@@ -1,0 +1,534 @@
+{
+    "metadata": {
+        "default": {
+            "title": "City's Residences",
+            "description": "Hayatın tam merkezinde, zamanı kendinize ve sevdiklerinize ayırabilmek, yaşamı sanata dönüştürmektir."
+        }
+    },
+    "localeSwitcher": {
+        "label": "tr",
+        "locale": "{locale, select, tr}"
+    },
+    "routes": {
+        "about": "HAKKIMIZDA",
+        "gallery": "GALERİ",
+        "contact": "İLETİŞİM"
+    },
+    "cursor": {
+        "view": "Videoyu İzleyin"
+    },
+    "common": {
+        "lifeReimagined": "Yaşam Yeniden Tasarlandı",
+        "navigation": {
+            "home": "Home",
+            "citysLiving": "City's Living",
+            "masterplan": "Master Plan",
+            "residencePlan": "Daire Planı",
+            "website": "Web Sitesi"
+        },
+        "contactInfo": "Satış Ofisi",
+        "close": "KAPAT",
+        "open": "MENÜ",
+        "inquiry": "RANDEVU AL",
+        "contact": "İletişim",
+        "socialMedia": "Sosyal Medya",
+        "menu": "Menü",
+        "legal": "KVKK",
+        "copyright": "Tüm hakları saklıdır.",
+        "copyrightYear": "2025 ©",
+        "copyrightText": "City's Residences İstanbul",
+        "kvkk": "KVKK",
+        "commercialElectronicMessage": "Ticari Elektronik İleti Aydınlatma Metni",
+        "explicitConsent": "Açık Rıza Metni",
+        "kvkRelatedInformation": "KVKK İlişkin Aydınlatma Metni",
+        "cookiePolicy": "Çerez Politikası",
+        "scrollToTop": "Yeniden Keşfet",
+        "salesOffice": "Satış Ofisi",
+        "salesOfficeAddress1": "City's Istanbul AVM",
+        "salesOfficeAddress2": "Kayışdağı Cad. No.2, Kozyatağı",
+        "salesOfficeAddress3": "34752 Ataşehir, İstanbul",
+        "createAppointment": "Randevu <br></br> Oluştur",
+        "speakWithRepresentative": "Temsilciyle <br></br> Görüş",
+        "getDirections": "Yol <br></br> Tarifi Al",
+        "legalDisclaimer": "City’s Residences, Hayat A.Ş.'nin tescilli bir markasıdır. Markanın tüm kullanım hakları, operasyonel faaliyetleri ve temsiliyeti, muvafakatname ile CITYS GAYRİMENKUL A.Ş. tarafından yürütülmektedir."
+    },
+    "countries": {
+        "AD": "Andorra",
+        "AE": "Birleşik Arap Emirlikleri",
+        "AF": "Afganistan",
+        "AG": "Antigua ve Barbuda",
+        "AI": "Anguilla",
+        "AL": "Arnavutluk",
+        "AM": "Ermenistan",
+        "AO": "Angola",
+        "AR": "Arjantin",
+        "AS": "Amerikan Samoası",
+        "AT": "Avusturya",
+        "AU": "Avustralya",
+        "AW": "Aruba",
+        "AX": "Aland Adaları",
+        "AZ": "Azerbaycan",
+        "BA": "Bosna Hersek",
+        "BB": "Barbados",
+        "BD": "Bangladeş",
+        "BE": "Belçika",
+        "BF": "Burkina Faso",
+        "BG": "Bulgaristan",
+        "BH": "Bahreyn",
+        "BI": "Burundi",
+        "BJ": "Benin",
+        "BL": "Saint Barthélemy",
+        "BM": "Bermuda",
+        "BN": "Brunei",
+        "BO": "Bolivya",
+        "BQ": "Bonaire",
+        "BR": "Brezilya",
+        "BS": "Bahamalar",
+        "BT": "Bhutan",
+        "BW": "Botsvana",
+        "BY": "Belarus",
+        "BZ": "Belize",
+        "CA": "Kanada",
+        "CC": "Cocos Adaları",
+        "CD": "Kongo Demokratik Cumhuriyeti",
+        "CF": "Orta Afrika Cumhuriyeti",
+        "CG": "Kongo",
+        "CH": "İsviçre",
+        "CI": "Fildişi Sahili",
+        "CK": "Cook Adaları",
+        "CL": "Şili",
+        "CM": "Kamerun",
+        "CN": "Çin",
+        "CO": "Kolombiya",
+        "CR": "Kosta Rika",
+        "CU": "Küba",
+        "CV": "Yeşil Burun Adaları",
+        "CW": "Curaçao",
+        "CY": "Kıbrıs",
+        "CZ": "Çek Cumhuriyeti",
+        "DE": "Almanya",
+        "DJ": "Cibuti",
+        "DK": "Danimarka",
+        "DM": "Dominika",
+        "DO": "Dominik Cumhuriyeti",
+        "DZ": "Cezayir",
+        "EC": "Ekvador",
+        "EE": "Estonya",
+        "EG": "Mısır",
+        "EH": "Batı Sahara",
+        "ER": "Eritre",
+        "ES": "İspanya",
+        "ET": "Etiyopya",
+        "FI": "Finlandiya",
+        "FJ": "Fiji",
+        "FK": "Falkland Adaları",
+        "FM": "Mikronezya",
+        "FO": "Faroe Adaları",
+        "FR": "Fransa",
+        "GA": "Gabon",
+        "GB": "Birleşik Krallık",
+        "GD": "Grenada",
+        "GE": "Gürcistan",
+        "GF": "Fransız Guyanası",
+        "GG": "Guernsey",
+        "GH": "Gana",
+        "GI": "Cebelitarık",
+        "GL": "Grönland",
+        "GM": "Gambiya",
+        "GN": "Gine",
+        "GP": "Guadeloupe",
+        "GQ": "Ekvator Ginesi",
+        "GR": "Yunanistan",
+        "GT": "Guatemala",
+        "GU": "Guam",
+        "GW": "Gine-Bissau",
+        "GY": "Guyana",
+        "HK": "Hong Kong",
+        "HN": "Honduras",
+        "HR": "Hırvatistan",
+        "HT": "Haiti",
+        "HU": "Macaristan",
+        "ID": "Endonezya",
+        "IE": "İrlanda",
+        "IL": "İsrail",
+        "IM": "Man Adası",
+        "IN": "Hindistan",
+        "IO": "Hint Okyanusu Britanya Toprakları",
+        "IQ": "Irak",
+        "IR": "İran",
+        "IS": "İzlanda",
+        "IT": "İtalya",
+        "JE": "Jersey",
+        "JM": "Jamaika",
+        "JO": "Ürdün",
+        "JP": "Japonya",
+        "KE": "Kenya",
+        "KG": "Kırgızistan",
+        "KH": "Kamboçya",
+        "KI": "Kiribati",
+        "KM": "Komorlar",
+        "KN": "Saint Kitts ve Nevis",
+        "KP": "Kuzey Kore",
+        "KR": "Güney Kore",
+        "KW": "Kuveyt",
+        "KY": "Cayman Adaları",
+        "KZ": "Kazakistan",
+        "LA": "Laos",
+        "LB": "Lübnan",
+        "LC": "Saint Lucia",
+        "LI": "Liechtenstein",
+        "LK": "Sri Lanka",
+        "LR": "Liberya",
+        "LS": "Lesotho",
+        "LT": "Litvanya",
+        "LU": "Lüksemburg",
+        "LV": "Letonya",
+        "LY": "Libya",
+        "MA": "Fas",
+        "MC": "Monako",
+        "MD": "Moldova",
+        "ME": "Karadağ",
+        "MF": "Saint Martin",
+        "MG": "Madagaskar",
+        "MH": "Marshall Adaları",
+        "MK": "Kuzey Makedonya",
+        "ML": "Mali",
+        "MM": "Myanmar",
+        "MN": "Moğolistan",
+        "MO": "Makao",
+        "MP": "Kuzey Mariana Adaları",
+        "MQ": "Martinique",
+        "MR": "Moritanya",
+        "MS": "Montserrat",
+        "MT": "Malta",
+        "MU": "Mauritius",
+        "MV": "Maldivler",
+        "MW": "Malavi",
+        "MX": "Meksika",
+        "MY": "Malezya",
+        "MZ": "Mozambik",
+        "NA": "Namibya",
+        "NC": "Yeni Kaledonya",
+        "NE": "Nijer",
+        "NF": "Norfolk Adası",
+        "NG": "Nijerya",
+        "NI": "Nikaragua",
+        "NL": "Hollanda",
+        "NO": "Norveç",
+        "NP": "Nepal",
+        "NR": "Nauru",
+        "NU": "Niue",
+        "NZ": "Yeni Zelanda",
+        "OM": "Umman",
+        "PA": "Panama",
+        "PE": "Peru",
+        "PF": "Fransız Polinezyası",
+        "PG": "Papua Yeni Gine",
+        "PH": "Filipinler",
+        "PK": "Pakistan",
+        "PL": "Polonya",
+        "PM": "Saint Pierre ve Miquelon",
+        "PR": "Porto Riko",
+        "PS": "Filistin",
+        "PT": "Portekiz",
+        "PW": "Palau",
+        "PY": "Paraguay",
+        "QA": "Katar",
+        "RE": "Réunion",
+        "RO": "Romanya",
+        "RS": "Sırbistan",
+        "RU": "Rusya",
+        "RW": "Ruanda",
+        "SA": "Suudi Arabistan",
+        "SB": "Solomon Adaları",
+        "SC": "Seyşeller",
+        "SD": "Sudan",
+        "SE": "İsveç",
+        "SG": "Singapur",
+        "SH": "Saint Helena",
+        "SI": "Slovenya",
+        "SJ": "Svalbard ve Jan Mayen",
+        "SK": "Slovakya",
+        "SL": "Sierra Leone",
+        "SM": "San Marino",
+        "SN": "Senegal",
+        "SO": "Somali",
+        "SR": "Surinam",
+        "SS": "Güney Sudan",
+        "ST": "São Tomé ve Príncipe",
+        "SV": "El Salvador",
+        "SX": "Sint Maarten",
+        "SY": "Suriye",
+        "SZ": "Eswatini",
+        "TC": "Turks ve Caicos Adaları",
+        "TD": "Çad",
+        "TG": "Togo",
+        "TH": "Tayland",
+        "TJ": "Tacikistan",
+        "TK": "Tokelau",
+        "TL": "Doğu Timor",
+        "TM": "Türkmenistan",
+        "TN": "Tunus",
+        "TO": "Tonga",
+        "TR": "Türkiye",
+        "TT": "Trinidad ve Tobago",
+        "TV": "Tuvalu",
+        "TW": "Tayvan",
+        "TZ": "Tanzanya",
+        "UA": "Ukrayna",
+        "UG": "Uganda",
+        "US": "Amerika Birleşik Devletleri",
+        "UY": "Uruguay",
+        "UZ": "Özbekistan",
+        "VA": "Vatikan",
+        "VC": "Saint Vincent ve Grenadinler",
+        "VE": "Venezuela",
+        "VG": "İngiliz Virgin Adaları",
+        "VI": "Amerikan Virgin Adaları",
+        "VN": "Vietnam",
+        "VU": "Vanuatu",
+        "WF": "Wallis ve Futuna",
+        "WS": "Samoa",
+        "YE": "Yemen",
+        "YT": "Mayotte",
+        "ZA": "Güney Afrika",
+        "ZM": "Zambiya",
+        "ZW": "Zimbabve"
+    },
+    "legalTableOfContents": {
+        "pdplRelatedInformation": "KVKK İlişkin Aydınlatma Metni",
+        "commercialElectronicMessage": "Ticari Elektronik İleti Aydınlatma Metni",
+        "explicitConsent": "Açık Rıza Metni",
+        "cookiePolicy": "Çerez Politikası"
+    },
+    "home": {
+        "lifeIn5Minutes": {
+            "items": {
+                "home": "Ev",
+                "homeDuration": "1 dakika",
+                "office": "Ofis",
+                "officeDuration": "2 dakika",
+                "mall": "AVM",
+                "mallDuration": "3 dakika",
+                "nature": "Doğa",
+                "natureDuration": "4 dakika",
+                "sports": "Spor",
+                "sportsDuration": "5 dakika"
+            }
+        }
+    },
+    "legal": {
+        "pdplRelatedInformation": {
+            "title": "Kişisel Verilerin Korunması ve İşlenmesine İlişkin Aydınlatma Metni (KVKK)",
+            "section1": {
+                "title": "1. Veri Sorumlusu, İlgili Kişi",
+                "content": "Citys Gayrimenkul Geliştirme A.Ş. (Kısaca \"Veri Sorumlusu\") 6698 sayılı Kişisel Verilerin Korunması Kanunu (Kısaca \"KVKK\") kapsamında Veri Sorumlusu sıfatını haiz olup gerçek kişi siz de İlgili Kişi olarak kabul edilip tanımlanmaktasınız. Aşağıda belirtilen Kişisel Verilerinizi Veri Sorumlusu olarak KVKK'nın 4. maddesindeki genel ilkelere de riayet edilerek işlediğimizi, İlgili Kişiye ait kişisel verilerin güvenliğine önem verdiğimizi ve KVKK'nın 10. maddesi hükmü gereğince aydınlatma yükümlülüğümüz bulunduğundan verilerinizin işlenmesine ilişkin olarak İlgili Kişi sizi bilgilendirmek isteriz."
+            },
+            "section2": {
+                "title": "2. İşlenen Kişisel Veriler, Verilerin İşlenme Amaçları, Hukuki Sebepleri, Aktarılması ve Toplanması",
+                "content": "Kişisel Verilerin teyidi maksadıyla Referanslarınıza veri aktarılabilmesi için Referansların Açık Rızasının alınması sorumluluğu şahsınıza aittir. Ayrıca Referanslarınıza ait Kişisel Verilerin hukuka aykırı olarak elde edilmesi durumunda Veri Sorumlusu olarak hiçbir hukuki yükümlülüğü de kabul etmemekteyiz."
+            },
+            "section2_1": {
+                "title": "2.1 İşlenen Kişisel Veriler:",
+                "items": {
+                    "identity": "Kimlik: Ad Soyad – Doğum Tarihi – Cinsiyet",
+                    "contact": "İletişim: Adres – Telefon – E-Posta",
+                    "professional": "Mesleki Deneyim: Çalıştığı Şirket – Unvan",
+                    "customer": "Müşteri İşlem: Referans Bilgileri"
+                }
+            },
+            "section2_2": {
+                "title": "2.2. Kişisel Verilerinizin İşleme Amaçları",
+                "content": "Toplanan kişisel verileriniz, Şirket'in ve Şirket'le iş ilişkisi içerisinde olan gerçek ve tüzel kişilerin yükümlülüklerinin ifası, güncellemeler ile ilgili bilgilendirme yapabilmek, sizlerle yapılacak sözleşmelerin kurulması ve ifa edilmesi, çeşitli reklam ve pazarlama faaliyetlerinde bulunmak, anket ve oylamalar ile görüşünüzün alınması, sizler için uygun ürün, proje ve hizmetlerin belirlenmesi, bunların size özel hale getirilmesi ve geliştirilmesi, etkin bir müşteri hizmeti sunulması Şirketimiz tarafından sunulan ürün ve hizmetlerden sizleri faydalandırmak için gerekli çalışmaların yapılması ve ilgili iş süreçlerinin yürütülmesi başta olmak üzere Kanun'un 5. ve 6. maddelerinde belirtilen kişisel veri işleme şartlarına uygun olarak aşağıda yer alan hususlar hakkında Şirket tarafından işlenebilecektir:",
+                "items": [
+                    "Fiyat teklifi süreçlerinin gerçekleştirilmesi ve ödemelerin tahsili.",
+                    "Şirket'in ve Şirket'le iş ilişkisi içerisinde olan ilgili kişilerin hukuki, teknik ve ticari-iş güvenliğinin temini,",
+                    "Resmi kurum taleplerinin yerine getirilmesi ve yetkili kuruluşlara mevzuattan kaynaklı bilgi verilmesi,",
+                    "Mevzuatta öngörülen saklama yükümlülüklerine uygunluğun sağlanması,",
+                    "İlgili kişi başvurularının mevzuata uygun olarak yanıtlanması ve gerekli işlemlerin gerçekleştirilmesi,",
+                    "Olası uyuşmazlıklarda delil teşkil etmesi amacıyla verilerin saklanması,",
+                    "Şirket yerleşkeleri ve/veya tesislerinin güvenliğinin temini,",
+                    "Müşteri talep ve şikayetlerinin takibi ve yönetimi,",
+                    "Müşteri memnuniyeti çalışmalarının yürütülmesi,",
+                    "Hukuk işlerinin takibi ve yürütülmesi,",
+                    "Denetim / etik faaliyetlerinin yürütülmesi,",
+                    "Operasyonel faaliyetlerinin yürütülmesi."
+                ]
+            },
+            "section2_3": {
+                "title": "2.3. Açık Rızaya Dayalı Kişisel Veriler",
+                "content": "Toplanan kişisel verileriniz; pazarlama, analiz, özelleştirme, promosyon ve benzeri amaçlarla açık rızanızla işlenebilir."
+            },
+            "section2_4": {
+                "title": "2.4. İşlenen Kişisel Verilerin Aktarılması",
+                "content": "İşlenen kişisel veriler, ilgili yasal şartlara uymak ve güvenlik önlemleri alınmak kaydıyla belirli kişi ve kuruluşlara aktarılabilir."
+            },
+            "section2_5": {
+                "title": "2.5. Toplama Yöntemi ve Hukuki Sebep",
+                "content": "Kişisel verileriniz farklı kanallardan fiziksel ve dijital olarak toplanabilir ve KVKK'nın 5. maddesinde belirtilen hukuki sebeplere dayanarak işlenmektedir."
+            },
+            "section3": {
+                "title": "3. İmha Politikası",
+                "content": "İşlenen kişisel veriler mevzuat ile belirlenen veya makul sürelerde saklanır, süresi dolduğunda silinir, yok edilir veya anonim hale getirilir."
+            },
+            "section4": {
+                "title": "4. İlgili Kişi Olarak Haklarınız",
+                "content": "KVKK kapsamında aşağıdaki haklara sahipsiniz:",
+                "items": [
+                    "Kişisel verilerin işlenip işlenmediğini öğrenme,",
+                    "İşlenmişse bilgi talep etme,",
+                    "İşlenme amacını öğrenme,",
+                    "Yurtiçi/yurtdışı aktarım yapılan üçüncü kişileri bilme,",
+                    "Eksik/yanlış işlenmişse düzeltilmesini isteme,",
+                    "İşlenmesini gerektiren sebeplerin kalkması durumunda silinmesini/yok edilmesini isteme,",
+                    "Otomatik sistemlerle analiz sonucuna itiraz etme,",
+                    "Zarara uğramanız durumunda tazminat talep etme."
+                ],
+                "application": "Başvurularınızı ",
+                "website": "www.citysresidences.com",
+                "email1": "info@citysresidences.com",
+                "email2": "citysgayrimenkul@hs02.Kep.tr",
+                "address": " adreslerine veya fiziksel olarak \"Teşvikiye Mah. Teşvikiye Cd. Nişantaşı City's No: 12 İç Kapı No: K.5 Şişli/ İstanbul\" adresine yapabilirsiniz. Başvuru Türkçe olmalı, kimlik bilgileri ve ilgili belgeler eklenmelidir. Vekâleten yapılan başvurular için vekâletname sunulmalıdır.",
+                "note": "Bu metin, Şirket ile yaptığınız sözleşmenin ayrılmaz bir parçasıdır. KVKK ve kurul kararlarına göre güncellenebilir."
+            }
+        },
+        "commercialElectronicMessage": {
+            "title": "Ticari Elektronik İleti Aydınlatma Metni",
+            "paragraph1": "Citys Gayrimenkul Geliştirme A.Ş. (\"Şirket\") olarak 5809 sayılı Elektronik Haberleşme Kanunu (\"EHK\"), 6563 sayılı Elektronik Ticaretin Düzenlenmesi Hakkında Kanun (\"ETK\") ve 6698 sayılı Kişisel Verilerin Korunması Kanunu (\"KVKK\") ve ilgili mevzuat kapsamında tarafınıza ticari elektronik ileti gönderilmesi ve kişisel verilerinizin işlenmesi, saklanması ve aktarılması ile ilgili sizlere bilgi vermek amacıyla işbu Ticari Elektronik İleti Aydınlatma Metni (\"Aydınlatma Metni\") hazırlanmıştır.",
+            "paragraph2": "Şirket ile paylaşmış olduğunuz kimlik bilgileri (ad, soyad) ve iletişim bilgileriniz (e-posta adresi, telefon numarası) ticari ileti onayı vermeniz halinde Şirket tarafından pazarlama iletişiminde kullanmak üzere, anlık/kısa mesaj, telefon, e-posta dahil rıza vermiş olduğunuz kanallar üzerinden elektronik ticari iletilerin gönderilmesi, müşteri memnuniyetine yönelik aktivitelerin yürütülmesi, pazarlama analiz çalışmalarının yürütülmesi, reklam, kampanya promosyon süreçlerinin yürütülmesi, ürün hizmetlerin pazarlama süreçlerinin yürütülmesi, müşterilere yönelik kampanyaların oluşturulması, hedef kitle belirlenmesi, müşteri hareketlerinin takip edilerek kullanıcı deneyimini arttırıcı faaliyetlerin yürütülmesi, doğrudan ve doğrudan olmayan pazarlama, kişiye özel pazarlama ve yeniden pazarlama faaliyetlerinin yürütülmesi, kişiye özel segmentasyon, hedefleme, analiz ve şirket içi raporlama faaliyetlerinin yürütülmesi, pazar araştırmaları, müşteri memnuniyeti aktivitelerinin planlanması ve icrası, Şirket'in sunduğu ürün ve hizmetlerin ilgili kişilerin beğeni, kullanım alışkanlıkları ve ihtiyaçlarına göre özelleştirilerek ilgili kişilere önerilmesi ve tanıtılması ile müşteri ilişkileri yönetimi süreçlerinin planlanması ve icrası amaçları da dahil olmak üzere genel anlamda Şirket ve iştiraklerinin ürün ve/veya hizmetlerinin pazarlama süreçlerinin planlanması ve icrası, Şirket ve iştiraklerinin sunduğu ürün ve/veya hizmetlere bağlılık oluşturulması ve/veya arttırılması süreçlerinin planlanması ve icrası amaçlarıyla sınırlı olarak ETK'nın 6. maddesi gereğince ticari elektronik ileti onay şartına ve elektronik ticari ileti gönderimi faaliyetiyle sınırlı olarak KVKK'nın 5. maddesinin 1. fıkrası gereğince açık rıza hukuki sebebine dayanılarak işlenecektir.",
+            "paragraph3": "Elektronik ticari ileti gönderimine ilişkin onayınızı dilediğiniz zaman geri alabilirsiniz.",
+            "paragraph4": "Şirket tarafından kişisel verileriniz yukarıda belirtilen amaçlarla sınırlı olarak doğrudan veya veri işleyenleri aracılığıyla kullanılacak, teknolojik altyapı tedarikçilerimiz ile paylaşılabilecektir.",
+            "paragraph5": "Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ'e göre KVKK'nın 11. Maddesinde sayılan haklarınız mevcut olup, işlenen kişisel verilerinize ilişkin hak ve talepleriniz ile ilgili başvuru yöntemlerine, \"",
+            "linkText": "Citys Gayrimenkul Geliştirme A.Ş. Kişisel Verilerin İşlenmesi ve Korunması Hakkında Aydınlatma Metni",
+            "paragraph5Suffix": "\"nden ulaşabilirsiniz."
+        },
+        "explicitConsent": {
+            "title": "Kişisel Verilerin Aktarılmasına İlişkin Açık Rıza Metni",
+            "paragraph1": "6698 sayılı Kişisel Verilerin Korunması Kanunu (\"KVKK\") nezdinde Veri Sorumlusu sıfatını haiz Citys Gayrimenkul Geliştirme A.Ş. (\"Şirket\") tarafından sizinle paylaşılan \"Kişisel Verilerin Korunması ve İşlenmesi Aydınlatma Metni\" kapsamında işlenen kişisel verilerinizin, Kanun'un 9. maddesinde belirtilen rıza alınmasına yer olmayan durumlar hariç olmak üzere, aşağıda belirtilen şekillerde aktarılması için açık rızanız talep olunmaktadır:",
+            "paragraph2": "Kimlik, İletişim, Mesleki Deneyim, Pazarlama Bilgileri, Hukuki İşlem Bilgileri, Finans, Müşteri İşlemleri, İşlem Güvenliği gibi kişisel verilerimin Şirket'in teknik altyapısında kullanılan sunucuların yurt dışında olması sebebiyle ve tarafıma hizmet sunulması amacıyla Aydınlatma Metni kapsamında belirtilen kişisel verilerimin; Aydınlatma Metni'ndeki amaçlar ve bu amaçlara ek olarak toplama, işleme, saklama ve arşiv faaliyetlerinin yürütülmesi amacıyla sınırlı olarak KVKK'nın 5, 6, 7, 8, 9'uncu maddesinde düzenleme altına alınan \"Açık Rıza\" hukuki sebebine dayalı olarak yurt içinde ve/veya yurt dışında üçüncü kişilere aktarılmasına yukarıdaki hususlarda bilgilendirildikten, bilgilendirmeye konu hususları anladıktan ve kayıtlara ilişkin yasal haklarımı öğrendikten sonra açık rızam ile onay veriyorum."
+        },
+        "cookiePolicy": {
+            "title": "Çerez Politikası",
+            "paragraph1": "Citys Gayrimenkul Geliştirme A.Ş. (\"Şirket\") olarak, internet sitemizden verimli şekilde faydalanabilmeniz ve kullanıcı deneyiminizi geliştirebilmek için çerez ve benzeri diğer bazı teknolojileri, ürünleri (hepsi birlikte \"Çerez\" olarak anılacaktır) kullanıyoruz.",
+            "paragraph2": "Bu metinde, www.citysresidences.com internet sitesini (\"Site\" olarak anılacaktır.) ziyaret etmeniz halinde kullanılacak Çerezlere ilişkin açıklamalar yer almaktadır. Çerez kullanılmasını tercih etmezseniz tarayıcınızın ayarlarından Çerez'leri silebilir ya da engelleyebilirsiniz. Ancak bunun Site kullanımınızı etkileyebileceğini hatırlatmak isteriz.",
+            "paragraph3": "6698 sayılı Kişisel Verilerin Korunması Kanunu (\"KVKK\") kapsamında \"Veri Sorumlusu\" sıfatıyla Citys Gayrimenkul Geliştirme A.Ş. olarak işlediğimiz kişisel verilerinize ilişkin aydınlatma metnine Site'deki Aydınlatma Metni linki üzerinden ulaşabilirsiniz.",
+            "section1": {
+                "title": "1. Çerez ve Diğer Benzer Teknolojiler Nedir?",
+                "content1": "Çerez, bir websitesini ziyaret ettiğinizde tarayıcınız aracılığıyla bilgisayarınıza veya mobil cihazınıza kaydedilen küçük boyutlu bir metin dosyasıdır. Çerezler bir sitenin daha verimli çalışmasının yanı sıra kişisel ihtiyaçlarınıza daha uygun ve hızlı bir ziyaret deneyimi yaşatmak için kişiselleştirilmiş sayfaların sunulabilmesine olanak vermektedir. Çerezler sadece internet ortamındaki ziyaret geçmişinize dair bilgiler içermekte olup, bilgisayarınızda veya mobil cihazınızda depolanmış dosyalara dair herhangi bir bilgi toplamamaktadır.",
+                "content2": "Bunun dışında Çerezlerle benzer amaçlarla kullanılan aşağıdaki bazı teknolojiler (\"Çerez Benzeri Teknolojiler\") de bulunmaktadır.",
+                "items": [
+                    "Piksel etiketleri (bir websitesine yerleştirilen ve bir sayfanın görüntülendiğini gösteren şeffaf grafiksel imgeler),",
+                    "Mobil cihaz tanımlayıcılar (IDFA, advertising ID vb. aracılığıyla bir mobil cihazın kullanımına ilişkin bilgilerin 3.kişi ortamlarda depolanması),",
+                    "Segmentasyon/Raporlama Ürünleri (websitesi veya mobil cihazların kodlara çeşitli yöntemlerle eklenen bazı hazır kodlar aracılığıyla çalışan ve bu kodlar sayesinde kullanıcıların websitesi veya mobil cihazdaki hareketlerini raporlayan/anlamlandıran/depolayan programlar/ürünler)"
+                ],
+                "content3": "Bu metinde kullanılan Çerez ibaresi Çerez Benzeri Teknolojileri de kapsayacak şekilde kullanılacaktır."
+            },
+            "section2": {
+                "title": "2. Çerez Türleri ve Kullanım Amaçları",
+                "section2_1": {
+                    "title": "2.1. Geçerlilik süreleri bakımından çerezler:",
+                    "session": {
+                        "title": "Oturum Çerezleri (Session Cookies):",
+                        "content": "Oturum Çerezleri ziyaretçilerin internet sitesini ziyaretleri süresince kullanılan, tarayıcı kapatıldıktan sonra silinen geçici çerezlerdir. Bu tür çerezlerin kullanılmasının temel amacı ziyaretiniz süresince internet sitesinin düzgün bir biçimde çalışmasını sağlamaktır. Örneğin; birden fazla sayfadan oluşan çevrimiçi formlarını doldurabilmeniz bu çerezler sayesinde mümkün olmaktadır."
+                    },
+                    "persistent": {
+                        "title": "Kalıcı Çerezler (Persistent Cookies):",
+                        "content": "Kalıcı çerezler internet sitesinin işlevselliğini artırmak, daha hızlı ve iyi bir hizmet sunmak amacıyla kullanılan çerez türleridir. Bu tür çerezler ziyaretçilerin tercihlerini hatırlamak için kullanılır ve tarayıcılar vasıtasıyla ziyaretçilerin cihazlarında depolanır. Kalıcı çerezlerin bazı türleri; internet sitesini kullanım amacı gibi hususlar göz önünde bulundurarak ziyaretçilere özel öneriler sunulması için kullanılabilmektedir. Kalıcı çerezler sayesinde internet sitesinin aynı cihazla tekrardan ziyaret edilmesi durumunda, ziyaretçilerin cihazlarında internet sitesi tarafından oluşturulmuş bir çerez olup olmadığı kontrol edilir ve var ise, internet sitesinin daha önce ziyaret edildiği anlaşılır ve ziyaretçilere iletilecek içerikler bu doğrultuda belirlenir. Çerez Benzeri Teknolojiler de bu kapsama girmektedir."
+                    }
+                },
+                "section2_2": {
+                    "title": "2.2. Kaynağı bakımından çerezler:",
+                    "firstParty": {
+                        "title": "Birinci taraf çerezleri:",
+                        "content": "Doğrudan internet sitesi tarafından ziyaretçilerin cihazlarına yerleştirilir. Birinci taraf çerezleri gezmekte olduğunuz internet sitesi tarafından tanımlanır ve sadece bu site tarafından okunabilirler."
+                    },
+                    "thirdParty": {
+                        "title": "Üçüncü taraf çerezleri:",
+                        "content": "Üçüncü taraf çerezleri farklı hizmetler için kullanılan diğer organizasyonlar tarafından tanımlanır. Örneğin, faydalanmakta olduğumuz harici veri analizi hizmetleri ve bu hizmeti sunan tedarikçiler, neyin popüler olup neyin olmadığını raporlamak üzere bizim adımıza çerezleri tanımlarlar."
+                    }
+                },
+                "section2_3": {
+                    "title": "2.3. Kullanım amaçlarına göre çerezler:",
+                    "mandatory": {
+                        "title": "Zorunlu Çerezler:",
+                        "content": "Zorunlu çerezler, internet sitesine göz atmanız ve sitenin güvenli alanlarına erişim gibi özelliklerini (log-in olma, form doldurma, gizlilik tercihlerinin hatırlanması gibi) kullanması için gerekli olan çerezlerdir. Bu çerezler güvenlik ve doğrulama gibi amaçlar için kullanılmakta olup, herhangi bir pazarlama amacı doğrultusunda kullanılmaz ve kimliğinizi tanımlamaz. Aynı oturum içerisinde bir sayfaya geri dönüldüğünde önceki eylemleri hatırlama buna örnek verilebilir."
+                    },
+                    "functionality": {
+                        "title": "İşlevsellik çerezleri:",
+                        "content": "İşlevsellik çerezleri, daha kişiselleştirilmiş bir çevrimiçi deneyim için web sitesi geçmişinde yaptığınız seçimlerin (kullanıcı adınız, bulunduğunuz bölge veya kullandığınız dil) hatırlanmasına olanak tanır. Bu çerezlerin topladığı bilgiler, kullanıcı adınız veya profil resminiz gibi kimliğinizi tanımlayabilecek gizli verileri içerebilir. Bu tür çerezlerin kullanımına izin verilmemesi size özel bir özelliğin kullanılmamasına neden olabilir ve tercihlerinizi hatırlamasını engeller."
+                    },
+                    "performance": {
+                        "title": "Performans çerezleri:",
+                        "content": "Bu çerezler, web sitesini nasıl kullandığınız, hangi sayfaları ziyaret ettiğiniz ve hangi bağlantıları tıkladığınız gibi bilgileri toplayarak ziyaretçilerin web sitesinde nasıl bir etkileşime girdiğinin anlamlandırılmasına yardımcı olur. Bu çerezler, sitenin iyileştirilmesi için kullanılmaktadır. İnternet sitesi sahipleri tarafından, tekil ziyaretçilerin sayısını tahmin etmek, bir internet sayfasına götüren en önemli arama motoru anahtar kelimelerini tespit etmek veya internet sitesinde gezinme durumunu izlemek için kullanılmaktadırlar. Bu çerezler kimliğinizi tanımlamaz. Tüm veriler isimsiz bir şekilde alınır ve bir araya getirilir."
+                    },
+                    "marketing": {
+                        "title": "Pazarlama çerezleri:",
+                        "content": "Bu çerezler size ve ilgi alanlarınıza yakın olan içerikleri sunmak amacıyla kullanılır. Ayrıca hedefli reklamlar sunmak veya bir reklamın size görüntülenme sayısını kısıtlamak amacıyla da kullanılabilir. Bu çerezlerin birçok türü, tüketicileri takip ederek kimlik tanımlayıcı bilgiler toplayabilir."
+                    }
+                }
+            },
+            "section3": {
+                "title": "3. Çerezlerin Kabul edilmemesi durumunda ne olur?",
+                "content": "Çerezleri kabul etmemeye karar vermeniz durumunda, internet sitesinin belirli özellikleri görüntülenemeyebilir ya da doğru çalışmayabilir. Bu da internet sitesnde yapacaklarınızı sınırlar ve tasarım ve kullanıcı deneyimi üzerinde etkiye sahip olabilir.",
+                "affectedFeatures": "Etkilenmesi muhtemel özellikler arasında şunlar bulunur:",
+                "items": [
+                    "İnternet sitesinin kişiselleştirilmiş şekilde deneyimlenememesi",
+                    "Video izlenmesi",
+                    "Bu sayfanın sosyal ağlarda beğenilmesi ya da paylaşılması",
+                    "Gömülü içeriğin görüntülenmesi"
+                ]
+            },
+            "section4": {
+                "title": "4. Çerezlerin Kullanılmasını Nasıl Engelleyebilirsiniz?",
+                "content": "Çerezlerin kullanılması websitesi veya mobil cihazın daha iyi hizmet vermesini sağlamakla birlikte eğer dilerseniz çerezlerin kullanılmasını engelleyebilirsiniz. Ancak bu takdirde websitesi veya mobil uygulamanın tam olarak işlevini gösterememesi ve tüm özelliklerinden yararlanamayabileceğinizi unutmayınız. Çerezlerin kullanılmasını engellemek için kullandığınız internet tarayıcınızın ayarlarınızı değiştirmeniz gerekmektedir. Bu değişiklikler kullandığınız cihaz ve internet tarayıcısına göre değişiklik göstermektedir. Aşağıda farklı internet tarayıcıları üzerinden çerezlerin kullanılmasını engellemek için hangi adımların izlenmesi gerektiğine ilişkin bilgiler yer almaktadır:",
+                "browsers": {
+                    "chrome": "Google Chrome: ",
+                    "ie": "Internet Explorer: ",
+                    "firefox": "Mozilla Firefox: ",
+                    "opera": "Opera: ",
+                    "safari": "Safari: "
+                }
+            },
+            "section5": {
+                "title": "5. Kullanılan Çerezler ve Kullanım amaçları",
+                "table": {
+                    "cookie": "Kullanılan Çerez",
+                    "type": "Çerez Türü",
+                    "domain": "Domain/Şirket",
+                    "details": "Ayrıntılı bilgi için tıklayınız",
+                    "duration": "Saklanma Süresi",
+                    "ga": {
+                        "name": "_ga_#",
+                        "type": "Performans çerezi",
+                        "domain": "Google",
+                        "details": "Google Analytics tarafından, bir kullanıcının web sitesini kaç kez ziyaret ettiğinin yanı sıra ilk ve en son ziyaretin tarihlerine ilişkin verileri toplamak için kullanılır. ",
+                        "duration": "2 Yıl"
+                    }
+                }
+            }
+        }
+    },
+    "LocaleSwitcher": {
+        "label": "Dil değiştir",
+        "locale": "{locale, select, tr {TR} en {EN} other {Unknown}}"
+    },
+    "lifeIn5Minutes": {
+        "mainTitle": {
+            "number": "5",
+            "line1": "dakikada",
+            "line2": "yaşam"
+        },
+        "items": {
+            "home": "Ev",
+            "homeDuration": "1 dakika",
+            "office": "Ofis",
+            "officeDuration": "2 dakika",
+            "mall": "AVM",
+            "mallDuration": "3 dakika",
+            "nature": "Doğa",
+            "natureDuration": "4 dakika",
+            "sports": "Spor",
+            "sportsDuration": "5 dakika"
+        }
+    }
+}

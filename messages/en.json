@@ -1,0 +1,535 @@
+{
+    "metadata": {
+        "default": {
+            "title": "City's Residences",
+            "description": "At the heart of life, being able to dedicate time to yourself and your loved ones is transforming life into art."
+        }
+    },
+    "localeSwitcher": {
+        "label": "en",
+        "locale": "{locale, select, en}"
+    },
+    "routes": {
+        "about": "ABOUT US",
+        "gallery": "GALLERY",
+        "contact": "CONTACT"
+    },
+    "cursor": {
+        "view": "Watch the Video"
+    },
+    "common": {
+        "lifeReimagined": "Life Reimagined",
+        "navigation": {
+            "home": "Home",
+            "citysLiving": "City's Living",
+            "masterplan": "Master Plan",
+            "residencePlan": "Residence Plan",
+            "website": "Website"
+        },
+        "contactInfo": "Sales Office",
+        "close": "CLOSE",
+        "open": "MENU",
+        "inquiry": "APPOINTMENT",
+        "contact": "Contact",
+        "socialMedia": "Social Media",
+        "menu": "Menu",
+        "legal": "Legal",
+        "copyright": "All rights reserved.",
+        "copyrightYear": "2025 ©",
+        "copyrightText": "City's Residences Istanbul All rights reserved.",
+        "kvkk": "Personal Data Protection (KVKK)",
+        "commercialElectronicMessage": "Commercial Electronic Message Information Text",
+        "explicitConsent": "Explicit Consent Text",
+        "kvkRelatedInformation": "PDPL",
+        "cookiePolicy": "Cookie Policy",
+        "scrollToTop": "Explore Again",
+        "salesOffice": "Sales Office",
+        "salesOfficeAddress1": "City's Istanbul Mall",
+        "salesOfficeAddress2": "Kayışdağı Cad. No.2, Kozyatağı",
+        "salesOfficeAddress3": "34752 Ataşehir, İstanbul",
+        "createAppointment": "Book an <br></br> Appointment",
+        "speakWithRepresentative": "Talk to a<br></br>Representative",
+        "getDirections": "Get <br></br> Directions",
+        "exploreAgain": "Explore Again",
+        "legalDisclaimer": "City’s Residences is a registered trademark of Hayat A.Ş. All usage rights, operational activities, and representation of the brand are carried out by CITYS GAYRİMENKUL A.Ş. with consent."
+    },
+    "countries": {
+        "AD": "Andorra",
+        "AE": "United Arab Emirates",
+        "AF": "Afghanistan",
+        "AG": "Antigua and Barbuda",
+        "AI": "Anguilla",
+        "AL": "Albania",
+        "AM": "Armenia",
+        "AO": "Angola",
+        "AR": "Argentina",
+        "AS": "American Samoa",
+        "AT": "Austria",
+        "AU": "Australia",
+        "AW": "Aruba",
+        "AX": "Åland Islands",
+        "AZ": "Azerbaijan",
+        "BA": "Bosnia and Herzegovina",
+        "BB": "Barbados",
+        "BD": "Bangladesh",
+        "BE": "Belgium",
+        "BF": "Burkina Faso",
+        "BG": "Bulgaria",
+        "BH": "Bahrain",
+        "BI": "Burundi",
+        "BJ": "Benin",
+        "BL": "Saint Barthélemy",
+        "BM": "Bermuda",
+        "BN": "Brunei",
+        "BO": "Bolivia",
+        "BQ": "Bonaire",
+        "BR": "Brazil",
+        "BS": "Bahamas",
+        "BT": "Bhutan",
+        "BW": "Botswana",
+        "BY": "Belarus",
+        "BZ": "Belize",
+        "CA": "Canada",
+        "CC": "Cocos Islands",
+        "CD": "Democratic Republic of the Congo",
+        "CF": "Central African Republic",
+        "CG": "Congo",
+        "CH": "Switzerland",
+        "CI": "Ivory Coast",
+        "CK": "Cook Islands",
+        "CL": "Chile",
+        "CM": "Cameroon",
+        "CN": "China",
+        "CO": "Colombia",
+        "CR": "Costa Rica",
+        "CU": "Cuba",
+        "CV": "Cape Verde",
+        "CW": "Curaçao",
+        "CY": "Cyprus",
+        "CZ": "Czech Republic",
+        "DE": "Germany",
+        "DJ": "Djibouti",
+        "DK": "Denmark",
+        "DM": "Dominica",
+        "DO": "Dominican Republic",
+        "DZ": "Algeria",
+        "EC": "Ecuador",
+        "EE": "Estonia",
+        "EG": "Egypt",
+        "EH": "Western Sahara",
+        "ER": "Eritrea",
+        "ES": "Spain",
+        "ET": "Ethiopia",
+        "FI": "Finland",
+        "FJ": "Fiji",
+        "FK": "Falkland Islands",
+        "FM": "Micronesia",
+        "FO": "Faroe Islands",
+        "FR": "France",
+        "GA": "Gabon",
+        "GB": "United Kingdom",
+        "GD": "Grenada",
+        "GE": "Georgia",
+        "GF": "French Guiana",
+        "GG": "Guernsey",
+        "GH": "Ghana",
+        "GI": "Gibraltar",
+        "GL": "Greenland",
+        "GM": "Gambia",
+        "GN": "Guinea",
+        "GP": "Guadeloupe",
+        "GQ": "Equatorial Guinea",
+        "GR": "Greece",
+        "GT": "Guatemala",
+        "GU": "Guam",
+        "GW": "Guinea-Bissau",
+        "GY": "Guyana",
+        "HK": "Hong Kong",
+        "HN": "Honduras",
+        "HR": "Croatia",
+        "HT": "Haiti",
+        "HU": "Hungary",
+        "ID": "Indonesia",
+        "IE": "Ireland",
+        "IL": "Israel",
+        "IM": "Isle of Man",
+        "IN": "India",
+        "IO": "British Indian Ocean Territory",
+        "IQ": "Iraq",
+        "IR": "Iran",
+        "IS": "Iceland",
+        "IT": "Italy",
+        "JE": "Jersey",
+        "JM": "Jamaica",
+        "JO": "Jordan",
+        "JP": "Japan",
+        "KE": "Kenya",
+        "KG": "Kyrgyzstan",
+        "KH": "Cambodia",
+        "KI": "Kiribati",
+        "KM": "Comoros",
+        "KN": "Saint Kitts and Nevis",
+        "KP": "North Korea",
+        "KR": "South Korea",
+        "KW": "Kuwait",
+        "KY": "Cayman Islands",
+        "KZ": "Kazakhstan",
+        "LA": "Laos",
+        "LB": "Lebanon",
+        "LC": "Saint Lucia",
+        "LI": "Liechtenstein",
+        "LK": "Sri Lanka",
+        "LR": "Liberia",
+        "LS": "Lesotho",
+        "LT": "Lithuania",
+        "LU": "Luxembourg",
+        "LV": "Latvia",
+        "LY": "Libya",
+        "MA": "Morocco",
+        "MC": "Monaco",
+        "MD": "Moldova",
+        "ME": "Montenegro",
+        "MF": "Saint Martin",
+        "MG": "Madagascar",
+        "MH": "Marshall Islands",
+        "MK": "North Macedonia",
+        "ML": "Mali",
+        "MM": "Myanmar",
+        "MN": "Mongolia",
+        "MO": "Macau",
+        "MP": "Northern Mariana Islands",
+        "MQ": "Martinique",
+        "MR": "Mauritania",
+        "MS": "Montserrat",
+        "MT": "Malta",
+        "MU": "Mauritius",
+        "MV": "Maldives",
+        "MW": "Malawi",
+        "MX": "Mexico",
+        "MY": "Malaysia",
+        "MZ": "Mozambique",
+        "NA": "Namibia",
+        "NC": "New Caledonia",
+        "NE": "Niger",
+        "NF": "Norfolk Island",
+        "NG": "Nigeria",
+        "NI": "Nicaragua",
+        "NL": "Netherlands",
+        "NO": "Norway",
+        "NP": "Nepal",
+        "NR": "Nauru",
+        "NU": "Niue",
+        "NZ": "New Zealand",
+        "OM": "Oman",
+        "PA": "Panama",
+        "PE": "Peru",
+        "PF": "French Polynesia",
+        "PG": "Papua New Guinea",
+        "PH": "Philippines",
+        "PK": "Pakistan",
+        "PL": "Poland",
+        "PM": "Saint Pierre and Miquelon",
+        "PR": "Puerto Rico",
+        "PS": "Palestine",
+        "PT": "Portugal",
+        "PW": "Palau",
+        "PY": "Paraguay",
+        "QA": "Qatar",
+        "RE": "Réunion",
+        "RO": "Romania",
+        "RS": "Serbia",
+        "RU": "Russia",
+        "RW": "Rwanda",
+        "SA": "Saudi Arabia",
+        "SB": "Solomon Islands",
+        "SC": "Seychelles",
+        "SD": "Sudan",
+        "SE": "Sweden",
+        "SG": "Singapore",
+        "SH": "Saint Helena",
+        "SI": "Slovenia",
+        "SJ": "Svalbard and Jan Mayen",
+        "SK": "Slovakia",
+        "SL": "Sierra Leone",
+        "SM": "San Marino",
+        "SN": "Senegal",
+        "SO": "Somalia",
+        "SR": "Suriname",
+        "SS": "South Sudan",
+        "ST": "São Tomé and Príncipe",
+        "SV": "El Salvador",
+        "SX": "Sint Maarten",
+        "SY": "Syria",
+        "SZ": "Eswatini",
+        "TC": "Turks and Caicos Islands",
+        "TD": "Chad",
+        "TG": "Togo",
+        "TH": "Thailand",
+        "TJ": "Tajikistan",
+        "TK": "Tokelau",
+        "TL": "East Timor",
+        "TM": "Turkmenistan",
+        "TN": "Tunisia",
+        "TO": "Tonga",
+        "TR": "Turkey",
+        "TT": "Trinidad and Tobago",
+        "TV": "Tuvalu",
+        "TW": "Taiwan",
+        "TZ": "Tanzania",
+        "UA": "Ukraine",
+        "UG": "Uganda",
+        "US": "United States",
+        "UY": "Uruguay",
+        "UZ": "Uzbekistan",
+        "VA": "Vatican",
+        "VC": "Saint Vincent and the Grenadines",
+        "VE": "Venezuela",
+        "VG": "British Virgin Islands",
+        "VI": "U.S. Virgin Islands",
+        "VN": "Vietnam",
+        "VU": "Vanuatu",
+        "WF": "Wallis and Futuna",
+        "WS": "Samoa",
+        "YE": "Yemen",
+        "YT": "Mayotte",
+        "ZA": "South Africa",
+        "ZM": "Zambia",
+        "ZW": "Zimbabwe"
+    },
+    "legalTableOfContents": {
+        "pdplRelatedInformation": "PDPL Related Information Text",
+        "commercialElectronicMessage": "Commercial Electronic Message Information Text",
+        "explicitConsent": "Explicit Consent Text",
+        "cookiePolicy": "Cookie Policy"
+    },
+    "home": {
+        "lifeIn5Minutes": {
+            "items": {
+                "home": "Home",
+                "homeDuration": "1 minute",
+                "office": "Office",
+                "officeDuration": "2 minutes",
+                "mall": "Mall",
+                "mallDuration": "3 minutes",
+                "nature": "Nature",
+                "natureDuration": "4 minutes",
+                "sports": "Sports",
+                "sportsDuration": "5 minutes"
+            }
+        }
+    },
+    "legal": {
+        "pdplRelatedInformation": {
+            "title": "Personal Data Protection and Processing Disclosure Text (PDPL)",
+            "section1": {
+                "title": "1. Data Controller, Data Subject",
+                "content": "Citys Real Estate Development Inc. (\"Data Controller\") holds the title of Data Controller within the scope of Law No. 6698 on the Protection of Personal Data (\"PDPL\"), and you, as a natural person, are accepted and defined as the Data Subject. We would like to inform you, as the Data Subject, regarding the processing of your Personal Data specified below, that we process them as the Data Controller in compliance with the general principles set forth in Article 4 of the PDPL, that we attach importance to the security of personal data belonging to the Data Subject, and that we have an obligation to inform pursuant to Article 10 of the PDPL."
+            },
+            "section2": {
+                "title": "2. Processed Personal Data, Processing Purposes, Legal Bases, Transfer and Collection",
+                "content": "The responsibility for obtaining the Explicit Consent of References for the transfer of data to your References for the purpose of confirming Personal Data belongs to you. In addition, we do not accept any legal liability as the Data Controller in case Personal Data belonging to your References are obtained unlawfully."
+            },
+            "section2_1": {
+                "title": "2.1 Processed Personal Data:",
+                "items": {
+                    "identity": "Identity: Name Surname – Date of Birth – Gender",
+                    "contact": "Contact: Address – Phone – E-Mail",
+                    "professional": "Professional Experience: Company Worked – Title",
+                    "customer": "Customer Transaction: Reference Information"
+                }
+            },
+            "section2_2": {
+                "title": "2.2. Processing Purposes of Your Personal Data",
+                "content": "Your collected personal data may be processed by the Company for the matters below in compliance with the personal data processing conditions specified in Articles 5 and 6 of the Law, primarily for the fulfillment of the obligations of the Company and the real and legal persons in business relations with the Company, making notifications regarding updates, establishment and fulfillment of contracts to be made with you, carrying out various advertising and marketing activities, obtaining your opinion through surveys and polls, determining products, projects and services suitable for you, customizing and developing them, providing effective customer service, carrying out necessary work to enable you to benefit from products and services offered by our Company and conducting related business processes:",
+                "items": [
+                    "Realization of price quotation processes and collection of payments.",
+                    "Ensuring the legal, technical and commercial-business security of the Company and relevant persons in business relations with the Company,",
+                    "Fulfillment of official institution requests and providing information to authorized organizations arising from legislation,",
+                    "Ensuring compliance with storage obligations foreseen in legislation,",
+                    "Responding to data subject applications in accordance with legislation and carrying out necessary procedures,",
+                    "Storage of data for the purpose of constituting evidence in possible disputes,",
+                    "Ensuring the security of Company premises and/or facilities,",
+                    "Tracking and management of customer requests and complaints,",
+                    "Conducting customer satisfaction studies,",
+                    "Tracking and conducting legal affairs,",
+                    "Conducting audit / ethics activities,",
+                    "Conducting operational activities."
+                ]
+            },
+            "section2_3": {
+                "title": "2.3. Personal Data Based on Explicit Consent",
+                "content": "Your collected personal data may be processed with your explicit consent for marketing, analysis, customization, promotion and similar purposes."
+            },
+            "section2_4": {
+                "title": "2.4. Transfer of Processed Personal Data",
+                "content": "Processed personal data may be transferred to certain persons and organizations provided that relevant legal conditions are complied with and security measures are taken."
+            },
+            "section2_5": {
+                "title": "2.5. Collection Method and Legal Basis",
+                "content": "Your personal data may be collected physically and digitally through different channels and are processed based on the legal bases specified in Article 5 of the PDPL."
+            },
+            "section3": {
+                "title": "3. Destruction Policy",
+                "content": "Processed personal data are stored for periods determined by legislation or reasonable periods, and are deleted, destroyed or anonymized when the period expires."
+            },
+            "section4": {
+                "title": "4. Your Rights as Data Subject",
+                "content": "You have the following rights within the scope of PDPL:",
+                "items": [
+                    "Learning whether personal data are processed,",
+                    "Requesting information if processed,",
+                    "Learning the processing purpose,",
+                    "Knowing third parties to whom data are transferred domestically/abroad,",
+                    "Requesting correction if processed incompletely/incorrectly,",
+                    "Requesting deletion/destruction if reasons requiring processing no longer exist,",
+                    "Objecting to analysis results through automated systems,",
+                    "Requesting compensation in case of damage."
+                ],
+                "application": "You can submit your applications to ",
+                "website": "www.citysresidences.com",
+                "email1": "info@citysresidences.com",
+                "email2": "citysgayrimenkul@hs02.Kep.tr",
+                "address": " or physically to \"Teşvikiye Mah. Teşvikiye Cd. Nişantaşı City's No: 12 İç Kapı No: K.5 Şişli/ İstanbul\". Applications must be in Turkish, identity information and relevant documents must be attached. Applications made by proxy must include a power of attorney.",
+                "note": "This text is an integral part of the contract you have made with the Company. It may be updated in accordance with PDPL and board decisions."
+            }
+        },
+        "commercialElectronicMessage": {
+            "title": "Commercial Electronic Message Disclosure Text",
+            "paragraph1": "This Commercial Electronic Message Disclosure Text (\"Disclosure Text\") has been prepared to inform you about the sending of commercial electronic messages to you and the processing, storage and transfer of your personal data within the scope of Law No. 5809 on Electronic Communication (\"EHK\"), Law No. 6563 on the Regulation of Electronic Commerce (\"ETK\") and Law No. 6698 on the Protection of Personal Data (\"PDPL\") and relevant legislation, as Citys Real Estate Development Inc. (\"Company\").",
+            "paragraph2": "The identity information (name, surname) and contact information (e-mail address, phone number) you have shared with the Company will be processed based on the explicit consent legal basis pursuant to Article 5, paragraph 1 of the PDPL, limited to the commercial electronic message approval condition pursuant to Article 6 of the ETK and the commercial electronic message sending activity, for the purposes of using in marketing communication by the Company if you give commercial message approval, sending electronic commercial messages through channels including instant/short message, phone, e-mail for which you have given consent, conducting activities aimed at customer satisfaction, conducting marketing analysis studies, conducting advertising, campaign promotion processes, conducting marketing processes of product services, creating campaigns for customers, determining target audience, conducting activities to increase user experience by tracking customer movements, conducting direct and indirect marketing, personalized marketing and remarketing activities, conducting personalized segmentation, targeting, analysis and internal reporting activities, market research, planning and execution of customer satisfaction activities, customizing and recommending the products and services offered by the Company to relevant persons according to their preferences, usage habits and needs, and planning and execution of customer relationship management processes, including generally planning and execution of marketing processes of products and/or services of the Company and its affiliates, and planning and execution of processes for creating and/or increasing loyalty to products and/or services offered by the Company and its affiliates.",
+            "paragraph3": "You can withdraw your consent regarding the sending of electronic commercial messages at any time.",
+            "paragraph4": "Your personal data will be used by the Company directly or through data processors, limited to the purposes specified above, and may be shared with our technological infrastructure suppliers.",
+            "paragraph5": "You have the rights listed in Article 11 of the PDPL in accordance with the Communiqué on the Procedures and Principles of Application to the Data Controller, and you can access the application methods regarding your rights and requests regarding your processed personal data from the \"",
+            "linkText": "Citys Real Estate Development Inc. Disclosure Text on the Processing and Protection of Personal Data",
+            "paragraph5Suffix": "\"."
+        },
+        "explicitConsent": {
+            "title": "Explicit Consent Text for Transfer of Personal Data",
+            "paragraph1": "Pursuant to Law No. 6698 on the Protection of Personal Data (\"PDPL\"), Citys Real Estate Development Inc. (\"Company\") holding the title of Data Controller requests your explicit consent for the transfer of your personal data processed within the scope of the \"Personal Data Protection and Processing Disclosure Text\" shared with you, in the ways specified below, except for the cases where consent is not required as specified in Article 9 of the Law:",
+            "paragraph2": "I give my explicit consent and approval after being informed about the above matters, understanding the matters subject to disclosure and learning about my legal rights regarding the records, for the transfer of my personal data such as Identity, Contact, Professional Experience, Marketing Information, Legal Transaction Information, Finance, Customer Transactions, Transaction Security to third parties domestically and/or abroad, limited to the purposes specified in the Disclosure Text and in addition to these purposes, for the purpose of conducting collection, processing, storage and archiving activities, based on the \"Explicit Consent\" legal basis regulated in Articles 5, 6, 7, 8, 9 of the PDPL, due to the servers used in the Company's technical infrastructure being located abroad and for the purpose of providing service to me, within the scope specified in the Disclosure Text."
+        },
+        "cookiePolicy": {
+            "title": "Cookie Policy",
+            "paragraph1": "As Citys Real Estate Development Inc. (\"Company\"), we use cookies and some other similar technologies and products (all together referred to as \"Cookies\") to enable you to benefit efficiently from our website and to improve your user experience.",
+            "paragraph2": "This text contains explanations regarding the Cookies that will be used if you visit the www.citysresidences.com website (referred to as \"Site\"). If you prefer not to use cookies, you can delete or block Cookies from your browser settings. However, we would like to remind you that this may affect your use of the Site.",
+            "paragraph3": "You can access the disclosure text regarding your personal data that we process as Citys Real Estate Development Inc. with the title of \"Data Controller\" within the scope of Law No. 6698 on the Protection of Personal Data (\"PDPL\") through the Disclosure Text link on the Site.",
+            "section1": {
+                "title": "1. What are Cookies and Other Similar Technologies?",
+                "content1": "A cookie is a small-sized text file saved to your computer or mobile device through your browser when you visit a website. Cookies enable the presentation of personalized pages to provide a more efficient operation of a site as well as a more suitable and faster visit experience according to your personal needs. Cookies only contain information about your visit history on the internet and do not collect any information about files stored on your computer or mobile device.",
+                "content2": "In addition, there are some technologies (\"Cookie-Like Technologies\") used for similar purposes as Cookies:",
+                "items": [
+                    "Pixel tags (transparent graphical images placed on a website and showing that a page is displayed),",
+                    "Mobile device identifiers (storage of information regarding the use of a mobile device through IDFA, advertising ID etc. in third-party environments),",
+                    "Segmentation/Reporting Products (programs/products that work through some ready-made codes added to websites or mobile devices in various ways and report/interpret/store users' movements on websites or mobile devices thanks to these codes)"
+                ],
+                "content3": "The term Cookie used in this text will also cover Cookie-Like Technologies."
+            },
+            "section2": {
+                "title": "2. Cookie Types and Usage Purposes",
+                "section2_1": {
+                    "title": "2.1. Cookies in terms of validity periods:",
+                    "session": {
+                        "title": "Session Cookies:",
+                        "content": "Session Cookies are temporary cookies used during visitors' visits to the website and deleted after the browser is closed. The main purpose of using this type of cookies is to ensure the proper operation of the website during your visit. For example; filling out online forms consisting of multiple pages is possible thanks to these cookies."
+                    },
+                    "persistent": {
+                        "title": "Persistent Cookies:",
+                        "content": "Persistent cookies are types of cookies used to increase the functionality of the website and provide faster and better service. This type of cookies is used to remember visitors' preferences and is stored on visitors' devices through browsers. Some types of persistent cookies can be used to offer special recommendations to visitors considering matters such as the purpose of using the website. Thanks to persistent cookies, when the website is visited again with the same device, it is checked whether there is a cookie created by the website on visitors' devices, and if there is, it is understood that the website has been visited before and the content to be conveyed to visitors is determined accordingly. Cookie-Like Technologies are also included in this scope."
+                    }
+                },
+                "section2_2": {
+                    "title": "2.2. Cookies in terms of source:",
+                    "firstParty": {
+                        "title": "First-party cookies:",
+                        "content": "They are placed directly on visitors' devices by the website. First-party cookies are identified by the website you are browsing and can only be read by this site."
+                    },
+                    "thirdParty": {
+                        "title": "Third-party cookies:",
+                        "content": "Third-party cookies are identified by other organizations used for different services. For example, external data analysis services we benefit from and suppliers providing this service identify cookies on our behalf to report what is popular and what is not."
+                    }
+                },
+                "section2_3": {
+                    "title": "2.3. Cookies in terms of usage purposes:",
+                    "mandatory": {
+                        "title": "Mandatory Cookies:",
+                        "content": "Mandatory cookies are cookies necessary to browse the website and use features such as accessing secure areas of the site (logging in, filling out forms, remembering privacy preferences). These cookies are used for purposes such as security and verification, are not used for any marketing purpose and do not identify you. Remembering previous actions when returning to a page within the same session can be given as an example."
+                    },
+                    "functionality": {
+                        "title": "Functionality cookies:",
+                        "content": "Functionality cookies enable remembering the choices you make in website history (your username, region you are in or language you use) for a more personalized online experience. The information collected by these cookies may include sensitive data that can identify you such as your username or profile picture. Not allowing the use of this type of cookies may cause a feature specific to you not to be used and prevents remembering your preferences."
+                    },
+                    "performance": {
+                        "title": "Performance cookies:",
+                        "content": "These cookies help interpret how visitors interact with the website by collecting information such as how you use the website, which pages you visit and which links you click. These cookies are used to improve the site. They are used by website owners to estimate the number of unique visitors, identify the most important search engine keywords leading to a web page or monitor the browsing situation on the website. These cookies do not identify you. All data is collected anonymously and combined."
+                    },
+                    "marketing": {
+                        "title": "Marketing cookies:",
+                        "content": "These cookies are used to present content close to you and your areas of interest. They can also be used to present targeted advertisements or limit the number of times an advertisement is displayed to you. Many types of these cookies can collect identity-identifying information by tracking consumers."
+                    }
+                }
+            },
+            "section3": {
+                "title": "3. What happens if Cookies are not accepted?",
+                "content": "If you decide not to accept cookies, certain features of the website may not be displayed or may not work correctly. This limits what you can do on the website and may have an impact on design and user experience.",
+                "affectedFeatures": "Features that may be affected include:",
+                "items": [
+                    "The website cannot be experienced in a personalized way",
+                    "Watching videos",
+                    "Liking or sharing this page on social networks",
+                    "Displaying embedded content"
+                ]
+            },
+            "section4": {
+                "title": "4. How Can You Block the Use of Cookies?",
+                "content": "Although the use of cookies enables the website or mobile device to provide better service, you can block the use of cookies if you wish. However, remember that in this case, the website or mobile application may not fully function and you may not be able to benefit from all features. To block the use of cookies, you need to change the settings of your internet browser you use. These changes vary according to the device and internet browser you use. Below is information on which steps should be followed to block the use of cookies through different internet browsers:",
+                "browsers": {
+                    "chrome": "Google Chrome: ",
+                    "ie": "Internet Explorer: ",
+                    "firefox": "Mozilla Firefox: ",
+                    "opera": "Opera: ",
+                    "safari": "Safari: "
+                }
+            },
+            "section5": {
+                "title": "5. Cookies Used and Usage Purposes",
+                "table": {
+                    "cookie": "Cookie Used",
+                    "type": "Cookie Type",
+                    "domain": "Domain/Company",
+                    "details": "Click for detailed information",
+                    "duration": "Storage Duration",
+                    "ga": {
+                        "name": "_ga_#",
+                        "type": "Performance cookie",
+                        "domain": "Google",
+                        "details": "Used by Google Analytics to collect data on how many times a user visits the website as well as dates of first and last visits. ",
+                        "duration": "2 Years"
+                    }
+                }
+            }
+        }
+    },
+    "LocaleSwitcher": {
+        "label": "Change language",
+        "locale": "{locale, select, tr {TR} en {EN} other {Unknown}}"
+    },
+    "lifeIn5Minutes": {
+        "mainTitle": {
+            "number": "5",
+            "line1": "minutes",
+            "line2": "life"
+        },
+        "items": {
+            "home": "Home",
+            "homeDuration": "1 minute",
+            "office": "Office",
+            "officeDuration": "2 minutes",
+            "mall": "Mall",
+            "mallDuration": "3 minutes",
+            "nature": "Nature",
+            "natureDuration": "4 minutes",
+            "sports": "Sports",
+            "sportsDuration": "5 minutes"
+        }
+    }
+}

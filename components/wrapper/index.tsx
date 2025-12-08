@@ -1,8 +1,10 @@
 "use client"
 
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
+import { Header } from "@/components/header"
 import { SmoothScroll } from "@/components/smooth-scroll"
+import { cn } from "@/lib/utils"
 
 interface CountryData {
   isoCode: string
@@ -31,11 +33,13 @@ export function Wrapper({
   ...props
 }: WrapperProps) {
   const locale = useLocale()
+  const t = useTranslations("common")
 
   return (
     <>
       <div>
-        <main className={className} {...props}>
+        <Header />
+        <main className={cn(className)} {...props}>
           {children}
         </main>
       </div>
