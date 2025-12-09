@@ -68,17 +68,22 @@ export default function Home() {
 
   return (
     <Wrapper>
-      <div className={cn("fixed z-50 inset-0", "pt-header-height-mobile lg:pt-header-height")}>
-        <div className={cn("container size-full mx-auto px-8 lg:px-8 pb-header-height pt-20", "flex flex-col gap-4")}>
+      <div className={cn("fixed z-50 inset-0", "pt-header-height-mobile 2xl:pt-header-height")}>
+        <div
+          className={cn(
+            "container size-full mx-auto px-8 lg:px-8 pb-16 2xl:20 pt-8 lg:pt-20 xl:pt-8 2xl:pt-20",
+            "flex flex-col gap-4"
+          )}
+        >
           {/* NAVIGATION */}
-          <div className='flex flex-col gap-3 lg:gap-4 items-start'>
+          <div className='flex flex-col gap-3 lg:gap-4 xl:gap-2 items-start'>
             {navbarSections.map((item) => (
               <Link
                 href={item.paths[locale as Locale] as Pathnames}
                 locale={locale as Locale}
                 key={item.id}
                 className={cn(
-                  "font-primary text-5xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal text-orochimaru",
+                  "font-primary text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-normal text-orochimaru",
                   "transition-colors duration-300 hover:opacity-70",
                   activeSection === item.id && "text-bricky-brick"
                 )}
@@ -93,45 +98,47 @@ export default function Home() {
             <span className='sr-only'>Scroll Down</span>
           </div>
           {/* YASAM YENİDEN TASARLANDI */}
-          <div className='flex items-center justify-start gap-0 mt-auto sm:gap-6 lg:gap-3 xl:gap-4'>
+          <div className='flex items-center justify-start mt-auto'>
             <span
               className={cn(
                 "whitespace-nowrap text-center font-primary font-medium text-bricky-brick",
-                "text-xl/[1.15] sm:text-[1.75rem]/[1.15] md:text-4xl/[1.15] lg:text-5xl/[1.15] xl:text-5xl/[1.15] 2xl:text-4xl/[1.15]",
+                "-tracking-[0.025em]",
+                "text-lg/[1.15] md:text-3xl/[1.15] lg:text-4xl/[1.15] xl:text-3xl/[1.15] 2xl:text-4xl/[1.15]",
                 "flex flex-col items-center justify-center gap-3 sm:gap-4 lg:flex-row lg:gap-2"
               )}
             >
               {t("lifeReimagined")}
             </span>
-            <span className='mx-0 size-8 sm:mx-6 sm:size-10 2xl:h-14 2xl:w-14 3xl:h-16 3xl:w-16'>
+            <span className='mx-2 size-8 md:mx-4 md:size-10 2xl:size-12 3xl:size-12'>
               <IconCollab className='text-bricky-brick' />
             </span>
             <span
               className={cn(
                 "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
-                "text-xl/[1.15] sm:text-[1.75rem]/[1.15] md:text-4xl/[1.15] lg:text-5xl/[1.15] xl:text-5xl/[1.15] 2xl:text-4xl/[1.15]"
+                "-tracking-[0.015em]",
+                "text-lg/[1.15] md:text-3xl/[1.15] lg:text-4xl/[1.15] xl:text-3xl/[1.15] 2xl:text-4xl/[1.15]"
               )}
             >
               CITY&apos;S
             </span>
           </div>
           {/* SOCIAL MEDIA */}
-          <div className='mr-auto gap-4 flex'>
+          <div className='mr-auto gap-4 flex 3xl:gap-6'>
             <FacebookLogoIcon
               weight='fill'
-              className='size-7 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-colors duration-300 hover:text-bricky-brick'
+              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
             />
             <XLogoIcon
               weight='regular'
-              className='size-7 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-colors duration-300 hover:text-bricky-brick'
+              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
             />
             <InstagramLogoIcon
               weight='regular'
-              className='size-7 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-colors duration-300 hover:text-bricky-brick'
+              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
             />
             <YoutubeLogoIcon
               weight='fill'
-              className='size-7 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-colors duration-300 hover:text-bricky-brick'
+              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
             />
           </div>
         </div>
@@ -141,12 +148,12 @@ export default function Home() {
           <div
             key={item.id}
             ref={registerSectionRef(item.id)}
-            className='container mx-auto h-screen flex items-center justify-end py-10 sm:py-14 lg:py-header-height'
+            className='container mx-auto h-screen flex items-center justify-end pb-40 pt-84 lg:pt-[420px] lg:pb-48 xl:pb-16 xl:pt-16 2xl:py-20 3xl:pb-16 3xl:pt-header-height'
           >
             <Link
               href={item.paths[locale as Locale] as Pathnames}
               locale={locale as Locale}
-              className='h-full aspect-16/15'
+              className='w-full h-full xl:w-auto xl:h-full xl:aspect-16/14 2xl:aspect-16/15 3xl:aspect-16/14'
             >
               <AutoplayVideo playbackId={item.media?.muxSrc} />
             </Link>
