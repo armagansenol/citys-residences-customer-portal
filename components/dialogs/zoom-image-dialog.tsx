@@ -1,16 +1,14 @@
 "use client"
 
-import { useEffect, useState } from "react"
-
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { ArrowsOutSimpleIcon } from "@phosphor-icons/react"
-import { useLenis } from "lenis/react"
 import { cn } from "@/lib/utils"
+import { useLenis } from "lenis/react"
+import { useEffect, useState } from "react"
 
 interface ZoomImageDialogProps {
   dialogTrigger?: React.ReactNode
   dialogContent?: React.ReactNode
-  aspectRatio?: number // Optional aspect ratio (width/height). If not provided, content will maintain natural aspect ratio
+  aspectRatio?: number
 }
 
 export function ZoomImageDialog({ dialogTrigger, dialogContent, aspectRatio }: ZoomImageDialogProps) {
@@ -41,12 +39,9 @@ export function ZoomImageDialog({ dialogTrigger, dialogContent, aspectRatio }: Z
           }
         >
           {dialogTrigger}
-          <span className='blur-bg-white absolute bottom-8 right-8 flex size-12 items-center justify-center rounded-full bg-bricky-brick p-3 text-white transition-transform duration-300 ease-in-out group-hover:scale-110 xl:size-16'>
-            <ArrowsOutSimpleIcon className='size-full' weight='thin' />
-          </span>
         </DialogTrigger>
       )}
-      <DialogContent className='flex flex-col items-center justify-center'>
+      <DialogContent className='relative' showCloseButton={false}>
         <DialogTitle className='sr-only'>Enlarged Image View</DialogTitle>
         <div
           className={cn(
