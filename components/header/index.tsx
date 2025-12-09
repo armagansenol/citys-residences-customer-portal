@@ -27,12 +27,12 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 h-header-height-mobile lg:h-header-height",
-        "before:pointer-events-none before:absolute before:bottom-0 before:left-0 before:z-20 before:h-[200%] before:w-full before:bg-linear-to-b before:from-white/90 before:to-transparent"
+        "before:pointer-events-none before:absolute before:bottom-0 before:left-0 before:z-20 before:h-[200%] before:w-full before:bg-linear-to-b before:from-white before:to-transparent"
       )}
     >
-      <div className='container mx-auto px-8 lg:px-8 flex items-center justify-between h-full z-50 relative'>
-        <Link href='/' locale={locale as Locale} className='block size-20'>
-          <Logo fill='var(--color-bricky-brick)' />
+      <div className='container mx-auto px-8 lg:px-8 flex items-center justify-between h-full z-50 relative py-4'>
+        <Link href='/' locale={locale as Locale} className='block h-full'>
+          <Logo className='text-bricky-brick' />
         </Link>
         {pathname !== "/" && (
           <div

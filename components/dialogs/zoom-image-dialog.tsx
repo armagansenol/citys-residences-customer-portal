@@ -32,9 +32,15 @@ export function ZoomImageDialog({ dialogTrigger, dialogContent, aspectRatio }: Z
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       {dialogTrigger && (
-        <DialogTrigger className='group relative h-full w-full cursor-pointer'>
+        <DialogTrigger
+          className='group relative w-full cursor-pointer'
+          style={
+            {
+              aspectRatio: aspectRatio,
+            } as React.CSSProperties
+          }
+        >
           {dialogTrigger}
-
           <span className='blur-bg-white absolute bottom-8 right-8 flex size-12 items-center justify-center rounded-full bg-bricky-brick p-3 text-white transition-transform duration-300 ease-in-out group-hover:scale-110 xl:size-16'>
             <ArrowsOutSimpleIcon className='size-full' weight='thin' />
           </span>

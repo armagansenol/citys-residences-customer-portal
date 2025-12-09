@@ -13,40 +13,39 @@ export default async function Page({ params }: LocalePageParams) {
 
   return (
     <Wrapper className='py-header-height-mobile lg:py-header-height'>
-      {/* Main Title */}
-      <div className='container mx-auto px-6 py-10 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 lg:py-16'>
-        <div
-          className={cn(
-            "flex items-start justify-start gap-6 text-left sm:items-center flex-row lg:gap-0",
-            "sm:text-center lg:text-left"
-          )}
-        >
-          <span
+      <div className='container mx-auto py-10 lg:py-16 flex flex-col justify-center gap-20'>
+        {/* Main Title */}
+        <div className='px-8 sm:px-10 lg:px-16 xl:px-24 2xl:px-32'>
+          <div
             className={cn(
-              "whitespace-nowrap font-primary font-medium text-bricky-brick",
-              "text-[1.25rem]/[1.15] sm:text-4xl/[1.15] lg:text-5xl/[1.15] xl:text-5xl/[1.15] 2xl:text-5xl/[1.15] 3xl:text-5xl/[1.15]",
-              "flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-0"
+              "flex items-start justify-start gap-6 text-left sm:items-center flex-row lg:gap-0",
+              "sm:text-center lg:text-left"
             )}
           >
-            {tCommon("lifeReimagined")}
-          </span>
-          <span className='mx-0 size-8 sm:mx-8 2xl:h-14 2xl:w-14 3xl:h-16 3xl:w-16'>
-            <IconCollab className='text-bricky-brick' />
-          </span>
-          <span
-            className={cn(
-              "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
-              "text-[1.25rem]/[1.15] sm:text-4xl/[1.15] lg:text-5xl/[1.15] xl:text-5xl/[1.15] 2xl:text-5xl/[1.15] 3xl:text-5xl/[1.15]"
-            )}
-          >
-            CITY&apos;S
-          </span>
+            <span
+              className={cn(
+                "whitespace-nowrap font-primary font-medium text-bricky-brick",
+                "text-[1.25rem]/[1.15] sm:text-4xl/[1.15] lg:text-5xl/[1.15] xl:text-5xl/[1.15] 2xl:text-5xl/[1.15] 3xl:text-5xl/[1.15]",
+                "flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-0"
+              )}
+            >
+              {tCommon("lifeReimagined")}
+            </span>
+            <span className='mx-0 size-8 sm:mx-8 2xl:h-14 2xl:w-14 3xl:h-16 3xl:w-16'>
+              <IconCollab className='text-bricky-brick' />
+            </span>
+            <span
+              className={cn(
+                "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
+                "text-[1.25rem]/[1.15] sm:text-4xl/[1.15] lg:text-5xl/[1.15] xl:text-5xl/[1.15] 2xl:text-5xl/[1.15] 3xl:text-5xl/[1.15]"
+              )}
+            >
+              CITY&apos;S
+            </span>
+          </div>
         </div>
-      </div>
-
-      {/* Main Content */}
-      <div className='container mx-auto px-6 pb-14 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 lg:pb-20'>
-        <div className='grid grid-cols-1 gap-12 xl:grid-cols-2 xl:gap-16'>
+        {/* Main Content */}
+        <div className='grid grid-cols-1 gap-12 xl:grid-cols-2 xl:gap-16 px-8 sm:px-10 lg:px-16 xl:px-24 2xl:px-32'>
           {/* Left Column */}
           <div className='flex flex-col gap-12 lg:gap-16'>
             {/* City's Park Section */}

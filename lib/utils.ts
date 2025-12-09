@@ -24,3 +24,8 @@ export function toTitleCase(str: string): string {
 export function toAllUppercase(str: string): string {
   return str.toUpperCase()
 }
+
+export function calculateRatio(width: number, height: number): number {
+  const ratio = Number((width / height).toFixed(2))
+  return ratio
+}
