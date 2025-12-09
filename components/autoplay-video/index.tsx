@@ -3,25 +3,19 @@
 import s from "./styles.module.css"
 
 import { cn } from "@/lib/utils"
-import { LaptopIcon, HandbagIcon, PlayCircleIcon, TreeIcon, HouseIcon, BarbellIcon } from "@phosphor-icons/react"
+import { ArrowsOutIcon, BarbellIcon, HandbagIcon, HouseIcon, LaptopIcon, TreeIcon } from "@phosphor-icons/react"
 import { useIntersectionObserver, useWindowSize } from "hamo"
-import dynamic from "next/dynamic"
+import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 import { Image } from "@/components/image"
 import { breakpoints } from "@/styles/config.mjs"
-import { useTranslations } from "next-intl"
-
-const FullScreenVideoDialog = dynamic(
-  () => import("@/components/dialogs/full-screen-video-dialog").then((module) => module.FullScreenVideoDialog),
-  { ssr: false }
-)
+import { SvgFiveMins } from "@/svgs/five-mins"
 
 interface AutoplayVideoProps {
   playbackId?: string
   mobilePlaybackId?: string
   aspectRatio?: number
-  enableFullscreen?: boolean
   horizontalPosition?: number
   verticalPosition?: number
 }
@@ -30,7 +24,6 @@ export function AutoplayVideo({
   playbackId,
   mobilePlaybackId,
   aspectRatio,
-  enableFullscreen = false,
   horizontalPosition = 50,
   verticalPosition = 50,
 }: AutoplayVideoProps) {
@@ -42,12 +35,9 @@ export function AutoplayVideo({
   const playerRef = useRef<HTMLVideoElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const hasLoadedRef = useRef(false)
-  const wasPlayingBeforeDialogRef = useRef(false)
   const [ready, setReady] = useState(false)
-  const [shouldLoadDialog, setShouldLoadDialog] = useState(false)
 
-  const t = useTranslations("home")
-  const tCommon = useTranslations("common")
+  const tLifeIn5Minutes = useTranslations("lifeIn5Minutes")
 
   const [setIntersectionRef, entry] = useIntersectionObserver({
     root: null,
@@ -68,16 +58,10 @@ export function AutoplayVideo({
     if (!el || (!playbackId && !mobilePlaybackId)) return
 
     // Lazy load video sources when intersecting
-    if (entry?.isIntersecting) {
-      if (!hasLoadedRef.current) {
-        hasLoadedRef.current = true
-        // The browser will automatically select the appropriate source based on media queries
-        el.load()
-      }
-
-      if (enableFullscreen && !shouldLoadDialog) {
-        setShouldLoadDialog(true)
-      }
+    if (entry?.isIntersecting && !hasLoadedRef.current) {
+      hasLoadedRef.current = true
+      // The browser will automatically select the appropriate source based on media queries
+      el.load()
     }
 
     // auto play / pause behavior
@@ -86,7 +70,7 @@ export function AutoplayVideo({
     } else if (entry?.isIntersecting && el.paused) {
       el.play().catch(() => {})
     }
-  }, [entry, playbackId, mobilePlaybackId, enableFullscreen, shouldLoadDialog])
+  }, [entry, playbackId, mobilePlaybackId])
 
   const videoContent = (
     <>
@@ -116,8 +100,7 @@ export function AutoplayVideo({
           {
             "opacity-0": !ready,
             "opacity-100": ready,
-          },
-          enableFullscreen && "cursor-pointer"
+          }
         )}
         style={
           {
@@ -154,91 +137,111 @@ export function AutoplayVideo({
   const lifeIn5Minutes = [
     {
       title: "home",
-      d1: t("lifeIn5Minutes.items.home"),
-      d2: t("lifeIn5Minutes.items.homeDuration"),
+      d1: tLifeIn5Minutes("items.home"),
+      d2: tLifeIn5Minutes("items.homeDuration"),
       icon: <HouseIcon className='size-full' weight='thin' />,
       mobileBorder: false,
       desktopBorder: true,
     },
     {
       title: "office",
-      d1: t("lifeIn5Minutes.items.office"),
-      d2: t("lifeIn5Minutes.items.officeDuration"),
+      d1: tLifeIn5Minutes("items.office"),
+      d2: tLifeIn5Minutes("items.officeDuration"),
       icon: <LaptopIcon className='size-full' weight='thin' />,
       mobileBorder: true,
       desktopBorder: true,
     },
     {
       title: "mall",
-      d1: t("lifeIn5Minutes.items.mall"),
-      d2: t("lifeIn5Minutes.items.mallDuration"),
+      d1: tLifeIn5Minutes("items.mall"),
+      d2: tLifeIn5Minutes("items.mallDuration"),
       icon: <HandbagIcon className='size-full' weight='thin' />,
       mobileBorder: true,
       desktopBorder: true,
     },
     {
       title: "nature",
-      d1: t("lifeIn5Minutes.items.nature"),
-      d2: t("lifeIn5Minutes.items.natureDuration"),
+      d1: tLifeIn5Minutes("items.nature"),
+      d2: tLifeIn5Minutes("items.natureDuration"),
       icon: <TreeIcon className='size-full' weight='thin' />,
       mobileBorder: false,
       desktopBorder: true,
     },
     {
       title: "sports",
-      d1: t("lifeIn5Minutes.items.sports"),
-      d2: t("lifeIn5Minutes.items.sportsDuration"),
+      d1: tLifeIn5Minutes("items.sports"),
+      d2: tLifeIn5Minutes("items.sportsDuration"),
       icon: <BarbellIcon className='size-full' weight='thin' />,
       mobileBorder: true,
       desktopBorder: true,
     },
   ]
 
-  const handleDialogOpenChange = useCallback(
-    (isOpen: boolean) => {
-      const el = playerRef.current
-      if (!el) return
-
-      if (isOpen) {
-        // Dialog is opening - pause the main video and remember if it was playing
-        wasPlayingBeforeDialogRef.current = !el.paused
-        el.pause()
-      } else {
-        // Dialog is closing - resume if it was playing and still intersecting
-        if (wasPlayingBeforeDialogRef.current && entry?.isIntersecting) {
-          el.play().catch(() => {})
-        }
-      }
-    },
-    [entry]
-  )
-
   const container = (
-    <div className={cn("group", "relative h-full w-full", enableFullscreen && "cursor-pointer")} ref={setContainerRef}>
+    <div className={cn("group", "relative h-full w-full")} ref={setContainerRef}>
       {videoContent}
-      {enableFullscreen && activePlaybackId && shouldLoadDialog && (
-        <div className='absolute inset-0 z-30'>
-          <FullScreenVideoDialog
-            dialogTrigger={null}
-            mediaId={playbackId ?? ""}
-            aspectRatio={aspectRatio}
-            onOpenChange={handleDialogOpenChange}
-            loading='page'
-          />
-        </div>
-      )}
-      {enableFullscreen && (
-        <span
-          className={cn(
-            "pointer-events-none absolute inset-0 z-50 bg-black/50 transition-all duration-300 ease-in-out group-hover:bg-black/30"
-          )}
-        >
-          <PlayCircleIcon
-            className='pointer-events-none absolute left-1/2 top-1/2 z-50 size-16 -translate-x-1/2 -translate-y-1/2 text-white transition-transform duration-300 ease-in-out group-hover:scale-125 xl:size-24'
-            weight='fill'
+      <span
+        className={cn(
+          "pointer-events-none absolute inset-0 z-30 bg-black/10 transition-all duration-300 ease-in-out group-hover:bg-black/0"
+        )}
+      >
+        <span className='size-24 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-gray-100 rounded-full p-6'>
+          <ArrowsOutIcon
+            className='pointer-events-none size-full text-black transition-transform duration-300 ease-in-out group-hover:scale-125'
+            weight='thin'
+            aria-hidden
           />
         </span>
-      )}
+      </span>
+      <div className='absolute top-24 left-24 z-50 font-primary text-6xl/none font-light xl:text-8xl/none text-white'>
+        {tLifeIn5Minutes("mainTitle.number")}
+        <div className='absolute left-1/2 top-1/2 size-[150px] -translate-x-[52%] -translate-y-[54%] opacity-90 xl:size-[220px]'>
+          <SvgFiveMins />
+        </div>
+        <div className='flex flex-1 items-center justify-center gap-1 px-6 xl:px-12'>
+          <div className='flex flex-col items-start justify-center'>
+            <div className='font-primary text-xl/none font-normal xl:text-3xl/none'>
+              {tLifeIn5Minutes("mainTitle.line1")}
+            </div>
+            <div className='font-primary text-xl/none font-light xl:text-3xl/none'>
+              {tLifeIn5Minutes("mainTitle.line2")}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className={cn(
+          "absolute inset-0 z-50 h-full w-full",
+          "before:pointer-events-none before:absolute before:bottom-0 before:left-0 before:z-20 before:h-[50%] before:w-full before:bg-linear-to-t before:from-black/90 before:to-transparent",
+          "flex items-end justify-center lg:justify-end",
+          "font-primary text-white"
+        )}
+      >
+        <div className='relative z-30 flex flex-col items-center justify-end gap-4 py-8 lg:flex-row lg:gap-0 xl:items-stretch'>
+          <div className='flex flex-wrap items-end justify-center xl:flex-nowrap xl:justify-start'>
+            {lifeIn5Minutes.map((item) => (
+              <div
+                className={cn(
+                  "flex items-center justify-center gap-x-2 px-4 py-5 lg:gap-x-4 xl:px-8 xl:py-8 3xl:px-12 3xl:py-10",
+                  item.desktopBorder && "lg:border-l lg:border-white/80",
+                  item.mobileBorder && "border-l border-white/80"
+                )}
+                key={item.title}
+              >
+                <div className='size-6 xl:size-8 3xl:size-12'>{item.icon}</div>
+                <div className='flex flex-col items-start justify-center'>
+                  <div className='whitespace-nowrap font-primary text-[10px]/tight font-normal xl:text-base/tight 3xl:text-xl/tight'>
+                    {item.d1}
+                  </div>
+                  <div className='whitespace-nowrap font-primary text-[10px]/tight font-light xl:text-base/tight 3xl:text-xl/tight'>
+                    {item.d2}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   )
 

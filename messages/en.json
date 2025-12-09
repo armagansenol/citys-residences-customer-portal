@@ -302,22 +302,6 @@
         "explicitConsent": "Explicit Consent Text",
         "cookiePolicy": "Cookie Policy"
     },
-    "home": {
-        "lifeIn5Minutes": {
-            "items": {
-                "home": "Home",
-                "homeDuration": "1 minute",
-                "office": "Office",
-                "officeDuration": "2 minutes",
-                "mall": "Mall",
-                "mallDuration": "3 minutes",
-                "nature": "Nature",
-                "natureDuration": "4 minutes",
-                "sports": "Sports",
-                "sportsDuration": "5 minutes"
-            }
-        }
-    },
     "legal": {
         "pdplRelatedInformation": {
             "title": "Personal Data Protection and Processing Disclosure Text (PDPL)",

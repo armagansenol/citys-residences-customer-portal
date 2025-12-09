@@ -23,7 +23,7 @@ export default async function Page({ params }: LocalePageParams) {
         >
           <span
             className={cn(
-              "whitespace-nowrap font-primary font-medium text-black",
+              "whitespace-nowrap font-primary font-medium text-bricky-brick",
               "text-[1.25rem]/[1.15] sm:text-4xl/[1.15] lg:text-5xl/[1.15] xl:text-5xl/[1.15] 2xl:text-5xl/[1.15] 3xl:text-5xl/[1.15]",
               "flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-0"
             )}
@@ -31,11 +31,11 @@ export default async function Page({ params }: LocalePageParams) {
             {tCommon("lifeReimagined")}
           </span>
           <span className='mx-0 size-8 sm:mx-8 2xl:h-14 2xl:w-14 3xl:h-16 3xl:w-16'>
-            <IconCollab className='text-black' />
+            <IconCollab className='text-bricky-brick' />
           </span>
           <span
             className={cn(
-              "whitespace-nowrap text-center font-primary font-semibold text-black",
+              "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
               "text-[1.25rem]/[1.15] sm:text-4xl/[1.15] lg:text-5xl/[1.15] xl:text-5xl/[1.15] 2xl:text-5xl/[1.15] 3xl:text-5xl/[1.15]"
             )}
           >

@@ -301,22 +301,6 @@
         "explicitConsent": "Açık Rıza Metni",
         "cookiePolicy": "Çerez Politikası"
     },
-    "home": {
-        "lifeIn5Minutes": {
-            "items": {
-                "home": "Ev",
-                "homeDuration": "1 dakika",
-                "office": "Ofis",
-                "officeDuration": "2 dakika",
-                "mall": "AVM",
-                "mallDuration": "3 dakika",
-                "nature": "Doğa",
-                "natureDuration": "4 dakika",
-                "sports": "Spor",
-                "sportsDuration": "5 dakika"
-            }
-        }
-    },
     "legal": {
         "pdplRelatedInformation": {
             "title": "Kişisel Verilerin Korunması ve İşlenmesine İlişkin Aydınlatma Metni (KVKK)",

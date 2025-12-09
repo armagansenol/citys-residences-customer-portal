@@ -1,19 +1,70 @@
+"use client"
+
+import { useEffect, useMemo, useRef, useState } from "react"
+
+import { cn } from "@/lib/utils"
 import { FacebookLogoIcon, InstagramLogoIcon, XLogoIcon, YoutubeLogoIcon } from "@phosphor-icons/react/ssr"
-import { getTranslations } from "next-intl/server"
+import { useLocale, useTranslations } from "next-intl"
 
 import { AutoplayVideo } from "@/components/autoplay-video"
 import { IconCollab, IconScrollDown } from "@/components/icons"
 import { Wrapper } from "@/components/wrapper"
 import { Link } from "@/i18n/navigation"
 import type { Locale, Pathnames } from "@/i18n/routing"
-import { citysLivingMedia, navigationConfig } from "@/lib/constants"
-import { cn } from "@/lib/utils"
+import { citysLivingMedia, routeConfig } from "@/lib/constants"
 
-type LocalePageParams = { params: Promise<{ locale: Locale }> }
+export default function Home() {
+  const locale = useLocale()
+  const t = useTranslations("common")
+  const [activeSection, setActiveSection] = useState<string | null>(null)
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
+  const sectionsWrapperRef = useRef<HTMLDivElement | null>(null)
 
-export default async function Home({ params }: LocalePageParams) {
-  const { locale } = await params
-  const t = await getTranslations({ locale, namespace: "common" })
+  const navbarSections = useMemo(
+    () =>
+      Object.values(routeConfig)
+        .filter((item) => item.inNavbar)
+        .sort((a, b) => a.order - b.order),
+    []
+  )
+
+  useEffect(() => {
+    let isCancelled = false
+    const scrollTriggers: Array<import("gsap/ScrollTrigger").ScrollTrigger> = []
+
+    const setupScrollTriggers = async () => {
+      const gsapModule = await import("gsap")
+      const ScrollTrigger = (await import("gsap/ScrollTrigger")).ScrollTrigger
+      if (!gsapModule.default || !ScrollTrigger || isCancelled) return
+
+      gsapModule.default.registerPlugin(ScrollTrigger)
+
+      Object.entries(sectionRefs.current).forEach(([sectionId, element]) => {
+        if (!element) return
+
+        const trigger = ScrollTrigger.create({
+          trigger: element,
+          start: "top center",
+          end: "bottom center",
+          onEnter: () => setActiveSection(sectionId),
+          onEnterBack: () => setActiveSection(sectionId),
+        })
+
+        scrollTriggers.push(trigger)
+      })
+    }
+
+    setupScrollTriggers()
+
+    return () => {
+      isCancelled = true
+      scrollTriggers.forEach((trigger) => trigger.kill())
+    }
+  }, [])
+
+  const registerSectionRef = (sectionId: string) => (node: HTMLDivElement | null) => {
+    sectionRefs.current[sectionId] = node
+  }
 
   return (
     <Wrapper>
@@ -26,18 +77,19 @@ export default async function Home({ params }: LocalePageParams) {
       >
         {/* NAVIGATION */}
         <div className='flex flex-col gap-3 lg:gap-4'>
-          {Object.values(navigationConfig)
-            .filter((item) => item.inNavbar)
-            .map((item) => (
-              <Link
-                href={item.href as Pathnames}
-                locale={locale as Locale}
-                key={item.id}
-                className='font-primary text-5xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal text-orochimaru'
-              >
-                {t(item.titleKey)}
-              </Link>
-            ))}
+          {navbarSections.map((item) => (
+            <Link
+              href={item.paths[locale as Locale] as Pathnames}
+              locale={locale as Locale}
+              key={item.id}
+              className={cn(
+                "font-primary text-5xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal text-orochimaru transition-colors duration-300",
+                activeSection === item.id && "text-bricky-brick"
+              )}
+            >
+              {t(item.titleKey)}
+            </Link>
+          ))}
         </div>
         {/* SCROLL DOWN */}
         <div className='relative size-12 animate-bounce-translate hidden xl:block'>
@@ -87,16 +139,22 @@ export default async function Home({ params }: LocalePageParams) {
           />
         </div>
       </div>
-      <div className='flex flex-col'>
-        <div className='h-screen flex items-center justify-end px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28 2xl:px-32 py-10 sm:py-14 lg:py-0'>
-          <div className='h-[35vh] sm:h-[65vh] md:h-[70vh] lg:h-[80vh] xl:h-[82vh] 2xl:h-[84vh] lg:aspect-16/14'>
-            <AutoplayVideo playbackId={citysLivingMedia.muxSrc} />
+      <div className='flex flex-col' ref={sectionsWrapperRef}>
+        {navbarSections.map((item) => (
+          <div
+            key={item.id}
+            ref={registerSectionRef(item.id)}
+            className='h-screen flex items-center justify-end px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28 2xl:px-32 py-10 sm:py-14 lg:py-0'
+          >
+            <Link
+              href={item.paths[locale as Locale] as Pathnames}
+              locale={locale as Locale}
+              className='h-[35vh] sm:h-[65vh] md:h-[70vh] lg:h-[80vh] xl:h-[82vh] 2xl:h-[84vh] lg:aspect-16/14'
+            >
+              <AutoplayVideo playbackId={item.media?.muxSrc} />
+            </Link>
           </div>
-        </div>
-        <div className='w-screen h-screen bg-amber-100'></div>
-        <div className='w-screen h-screen bg-amber-200'></div>
-        <div className='w-screen h-screen bg-amber-300'></div>
-        <div className='w-screen h-screen bg-amber-400'></div>
+        ))}
       </div>
     </Wrapper>
   )
