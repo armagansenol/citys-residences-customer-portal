@@ -44,7 +44,7 @@ export default function Home() {
           )}
         >
           {/* NAVIGATION */}
-          <div className='flex flex-col gap-1.5 lg:gap-4 xl:gap-3 items-start'>
+          <div className='flex flex-col gap-1.5 lg:gap-4 xl:gap-5 items-start'>
             {navbarSections.map((item) => (
               <Link
                 href={item.paths[locale as Locale] as Pathnames}
