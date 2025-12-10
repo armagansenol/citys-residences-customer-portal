@@ -110,7 +110,7 @@ export default function Page() {
                 />
                 <motion.div
                   layoutId='masterplan-image'
-                  className='relative w-full xl:max-w-6xl max-h-[90vh] overflow-hidden'
+                  className='relative w-full xl:max-w-6xl 3xl:max-w-[1440px] max-h-[90vh] overflow-hidden'
                   style={{ aspectRatio: aspectRatio }}
                   initial={{ scale: 0.96 }}
                   animate={{ scale: 1 }}
