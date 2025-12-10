@@ -41,7 +41,7 @@
   /* Custom breakpoints */
   --breakpoint-3xl: 120rem; /* 1920px */
 
-  --spacing-header-height: 140px;
+  --spacing-header-height: 120px;
   --spacing-header-height-mobile: 90px;
 }
 

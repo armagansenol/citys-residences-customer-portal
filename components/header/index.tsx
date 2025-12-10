@@ -26,12 +26,12 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 h-header-height-mobile 2xl:h-header-height",
+        "fixed top-0 left-0 right-0 z-50 h-header-height-mobile 2xl:h-header-height pt-3",
         "before:pointer-events-none before:absolute before:top-0 before:left-0 before:right-0 before:z-20 before:h-[150%] xl:before:h-full before:gradient-top-white-smooth"
       )}
     >
       <div className='w-full px-8 lg:px-16 xl:px-16 mx-auto flex items-center justify-between h-full z-50 relative'>
-        <Link href='/' locale={locale as Locale} className='block h-full aspect-square'>
+        <Link href='/' locale={locale as Locale} className='block h-full w-fit' style={{ aspectRatio: "122/88" }}>
           <Logo className='text-bricky-brick' />
         </Link>
         {/* SCROLL DOWN */}

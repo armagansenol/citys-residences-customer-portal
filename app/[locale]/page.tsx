@@ -74,20 +74,25 @@ export default function Home() {
               className={cn(
                 "whitespace-nowrap text-center font-primary font-medium text-bricky-brick",
                 "-tracking-[0.025em]",
-                "text-lg/[1.15] md:text-3xl/[1.15] lg:text-4xl/[1.15] xl:text-3xl/[1.15] 2xl:text-4xl/[1.15]",
+                "text-lg/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]",
                 "flex flex-col items-center justify-center gap-3 sm:gap-4 lg:flex-row lg:gap-2"
               )}
             >
               {t("lifeReimagined")}
             </span>
-            <span className='mx-1 sm:mx-3 size-5 sm:size-6 md:mx-4 md:size-10 2xl:size-12 3xl:size-12'>
-              <IconCollab className='text-bricky-brick' />
+            <span
+              className={cn(
+                "mx-2 sm:mx-3 md:mx-4 xl:mx-3 2xl:mx-4 3xl:mx-4",
+                "size-5 sm:size-6 md:size-8 xl:size-8 2xl:size-8 3xl:size-10"
+              )}
+            >
+              <IconCollab className='text-bricky-brick size-full' />
             </span>
             <span
               className={cn(
                 "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
                 "-tracking-[0.015em]",
-                "text-lg/[1.15] md:text-3xl/[1.15] lg:text-4xl/[1.15] xl:text-3xl/[1.15] 2xl:text-4xl/[1.15]"
+                "text-lg/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]"
               )}
             >
               CITY&apos;S
