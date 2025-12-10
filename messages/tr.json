@@ -50,7 +50,10 @@
         "createAppointment": "Randevu <br></br> Oluştur",
         "speakWithRepresentative": "Temsilciyle <br></br> Görüş",
         "getDirections": "Yol <br></br> Tarifi Al",
-        "legalDisclaimer": "City’s Residences, Hayat A.Ş.'nin tescilli bir markasıdır. Markanın tüm kullanım hakları, operasyonel faaliyetleri ve temsiliyeti, muvafakatname ile CITYS GAYRİMENKUL A.Ş. tarafından yürütülmektedir."
+        "legalDisclaimer": "City’s Residences, Hayat A.Ş.'nin tescilli bir markasıdır. Markanın tüm kullanım hakları, operasyonel faaliyetleri ve temsiliyeti, muvafakatname ile CITYS GAYRİMENKUL A.Ş. tarafından yürütülmektedir.",
+        "residencePlan": {
+            "ctaLabel": "Daire Planı"
+        }
     },
     "citysLiving": {
         "park": {

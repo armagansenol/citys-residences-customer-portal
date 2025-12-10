@@ -153,3 +153,7 @@ body {
 @utility gradient-top-white-smooth {
   background: linear-gradient(to bottom, #fff 0%, #fff 25%, #ffffff99 45%, #ffffff33 65%, #ffffff00 100%);
 }
+
+@utility gradient-submit-button {
+  background: linear-gradient(0deg, #f57c67 0%, #e0533a 100%);
+}

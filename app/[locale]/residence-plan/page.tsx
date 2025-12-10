@@ -16,8 +16,8 @@ export default async function Page({ params }: LocalePageParams) {
 
   return (
     <Wrapper className='py-header-height-mobile lg:py-header-height'>
-      <section className='w-full py-12 lg:py-14 px-0 sm:px-8 lg:px-16 xl:px-24 2xl:px-32'>
-        <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 '>
+      <section className='w-full py-12 lg:py-14 px-8 lg:px-16 xl:px-24 2xl:px-32'>
+        <div className='grid grid-cols-2 gap-4 md:gap-8  xl:gap-10 sm:grid-cols-2 lg:grid-cols-4'>
           {residencePlans.map((residence, index) => (
             <ResidencePlanCard
               key={`${residence.block}-${residence.number}`}

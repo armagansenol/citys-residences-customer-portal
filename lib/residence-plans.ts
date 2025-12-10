@@ -40,4 +40,28 @@ export const residencePlans: ResidencePlan[] = [
     image: "/img/interior.jpg",
     pdf: "/pdf/plan.pdf",
   },
+  {
+    slug: "c-blok-kat-4-no-28-2-1",
+    block: "C BLOK",
+    floor: "Kat 4",
+    number: "No 28 | 2+1",
+    image: "/img/interior.jpg",
+    pdf: "/pdf/plan.pdf",
+  },
+  {
+    slug: "c-blok-kat-2-no-12-3-1",
+    block: "C BLOK",
+    floor: "Kat 2",
+    number: "No 12 | 3+1",
+    image: "/img/interior.jpg",
+    pdf: "/pdf/plan.pdf",
+  },
+  {
+    slug: "c-blok-kat-8-no-5-3-5-1",
+    block: "C BLOK",
+    floor: "Kat 8",
+    number: "No 5 | 3.5+1",
+    image: "/img/interior.jpg",
+    pdf: "/pdf/plan.pdf",
+  },
 ]
