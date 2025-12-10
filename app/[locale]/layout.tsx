@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations } from "next-intl/server"
+import { ViewTransitions } from "next-view-transitions"
 
 const suisseIntl = localFont({
   src: [
@@ -77,10 +78,12 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale}>
-      <body className={`${suisseIntl.variable} antialiased`}>
-        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang={locale}>
+        <body className={`${suisseIntl.variable} antialiased`}>
+          <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   )
 }

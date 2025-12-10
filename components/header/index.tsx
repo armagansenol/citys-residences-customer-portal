@@ -1,27 +1,25 @@
 "use client"
 
-import { Locale, useLocale, useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 import { IconScrollDown, Logo } from "@/components/icons"
 import { usePathname } from "@/i18n/navigation"
-import { routing } from "@/i18n/routing"
+import { routing, type Locale } from "@/i18n/routing"
+import { LocaleTransitionLink } from "@/components/locale-transition-link"
 import { routeConfig } from "@/lib/constants"
 import { cn, toAllUppercase } from "@/lib/utils"
 import { XIcon } from "@phosphor-icons/react"
-import Link from "next/link"
 
 const isLocale = (value: string): value is Locale => routing.locales.some((locale) => locale === value)
 
 export function Header() {
-  const locale = useLocale()
+  const locale = useLocale() as Locale
   const pathname = usePathname()
   const segments = pathname.split("/").filter(Boolean)
   const normalizedSegments = segments.length > 0 && isLocale(segments[0]) ? segments.slice(1) : segments
   const navigationKey = normalizedSegments.length ? `/${normalizedSegments[0]}` : "/"
   const navigationItem = routeConfig[navigationKey]
   const t = useTranslations("common")
-
-  console.log("pathname", pathname)
 
   return (
     <header
@@ -31,9 +29,14 @@ export function Header() {
       )}
     >
       <div className='w-full px-8 lg:px-16 xl:px-16 mx-auto flex items-center justify-between h-full z-50 relative'>
-        <Link href='/' locale={locale as Locale} className='block h-full w-fit' style={{ aspectRatio: "122/88" }}>
+        <LocaleTransitionLink
+          href='/'
+          locale={locale as Locale}
+          className='block h-full w-fit'
+          style={{ aspectRatio: "122/88" }}
+        >
           <Logo className='text-bricky-brick' />
-        </Link>
+        </LocaleTransitionLink>
         {/* SCROLL DOWN */}
         {pathname === "/" && (
           <div className='relative animate-bounce-translate block xl:hidden size-10'>
@@ -54,10 +57,10 @@ export function Header() {
           </div>
         )}
         {pathname !== "/" && (
-          <Link className='ml-auto' href='/' locale={locale as Locale}>
+          <LocaleTransitionLink className='ml-auto' href='/' locale={locale as Locale}>
             <XIcon className='size-9 sm:size-10 lg:size-12 text-bricky-brick' weight='light' />
             <span className='sr-only'>Close</span>
-          </Link>
+          </LocaleTransitionLink>
         )}
       </div>
     </header>

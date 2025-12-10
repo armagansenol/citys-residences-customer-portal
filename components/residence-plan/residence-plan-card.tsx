@@ -3,7 +3,8 @@
 import { CaretRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
-import Link from "next/link"
+
+import { LocaleTransitionLink } from "@/components/locale-transition-link"
 
 type ResidencePlanCardProps = {
   image: string
@@ -27,7 +28,7 @@ export function ResidencePlanCard({
   const t = useTranslations("common")
 
   return (
-    <Link href={href} className='group relative isolate overflow-hidden cursor-pointer'>
+    <LocaleTransitionLink href={href} className='group relative isolate overflow-hidden cursor-pointer'>
       <div className='relative aspect-9/16 w-full'>
         <Image
           src={image}
@@ -52,6 +53,6 @@ export function ResidencePlanCard({
           </div>
         </div>
       </div>
-    </Link>
+    </LocaleTransitionLink>
   )
 }

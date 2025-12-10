@@ -9,9 +9,9 @@ import { useLocale, useTranslations } from "next-intl"
 import { AutoplayVideo } from "@/components/autoplay-video"
 import { HorizontalScroll } from "@/components/horizontal-scroll"
 import { IconCollab, IconScrollDown } from "@/components/icons"
+import { LocaleTransitionLink } from "@/components/locale-transition-link"
 import { Wrapper } from "@/components/wrapper"
 import { useSectionTracker } from "@/hooks"
-import { Link } from "@/i18n/navigation"
 import type { Locale, Pathnames } from "@/i18n/routing"
 import { routeConfig } from "@/lib/constants"
 
@@ -46,7 +46,7 @@ export default function Home() {
           {/* NAVIGATION */}
           <div className='flex flex-col gap-1.5 lg:gap-4 xl:gap-5 items-start'>
             {navbarSections.map((item) => (
-              <Link
+              <LocaleTransitionLink
                 href={item.paths[locale as Locale] as Pathnames}
                 locale={locale as Locale}
                 key={item.id}
@@ -60,7 +60,7 @@ export default function Home() {
                 )}
               >
                 {t(item.titleKey)}
-              </Link>
+              </LocaleTransitionLink>
             ))}
           </div>
           {/* SCROLL DOWN */}
@@ -128,7 +128,7 @@ export default function Home() {
                 ref={registerSectionRef(item.id)}
                 className='w-screen h-screen shrink-0 flex items-center justify-end px-8 lg:px-16 xl:px-16 pb-36 pt-84 lg:pt-[420px] lg:pb-48 xl:pb-16 xl:pt-16 2xl:py-20 3xl:pb-16 2xl:pt-header-height'
               >
-                <Link
+                <LocaleTransitionLink
                   href={item.paths[locale as Locale] as Pathnames}
                   locale={locale as Locale}
                   {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
@@ -138,7 +138,7 @@ export default function Home() {
                   )}
                 >
                   <AutoplayVideo playbackId={item.media?.muxSrc} />
-                </Link>
+                </LocaleTransitionLink>
               </div>
             )
         )}
