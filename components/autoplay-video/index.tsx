@@ -185,12 +185,8 @@ export function AutoplayVideo({
           "pointer-events-none absolute inset-0 z-30 bg-black/10 transition-all duration-300 ease-in-out group-hover:bg-black/0"
         )}
       >
-        <span className='size-16 lg:size-24 xl:size-16 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-gray-100 rounded-full p-4 lg:p-6 xl:p-4'>
-          <ArrowsOutIcon
-            className='pointer-events-none size-full text-black transition-transform duration-300 ease-in-out group-hover:scale-125'
-            weight='thin'
-            aria-hidden
-          />
+        <span className='size-16 lg:size-24 xl:size-16 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-gray-100 rounded-full p-4 lg:p-6 xl:p-4 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100'>
+          <ArrowsOutIcon className='pointer-events-none size-full text-black' weight='thin' aria-hidden />
         </span>
       </span>
       <div className='absolute top-12 left-10 xl:left-14 xl:top-14 3xl:left-24 3xl:top-24 z-50 font-primary text-6xl/none font-light xl:text-8xl/none text-white'>

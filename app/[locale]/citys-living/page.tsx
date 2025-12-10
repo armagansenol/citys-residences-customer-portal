@@ -38,20 +38,20 @@ export default async function Page({ params }: LocalePageParams) {
               className={cn(
                 "whitespace-nowrap text-center font-primary font-medium text-bricky-brick",
                 "-tracking-[0.025em]",
-                "text-xl/[1.15] md:text-3xl/[1.15] lg:text-4xl/[1.15] xl:text-4xl/[1.15] 2xl:text-5xl/[1.15] 3xl:text-5xl/[1.15]",
+                "text-lg/[1.15] md:text-3xl/[1.15] lg:text-4xl/[1.15] xl:text-[36px]/[1.15] 2xl:text-[42px]/[1.15] 3xl:text-[50px]/[1.15]",
                 "flex flex-col items-center justify-center gap-3 sm:gap-4 lg:flex-row lg:gap-2"
               )}
             >
               {tCommon("lifeReimagined")}
             </span>
-            <span className='mx-3 size-6 md:mx-4 md:size-10 2xl:size-12 3xl:size-12'>
+            <span className='mx-1 sm:mx-3 size-5 sm:size-6 md:mx-4 md:size-10 2xl:size-12 3xl:size-12'>
               <IconCollab className='text-bricky-brick' />
             </span>
             <span
               className={cn(
                 "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
                 "-tracking-[0.015em]",
-                "text-xl/[1.15] md:text-3xl/[1.15] lg:text-4xl/[1.15] xl:text-4xl/[1.15] 2xl:text-5xl/[1.15] 3xl:text-5xl/[1.15]"
+                "text-lg/[1.15] md:text-3xl/[1.15] lg:text-4xl/[1.15] xl:text-[36px]/[1.15] 2xl:text-[42px]/[1.15] 3xl:text-[50px]/[1.15]"
               )}
             >
               CITY&apos;S

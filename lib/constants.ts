@@ -62,8 +62,8 @@ export const masterplanMedia: Media = {
     return calculateRatio(1920, 848)
   },
   mediaId: "luxxfpk3x3",
-  muxSrc: "OsgPIrhKWKCZk7Jt8zpV1MsOvJL59cXc77bomiWVYe4",
-  thumbnail: "https://image.mux.com/OsgPIrhKWKCZk7Jt8zpV1MsOvJL59cXc77bomiWVYe4/thumbnail.webp?width=1920&time=0",
+  muxSrc: "twlqfuHVasIAshKTVMuVIMPMKfzAMHS9r5c6wEFvido",
+  thumbnail: "https://image.mux.com/twlqfuHVasIAshKTVMuVIMPMKfzAMHS9r5c6wEFvido/thumbnail.webp?width=1920&time=0",
 }
 
 export type NavigationMetadata = {

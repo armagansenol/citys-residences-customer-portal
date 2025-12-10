@@ -42,7 +42,7 @@
   --breakpoint-3xl: 120rem; /* 1920px */
 
   --spacing-header-height: 140px;
-  --spacing-header-height-mobile: 110px;
+  --spacing-header-height-mobile: 90px;
 }
 
 @layer utilities {
@@ -148,4 +148,8 @@ body {
 
 .animate-bounce-translate {
   animation: bounce-translate 1.8s ease-in-out infinite;
+}
+
+@utility gradient-top-white-smooth {
+  background: linear-gradient(to bottom, #fff 0%, #fff 25%, #ffffff99 45%, #ffffff33 65%, #ffffff00 100%);
 }
