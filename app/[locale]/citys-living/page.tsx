@@ -9,7 +9,24 @@ type LocalePageParams = { params: Promise<{ locale: Locale }> }
 
 export default async function Page({ params }: LocalePageParams) {
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: "common" })
+  const tCommon = await getTranslations({ locale, namespace: "common" })
+  const tLiving = await getTranslations({ locale, namespace: "citysLiving" })
+
+  const parkItems = tLiving.raw("park.items") as string[]
+  const lifeItemsCount = (tLiving.raw("life.items") as string[]).length
+  const lifeItems = Array.from({ length: lifeItemsCount }, (_, idx) =>
+    tLiving.rich(`life.items.${idx}`, {
+      strong: (chunk) => <span className='font-medium'>{chunk}</span>,
+      br: () => <br />,
+    })
+  )
+  const membersItemsCount = (tLiving.raw("members.items") as string[]).length
+  const membersItems = Array.from({ length: membersItemsCount }, (_, idx) =>
+    tLiving.rich(`members.items.${idx}`, {
+      strong: (chunk) => <span className='font-medium'>{chunk}</span>,
+      br: () => <br />,
+    })
+  )
 
   return (
     <Wrapper className='py-header-height-mobile 2xl:py-header-height'>
@@ -25,7 +42,7 @@ export default async function Page({ params }: LocalePageParams) {
                 "flex flex-col items-center justify-center gap-3 sm:gap-4 lg:flex-row lg:gap-2"
               )}
             >
-              {t("lifeReimagined")}
+              {tCommon("lifeReimagined")}
             </span>
             <span className='mx-3 size-6 md:mx-4 md:size-10 2xl:size-12 3xl:size-12'>
               <IconCollab className='text-bricky-brick' />
@@ -56,17 +73,14 @@ export default async function Page({ params }: LocalePageParams) {
                     transform: "rotate(180deg)",
                   }}
                 >
-                  City's Park
+                  {tLiving("park.title")}
                 </h3>
                 <div className='w-px h-full bg-[#5D7261]' />
               </div>
               <ul className='space-y-3 text-black font-primary text-sm sm:text-xl font-light'>
-                <li>City's Lounge</li>
-                <li>Açık Yüzme Havuzları</li>
-                <li>Evcil Hayvan Parkı</li>
-                <li>Açık Spor Alanları</li>
-                <li>Yürüyüş/Koşu Parkuru</li>
-                <li>Çocuk Parkları</li>
+                {parkItems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
             </div>
 
@@ -81,30 +95,14 @@ export default async function Page({ params }: LocalePageParams) {
                     transform: "rotate(180deg)",
                   }}
                 >
-                  City's Life
+                  {tLiving("life.title")}
                 </h3>
                 <div className='w-px h-full bg-[#7DCECC]' />
               </div>
               <ul className='space-y-3 text-black font-primary text-sm sm:text-xl font-light'>
-                <li>Resepsiyon & Concierge Hizmetleri</li>
-                <li>Vale & Otopark Hizmetleri</li>
-                <li>Kargo Teslim Servisi</li>
-                <li>
-                  Paylaşımlı Ofis ve Toplantı Salonları <span className='font-medium'>x JUSTWORK</span>
-                </li>
-                <li>
-                  Yeni Nesil Hotel Odaları <span className='font-medium'>x JUST STAY</span>
-                </li>
-                <li>
-                  Performans Sanatları Merkezi <span className='font-medium'>x JUST EVENTS</span>
-                </li>
-                <li>
-                  Evcil Hayvan Oteli <span className='font-medium'>x PET HOTEL</span>
-                </li>
-                <li>
-                  Veteriner Hizmetleri <span className='font-medium'>x PET HOSPITAL</span>
-                </li>
-                <li>City's AVM'lerinde Ayrıcalıklar</li>
+                {lifeItems.map((item, idx) => (
+                  <li key={`life-${idx}`}>{item}</li>
+                ))}
               </ul>
             </div>
           </div>
@@ -120,27 +118,14 @@ export default async function Page({ params }: LocalePageParams) {
                   transform: "rotate(180deg)",
                 }}
               >
-                City's Members Club
+                {tLiving("members.title")}
               </h3>
               <div className='w-px h-full bg-bricky-brick' />
             </div>
             <ul className='space-y-3 text-black font-primary text-sm sm:text-xl font-light'>
-              <li>Kapalı Yüzme Havuzu</li>
-              <li>Spor Kulübü</li>
-              <li>SPA & Wellness</li>
-              <li>Basketbol Sahası</li>
-              <li>Padel Tenis Kortu</li>
-              <li>Golf Simülatör Sahası</li>
-              <li>Masa Tenisi</li>
-              <li>Yoga Stüdyosu</li>
-              <li>Meditasyon Odası</li>
-              <li>Özel Sinema Salonu</li>
-              <li>Yemek Atölyesi</li>
-              <li>Sanat Atölyesi</li>
-              <li>Müzik/Karaoke Stüdyosu</li>
-              <li>Podcast Stüdyosu</li>
-              <li>Playstation Odası</li>
-              <li>Kids Club x CITY'S KIDS CLUB</li>
+              {membersItems.map((item, idx) => (
+                <li key={`members-${idx}`}>{item}</li>
+              ))}
             </ul>
           </div>
         </div>

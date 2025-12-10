@@ -52,6 +52,54 @@
         "getDirections": "Yol <br></br> Tarifi Al",
         "legalDisclaimer": "City’s Residences, Hayat A.Ş.'nin tescilli bir markasıdır. Markanın tüm kullanım hakları, operasyonel faaliyetleri ve temsiliyeti, muvafakatname ile CITYS GAYRİMENKUL A.Ş. tarafından yürütülmektedir."
     },
+    "citysLiving": {
+        "park": {
+            "title": "City's Park",
+            "items": [
+                "City's Lounge",
+                "Açık Yüzme Havuzları",
+                "Evcil Hayvan Parkı",
+                "Açık Spor Alanları",
+                "Yürüyüş/Koşu Parkuru",
+                "Çocuk Parkları"
+            ]
+        },
+        "life": {
+            "title": "City's Life",
+            "items": [
+                "Resepsiyon & Concierge Hizmetleri",
+                "Vale & Otopark Hizmetleri",
+                "Kargo Teslim Servisi",
+                "Paylaşımlı Ofis ve Toplantı Salonları <strong>x JUSTWORK</strong>",
+                "Yeni Nesil Hotel Odaları <strong>x JUST STAY</strong>",
+                "Performans Sanatları Merkezi <strong>x JUST EVENTS</strong>",
+                "Evcil Hayvan Oteli <strong>x PET HOTEL</strong>",
+                "Veteriner Hizmetleri <strong>x PET HOSPITAL</strong>",
+                "City's AVM'lerinde Ayrıcalıklar"
+            ]
+        },
+        "members": {
+            "title": "City's Members Club",
+            "items": [
+                "Kapalı Yüzme Havuzu",
+                "Spor Kulübü",
+                "SPA & Wellness",
+                "Basketbol Sahası",
+                "Padel Tenis Kortu",
+                "Golf Simülatör Sahası",
+                "Masa Tenisi",
+                "Yoga Stüdyosu",
+                "Meditasyon Odası",
+                "Özel Sinema Salonu",
+                "Yemek Atölyesi",
+                "Sanat Atölyesi",
+                "Müzik/Karaoke Stüdyosu",
+                "Podcast Stüdyosu",
+                "Playstation Odası",
+                "Kids Club <strong>x CITY'S KIDS CLUB</strong>"
+            ]
+        }
+    },
     "countries": {
         "AD": "Andorra",
         "AE": "Birleşik Arap Emirlikleri",

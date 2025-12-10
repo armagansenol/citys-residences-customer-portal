@@ -53,6 +53,54 @@
         "exploreAgain": "Explore Again",
         "legalDisclaimer": "City’s Residences is a registered trademark of Hayat A.Ş. All usage rights, operational activities, and representation of the brand are carried out by CITYS GAYRİMENKUL A.Ş. with consent."
     },
+    "citysLiving": {
+        "park": {
+            "title": "City's Park",
+            "items": [
+                "City's Lounge",
+                "Outdoor Swimming Pools",
+                "Pet Park",
+                "Open-Air Sports Areas",
+                "Walking/Running Track",
+                "Children's Playgrounds"
+            ]
+        },
+        "life": {
+            "title": "City's Life",
+            "items": [
+                "Reception & Concierge Services",
+                "Valet & Parking Services",
+                "Parcel Delivery Service",
+                "Shared Offices and Meeting Rooms <strong>x JUSTWORK</strong>",
+                "Next-Generation Hotel Rooms <strong>x JUST STAY</strong>",
+                "Performing Arts Center <strong>x JUST EVENTS</strong>",
+                "Pet Hotel <strong>x PET HOTEL</strong>",
+                "Veterinary Services <strong>x PET HOSPITAL</strong>",
+                "Privileges at City's Malls"
+            ]
+        },
+        "members": {
+            "title": "City's Members Club",
+            "items": [
+                "Indoor Swimming Pool",
+                "Sports Club",
+                "SPA & Wellness",
+                "Basketball Court",
+                "Padel Tennis Court",
+                "Golf Simulator Range",
+                "Table Tennis",
+                "Yoga Studio",
+                "Meditation Room",
+                "Private Cinema",
+                "Culinary Workshop",
+                "Art Studio",
+                "Music/Karaoke Studio",
+                "Podcast Studio",
+                "Playstation Room",
+                "Kids Club <strong>x CITY'S KIDS CLUB</strong>"
+            ]
+        }
+    },
     "countries": {
         "AD": "Andorra",
         "AE": "United Arab Emirates",
