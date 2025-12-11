@@ -174,7 +174,7 @@ export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
                   styles.slide,
                   "text-bricky-brick",
                   "size-full",
-                  "text-4xl/[1] font-medium",
+                  "text-4xl/[1] font-regular",
                   "flex items-center justify-start",
                   "text-left",
                   "px-12",
