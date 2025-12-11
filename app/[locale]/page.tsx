@@ -39,8 +39,8 @@ export default function Home() {
       <div className={cn("fixed z-50 inset-0", "pt-header-height-mobile 2xl:pt-header-height")}>
         <div
           className={cn(
-            "w-full size-full mx-auto px-8 lg:px-16 xl:px-16 pb-4 lg:pb-16 2xl:20 pt-8 lg:pt-20 xl:pt-8 2xl:pt-20",
-            "flex flex-col gap-2 lg:gap-4 3xl:gap-6"
+            "w-full size-full mx-auto px-8 lg:px-16 xl:px-16 pb-4 lg:pb-16 2xl:20 pt-4 lg:pt-20 xl:pt-8 2xl:pt-20",
+            "flex flex-col gap-4 lg:gap-4 3xl:gap-6"
           )}
         >
           {/* NAVIGATION */}
@@ -66,7 +66,7 @@ export default function Home() {
           <div className='block xl:hidden'>
             <IosPicker
               loop
-              items={[...navbarSections, ...navbarSections, ...navbarSections].map((item) => ({
+              items={navbarSections.map((item) => ({
                 title: t(item.titleKey),
                 href: item.paths[locale as Locale] as Pathnames,
                 id: item.id,
@@ -85,54 +85,56 @@ export default function Home() {
               <AutoplayVideo playbackId={residencePlanMedia.muxSrc} />
             </div>
           </section>
-          {/* YASAM YENİDEN TASARLANDI */}
-          <div className='flex items-center justify-start mt-8 xl:mt-auto'>
-            <span
-              className={cn(
-                "whitespace-nowrap text-center font-primary font-medium text-bricky-brick",
-                "-tracking-[0.025em]",
-                "text-lg/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]",
-                "flex flex-col items-center justify-center gap-3 sm:gap-4 lg:flex-row lg:gap-2"
-              )}
-            >
-              {t("lifeReimagined")}
-            </span>
-            <span
-              className={cn(
-                "mx-2 sm:mx-3 md:mx-4 xl:mx-3 2xl:mx-4 3xl:mx-4",
-                "size-5 sm:size-6 md:size-8 xl:size-8 2xl:size-8 3xl:size-10"
-              )}
-            >
-              <IconCollab className='text-bricky-brick size-full' />
-            </span>
-            <span
-              className={cn(
-                "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
-                "-tracking-[0.015em]",
-                "text-lg/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]"
-              )}
-            >
-              CITY&apos;S
-            </span>
-          </div>
-          {/* SOCIAL MEDIA */}
-          <div className='mr-auto gap-4 flex 3xl:gap-6'>
-            <FacebookLogoIcon
-              weight='fill'
-              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-            />
-            <XLogoIcon
-              weight='regular'
-              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-            />
-            <InstagramLogoIcon
-              weight='regular'
-              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-            />
-            <YoutubeLogoIcon
-              weight='fill'
-              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-            />
+          <div className='flex flex-col gap-2 lg:gap-4 3xl:gap-6'>
+            {/* YASAM YENİDEN TASARLANDI */}
+            <div className='flex items-center justify-start xl:mt-auto'>
+              <span
+                className={cn(
+                  "whitespace-nowrap text-center font-primary font-medium text-bricky-brick",
+                  "-tracking-[0.025em]",
+                  "text-lg/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]",
+                  "flex flex-col items-center justify-center gap-3 sm:gap-4 lg:flex-row lg:gap-2"
+                )}
+              >
+                {t("lifeReimagined")}
+              </span>
+              <span
+                className={cn(
+                  "mx-2 sm:mx-3 md:mx-4 xl:mx-3 2xl:mx-4 3xl:mx-4",
+                  "size-5 sm:size-6 md:size-8 xl:size-8 2xl:size-8 3xl:size-10"
+                )}
+              >
+                <IconCollab className='text-bricky-brick size-full' />
+              </span>
+              <span
+                className={cn(
+                  "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
+                  "-tracking-[0.015em]",
+                  "text-lg/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]"
+                )}
+              >
+                CITY&apos;S
+              </span>
+            </div>
+            {/* SOCIAL MEDIA */}
+            <div className='mr-auto gap-4 flex 3xl:gap-6'>
+              <FacebookLogoIcon
+                weight='fill'
+                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+              />
+              <XLogoIcon
+                weight='regular'
+                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+              />
+              <InstagramLogoIcon
+                weight='regular'
+                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+              />
+              <YoutubeLogoIcon
+                weight='fill'
+                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+              />
+            </div>
           </div>
         </div>
       </div>

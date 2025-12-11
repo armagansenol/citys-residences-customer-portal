@@ -6,10 +6,10 @@ import useEmblaCarousel from "embla-carousel-react"
 import { cn } from "@/lib/utils"
 import styles from "./styles.module.css"
 
-const CIRCLE_DEGREES = 500
-const WHEEL_ITEM_SIZE = 32
-const WHEEL_ITEM_COUNT = 32
-const WHEEL_ITEMS_IN_VIEW = 4
+const CIRCLE_DEGREES = 360 // Total degrees of the wheel (360 = full circle)
+const WHEEL_ITEM_SIZE = 50 // Height of each item in pixels
+const WHEEL_ITEM_COUNT = 16 // Total slots on the wheel (affects angle between items)
+const WHEEL_ITEMS_IN_VIEW = 4 // Number of items visible at once
 
 export const WHEEL_ITEM_RADIUS = CIRCLE_DEGREES / WHEEL_ITEM_COUNT
 export const IN_VIEW_DEGREES = WHEEL_ITEM_RADIUS * WHEEL_ITEMS_IN_VIEW
@@ -80,11 +80,12 @@ type IosPickerItemProps = {
 
 export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
   const { items, perspective = "center", loop = false, onSelect, initialIndex = 0, className } = props
+  // Use actual rendered slide count (items are NOT duplicated anymore)
   const slideCount = items.length
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop,
     axis: "y",
-    dragFree: true,
+    dragFree: true, // Must be true for custom snap logic in pointerUp
     containScroll: false,
     watchSlides: false,
     startIndex: initialIndex,
@@ -167,12 +168,21 @@ export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
           ref={emblaRef}
         >
           <div className={styles.container}>
-            {items.map((item, index) => (
+            {[...items, ...items, ...items, ...items].map((item, index) => (
               <div
-                className={cn(styles.slide, {
-                  [styles.disabled]: item.disabled,
-                })}
-                key={item.id || index}
+                className={cn(
+                  styles.slide,
+                  "text-bricky-brick",
+                  "size-full",
+                  "text-4xl/[1] font-medium",
+                  "flex items-center justify-start",
+                  "text-left",
+                  "px-12",
+                  {
+                    [styles.disabled]: item.disabled,
+                  }
+                )}
+                key={index}
               >
                 {item.title}
               </div>
@@ -194,7 +204,10 @@ type IosPickerProps = {
 
 export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIndex = 0, loop = false, className }) => {
   return (
-    <div className={cn(styles.embla, className)}>
+    <div
+      className={cn(styles.embla, className)}
+      style={{ "--wheel-item-size": `${WHEEL_ITEM_SIZE}px` } as React.CSSProperties}
+    >
       <IosPickerItem items={items} perspective='center' loop={loop} onSelect={onSelect} initialIndex={initialIndex} />
     </div>
   )
