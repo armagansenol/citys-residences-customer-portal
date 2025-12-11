@@ -1,15 +1,18 @@
 "use client"
 
-import React, { useEffect, useCallback, useRef } from "react"
+import { LocaleTransitionLink } from "@/components/locale-transition-link"
+import { cn } from "@/lib/utils"
 import type { EmblaCarouselType } from "embla-carousel"
 import useEmblaCarousel from "embla-carousel-react"
-import { cn } from "@/lib/utils"
+import React, { useCallback, useEffect, useRef } from "react"
 import styles from "./styles.module.css"
+import { Locale } from "@/i18n/routing"
+import { useLocale } from "next-intl"
 
 const CIRCLE_DEGREES = 360 // Total degrees of the wheel (360 = full circle)
 const WHEEL_ITEM_SIZE = 50 // Height of each item in pixels
-const WHEEL_ITEM_COUNT = 16 // Total slots on the wheel (affects angle between items)
-const WHEEL_ITEMS_IN_VIEW = 4 // Number of items visible at once
+const WHEEL_ITEM_COUNT = 18 // Wheel geometry - controls curvature
+const WHEEL_ITEMS_IN_VIEW = 4 // Visible arc size
 
 export const WHEEL_ITEM_RADIUS = CIRCLE_DEGREES / WHEEL_ITEM_COUNT
 export const IN_VIEW_DEGREES = WHEEL_ITEM_RADIUS * WHEEL_ITEMS_IN_VIEW
@@ -33,6 +36,7 @@ const setSlideStyles = (
 
   let inView = false
   let angle = index * -WHEEL_ITEM_RADIUS
+  let distanceFromCenter = Math.abs(wheelLocation - positionDefault)
 
   if (isInView(wheelLocation, positionDefault)) {
     inView = true
@@ -41,19 +45,28 @@ const setSlideStyles = (
   if (loop && isInView(wheelLocation, positionLoopEnd)) {
     inView = true
     angle = -CIRCLE_DEGREES + (slideCount - index) * WHEEL_ITEM_RADIUS
+    distanceFromCenter = Math.abs(wheelLocation - positionLoopEnd)
   }
 
   if (loop && isInView(wheelLocation, positionLoopStart)) {
     inView = true
     angle = -(totalRadius % CIRCLE_DEGREES) - index * WHEEL_ITEM_RADIUS
+    distanceFromCenter = Math.abs(wheelLocation - positionLoopStart)
   }
+
+  // Check if this slide is the active one (closest to center)
+  const isActive = distanceFromCenter < WHEEL_ITEM_RADIUS / 2
 
   if (inView) {
     slideNode.style.opacity = "1"
     slideNode.style.transform = `translateY(-${index * 100}%) rotateX(${angle}deg) translateZ(${WHEEL_RADIUS}px)`
+    slideNode.style.color = isActive ? "#CC4429" : ""
+    slideNode.style.pointerEvents = isActive ? "auto" : "none"
   } else {
     slideNode.style.opacity = "0"
     slideNode.style.transform = "none"
+    slideNode.style.color = ""
+    slideNode.style.pointerEvents = "none"
   }
 }
 
@@ -80,8 +93,9 @@ type IosPickerItemProps = {
 
 export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
   const { items, perspective = "center", loop = false, onSelect, initialIndex = 0, className } = props
-  // Use actual rendered slide count (items are NOT duplicated anymore)
-  const slideCount = items.length
+  // Duplicate items to fill the wheel (original example expects many items)
+  const duplicatedItems = [...items, ...items, ...items, ...items, ...items]
+  const slideCount = duplicatedItems.length
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop,
     axis: "y",
@@ -131,9 +145,11 @@ export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
     const handleSettle = () => {
       if (onSelect && emblaApi) {
         const selectedIndex = emblaApi.selectedScrollSnap()
-        const selectedItem = items[selectedIndex]
+        // Map back to original item index
+        const originalIndex = selectedIndex % items.length
+        const selectedItem = items[originalIndex]
         if (selectedItem) {
-          onSelect(selectedItem, selectedIndex)
+          onSelect(selectedItem, originalIndex)
         }
       }
     }
@@ -156,6 +172,8 @@ export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
     }
   }, [emblaApi, inactivateEmblaTransform, rotateWheel, onSelect, items])
 
+  const locale = useLocale()
+
   return (
     <div className={cn(styles.iosPicker, className)}>
       <div className={styles.scene} ref={rootNodeRef}>
@@ -168,16 +186,19 @@ export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
           ref={emblaRef}
         >
           <div className={styles.container}>
-            {[...items, ...items, ...items, ...items].map((item, index) => (
-              <div
+            {duplicatedItems.map((item, index) => (
+              <LocaleTransitionLink
+                locale={locale as Locale}
+                href={item.href}
                 className={cn(
                   styles.slide,
-                  "text-bricky-brick",
+                  "text-gray-500",
                   "size-full",
                   "text-4xl/[1] font-regular",
                   "flex items-center justify-start",
                   "text-left",
-                  "px-12",
+                  "px-14",
+                  "transition-colors duration-300",
                   {
                     [styles.disabled]: item.disabled,
                   }
@@ -185,7 +206,7 @@ export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
                 key={index}
               >
                 {item.title}
-              </div>
+              </LocaleTransitionLink>
             ))}
           </div>
         </div>
