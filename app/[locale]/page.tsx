@@ -7,13 +7,13 @@ import { FacebookLogoIcon, InstagramLogoIcon, XLogoIcon, YoutubeLogoIcon } from 
 import { useLocale, useTranslations } from "next-intl"
 
 import { AutoplayVideo } from "@/components/autoplay-video"
-import { HorizontalScroll } from "@/components/horizontal-scroll"
 import { IconCollab, IconScrollDown } from "@/components/icons"
+import { IosPicker } from "@/components/ios-picker"
 import { LocaleTransitionLink } from "@/components/locale-transition-link"
 import { Wrapper } from "@/components/wrapper"
 import { useSectionTracker } from "@/hooks"
 import type { Locale, Pathnames } from "@/i18n/routing"
-import { routeConfig } from "@/lib/constants"
+import { residencePlanMedia, routeConfig } from "@/lib/constants"
 
 export default function Home() {
   const locale = useLocale()
@@ -44,7 +44,7 @@ export default function Home() {
           )}
         >
           {/* NAVIGATION */}
-          <div className='flex flex-col gap-1.5 lg:gap-4 xl:gap-4 2xl:gap-5 items-start'>
+          <div className='hidden xl:flex flex-col gap-1.5 lg:gap-4 xl:gap-4 2xl:gap-5 items-start'>
             {navbarSections.map((item) => (
               <LocaleTransitionLink
                 href={item.paths[locale as Locale] as Pathnames}
@@ -63,13 +63,30 @@ export default function Home() {
               </LocaleTransitionLink>
             ))}
           </div>
+          <div className='block xl:hidden'>
+            <IosPicker
+              loop
+              items={[...navbarSections, ...navbarSections, ...navbarSections].map((item) => ({
+                title: t(item.titleKey),
+                href: item.paths[locale as Locale] as Pathnames,
+                id: item.id,
+                disabled: item.disabled,
+                isExternal: item.isExternal,
+              }))}
+            />
+          </div>
           {/* SCROLL DOWN */}
           <div className='relative animate-bounce-translate hidden xl:block xl:size-16'>
             <IconScrollDown className='text-bricky-brick size-full' />
             <span className='sr-only'>Scroll Down</span>
           </div>
+          <section className='relative w-full overflow-hidden'>
+            <div className='w-full aspect-16/14'>
+              <AutoplayVideo playbackId={residencePlanMedia.muxSrc} />
+            </div>
+          </section>
           {/* YASAM YENİDEN TASARLANDI */}
-          <div className='flex items-center justify-start mt-auto'>
+          <div className='flex items-center justify-start mt-8 xl:mt-auto'>
             <span
               className={cn(
                 "whitespace-nowrap text-center font-primary font-medium text-bricky-brick",
@@ -143,7 +160,6 @@ export default function Home() {
             )
         )}
       </div>
-      <HorizontalScroll onSectionChange={setActiveSection} />
     </Wrapper>
   )
 }
