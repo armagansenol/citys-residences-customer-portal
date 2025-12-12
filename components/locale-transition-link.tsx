@@ -26,5 +26,5 @@ export function LocaleTransitionLink({ locale: localeProp, href, ...rest }: Loca
   const locale = (localeProp ?? localeFromHook) as Locale
   const localizedHref = addLocaleToHref(href, locale, routing.locales)
 
-  return <ViewTransitionLink {...rest} locale={locale} href={localizedHref} />
+  return <ViewTransitionLink {...rest} href={localizedHref} />
 }

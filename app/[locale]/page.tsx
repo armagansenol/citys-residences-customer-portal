@@ -7,13 +7,13 @@ import { FacebookLogoIcon, InstagramLogoIcon, XLogoIcon, YoutubeLogoIcon } from 
 import { useLocale, useTranslations } from "next-intl"
 
 import { AutoplayVideo } from "@/components/autoplay-video"
-import { HorizontalScroll } from "@/components/horizontal-scroll"
 import { IconCollab, IconScrollDown } from "@/components/icons"
 import { LocaleTransitionLink } from "@/components/locale-transition-link"
 import { Wrapper } from "@/components/wrapper"
 import { useSectionTracker } from "@/hooks"
 import type { Locale, Pathnames } from "@/i18n/routing"
-import { routeConfig } from "@/lib/constants"
+import { residencePlanMedia, routeConfig } from "@/lib/constants"
+import { ArrowRightIcon } from "@phosphor-icons/react"
 
 export default function Home() {
   const locale = useLocale()
@@ -40,11 +40,11 @@ export default function Home() {
         <div
           className={cn(
             "w-full size-full mx-auto px-8 lg:px-16 xl:px-16 pb-4 lg:pb-16 2xl:20 pt-8 lg:pt-20 xl:pt-8 2xl:pt-20",
-            "flex flex-col gap-2 lg:gap-4 3xl:gap-6"
+            "flex flex-col gap-6 lg:gap-4 3xl:gap-6"
           )}
         >
           {/* NAVIGATION */}
-          <div className='flex flex-col gap-1.5 lg:gap-4 xl:gap-4 2xl:gap-5 items-start'>
+          <div className='flex flex-col gap-2 lg:gap-4 xl:gap-4 2xl:gap-5 items-start'>
             {navbarSections.map((item) => (
               <LocaleTransitionLink
                 href={item.paths[locale as Locale] as Pathnames}
@@ -52,6 +52,7 @@ export default function Home() {
                 key={item.id}
                 {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
                 className={cn(
+                  "flex items-center gap-2",
                   "font-primary text-[10vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-5xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
                   "-tracking-[0.025em]",
                   "transition-colors duration-300 hover:text-tangerine-flake",
@@ -59,7 +60,8 @@ export default function Home() {
                   item.disabled && "pointer-events-none"
                 )}
               >
-                {t(item.titleKey)}
+                <span>{t(item.titleKey)}</span>
+                <ArrowRightIcon weight='regular' className='text-orochimaru size-6 xl:hidden' />
               </LocaleTransitionLink>
             ))}
           </div>
@@ -68,58 +70,64 @@ export default function Home() {
             <IconScrollDown className='text-bricky-brick size-full' />
             <span className='sr-only'>Scroll Down</span>
           </div>
-          {/* YASAM YENİDEN TASARLANDI */}
-          <div className='flex items-center justify-start mt-auto'>
-            <span
-              className={cn(
-                "whitespace-nowrap text-center font-primary font-medium text-bricky-brick",
-                "-tracking-[0.025em]",
-                "text-lg/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]",
-                "flex flex-col items-center justify-center gap-3 sm:gap-4 lg:flex-row lg:gap-2"
-              )}
-            >
-              {t("lifeReimagined")}
-            </span>
-            <span
-              className={cn(
-                "mx-2 sm:mx-3 md:mx-4 xl:mx-3 2xl:mx-4 3xl:mx-4",
-                "size-5 sm:size-6 md:size-8 xl:size-8 2xl:size-8 3xl:size-10"
-              )}
-            >
-              <IconCollab className='text-bricky-brick size-full' />
-            </span>
-            <span
-              className={cn(
-                "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
-                "-tracking-[0.015em]",
-                "text-lg/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]"
-              )}
-            >
-              CITY&apos;S
-            </span>
+          {/* MOBILE VIDEO */}
+          <div className='w-full aspect-16/14 block xl:hidden'>
+            <AutoplayVideo playbackId={residencePlanMedia.muxSrc} />
           </div>
-          {/* SOCIAL MEDIA */}
-          <div className='mr-auto gap-4 flex 3xl:gap-6'>
-            <FacebookLogoIcon
-              weight='fill'
-              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-            />
-            <XLogoIcon
-              weight='regular'
-              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-            />
-            <InstagramLogoIcon
-              weight='regular'
-              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-            />
-            <YoutubeLogoIcon
-              weight='fill'
-              className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-            />
+          <div className='flex flex-col gap-3 xl:mt-auto'>
+            {/* YASAM YENİDEN TASARLANDI */}
+            <div className='flex items-center justify-start '>
+              <span
+                className={cn(
+                  "whitespace-nowrap text-center font-primary font-medium text-bricky-brick",
+                  "-tracking-[0.025em]",
+                  "text-lg/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]",
+                  "flex flex-col items-center justify-center gap-3 sm:gap-4 lg:flex-row lg:gap-2"
+                )}
+              >
+                {t("lifeReimagined")}
+              </span>
+              <span
+                className={cn(
+                  "mx-2 sm:mx-3 md:mx-4 xl:mx-3 2xl:mx-4 3xl:mx-4",
+                  "size-5 sm:size-6 md:size-8 xl:size-8 2xl:size-8 3xl:size-10"
+                )}
+              >
+                <IconCollab className='text-bricky-brick size-full' />
+              </span>
+              <span
+                className={cn(
+                  "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
+                  "-tracking-[0.015em]",
+                  "text-lg/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]"
+                )}
+              >
+                CITY&apos;S
+              </span>
+            </div>
+            {/* SOCIAL MEDIA */}
+            <div className='mr-auto gap-4 flex 3xl:gap-6'>
+              <FacebookLogoIcon
+                weight='fill'
+                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+              />
+              <XLogoIcon
+                weight='regular'
+                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+              />
+              <InstagramLogoIcon
+                weight='regular'
+                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+              />
+              <YoutubeLogoIcon
+                weight='fill'
+                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+              />
+            </div>
           </div>
         </div>
       </div>
-      <div className='hidden xl:flex flex-col' ref={sectionsWrapperRef}>
+      <div ref={sectionsWrapperRef} className='hidden xl:flex flex-col'>
         {navbarSections.map(
           (item) =>
             item.id && (
@@ -143,7 +151,6 @@ export default function Home() {
             )
         )}
       </div>
-      <HorizontalScroll onSectionChange={setActiveSection} />
     </Wrapper>
   )
 }
