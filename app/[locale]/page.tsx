@@ -36,7 +36,9 @@ export default function Home() {
 
   return (
     <Wrapper>
-      <div className={cn("fixed z-50 inset-0", "pt-header-height-mobile 2xl:pt-header-height")}>
+      <div
+        className={cn("h-screen xl:h-auto xl:fixed z-50 xl:inset-0", "pt-header-height-mobile 2xl:pt-header-height")}
+      >
         <div
           className={cn(
             "w-full size-full mx-auto px-8 lg:px-16 xl:px-16 pb-4 lg:pb-16 2xl:20 pt-8 lg:pt-20 xl:pt-8 2xl:pt-20",
@@ -53,7 +55,7 @@ export default function Home() {
                 {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
                 className={cn(
                   "flex items-center gap-2",
-                  "font-primary text-[10vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-5xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
+                  "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-5xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
                   "-tracking-[0.025em]",
                   "transition-colors duration-300 hover:text-tangerine-flake",
                   activeSection === item.id && "xl:text-bricky-brick",
