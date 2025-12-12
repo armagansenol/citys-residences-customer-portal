@@ -9,9 +9,6 @@
 @theme inline {
   --color-background: var(--foreground);
   --color-foreground: var(--background);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-primary: var(--font-suisse-intl);
 
   --color-transparent: transparent;
   --color-black: #000000;
@@ -38,11 +35,16 @@
   --color-tangerine-cream: #ffa386;
   --color-orochimaru: #d9d9d9;
 
-  /* Custom breakpoints */
-  --breakpoint-3xl: 120rem; /* 1920px */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-primary: var(--font-suisse-intl);
 
   --spacing-header-height: 120px;
   --spacing-header-height-mobile: 90px;
+}
+
+@theme {
+  --breakpoint-3xl: 120rem; /* 1920px */
 }
 
 @layer utilities {
