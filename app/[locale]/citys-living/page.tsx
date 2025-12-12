@@ -30,6 +30,12 @@ export default async function Page({ params }: LocalePageParams) {
 
   return (
     <Wrapper className='py-header-height-mobile 2xl:py-header-height'>
+      <div
+        className={cn(
+          "fixed top-0 left-0 right-0 z-40 h-header-height-mobile 2xl:h-header-height",
+          "gradient-bg-white"
+        )}
+      ></div>
       <div className='w-full px-8 lg:px-16 xl:px-16 py-10 lg:py-16 flex flex-col justify-center gap-8 xl:gap-20'>
         {/* Main Title */}
         <div className='px-0 sm:px-8 lg:px-16 xl:px-24 2xl:px-32'>

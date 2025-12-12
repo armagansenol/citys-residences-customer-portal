@@ -24,8 +24,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 h-header-height-mobile 2xl:h-header-height pt-3",
-        "gradient-bg-white"
+        "fixed top-0 left-0 right-0 z-50 h-header-height-mobile 2xl:h-header-height pt-3"
         // "before:pointer-events-none before:absolute before:top-0 before:left-0 before:right-0 before:z-20 before:h-[150%] xl:before:h-full before:gradient-top-white-smooth"
       )}
     >

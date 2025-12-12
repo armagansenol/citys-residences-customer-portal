@@ -158,6 +158,40 @@ body {
   background: linear-gradient(0deg, #f57c67 0%, #e0533a 100%);
 }
 
+@utility gradient-bg-white {
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 130%;
+
+    background: #ffffff;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 1) 80%,
+      rgba(255, 255, 255, 0.5) 90%,
+      rgba(255, 255, 255, 0) 100%
+    );
+
+    @media (min-width: 1280px) {
+      height: 150%;
+
+      background: #ffffff;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 1) 80%,
+        rgba(255, 255, 255, 0.5) 90%,
+        rgba(255, 255, 255, 0) 100%
+      );
+    }
+  }
+}
+
 /* View Transitions */
 @view-transition {
   navigation: auto;
