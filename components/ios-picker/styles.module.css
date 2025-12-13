@@ -1,0 +1,104 @@
+.embla {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 14rem;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.embla::before,
+.embla::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  content: "";
+  display: block;
+  height: calc(50% - var(--wheel-item-size) / 1.5);
+  z-index: 1;
+  opacity: var(--pseudo-opacity, 0);
+  transition: opacity 500ms ease-in-out;
+  pointer-events: none;
+}
+
+.embla::before {
+  top: -0.5px;
+  border-bottom: 0.5px solid rgba(204, 68, 41, 0.3);
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.embla::after {
+  bottom: -0.5px;
+  border-top: 0.5px solid rgba(204, 68, 41, 0.3);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.iosPicker {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  min-width: 100%;
+  justify-content: center;
+  line-height: 1;
+  position: relative;
+}
+
+.scene {
+  min-width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  touch-action: pan-y;
+}
+
+.viewport {
+  height: 100%;
+  width: 100%;
+  perspective: 1000px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.perspectiveLeft {
+  perspective-origin: calc(50% + 130px) 50%;
+  transform: translateX(27px);
+}
+
+.perspectiveRight {
+  perspective-origin: calc(50% - 130px) 50%;
+  transform: translateX(-27px);
+}
+
+.perspectiveCenter {
+  perspective-origin: 50% 50%;
+  transform: translateX(0);
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.slide {
+  backface-visibility: hidden;
+  opacity: 0;
+}
+
+.slide.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.label {
+  font-weight: 700;
+  pointer-events: none;
+}

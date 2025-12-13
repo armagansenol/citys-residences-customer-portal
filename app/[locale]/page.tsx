@@ -14,6 +14,7 @@ import { useSectionTracker } from "@/hooks"
 import type { Locale, Pathnames } from "@/i18n/routing"
 import { residencePlanMedia, routeConfig } from "@/lib/constants"
 import { ArrowRightIcon } from "@phosphor-icons/react"
+import IosPicker from "@/components/ios-picker"
 
 export default function Home() {
   const locale = useLocale()
@@ -46,7 +47,7 @@ export default function Home() {
           )}
         >
           {/* NAVIGATION */}
-          <div className='flex flex-col gap-2 lg:gap-4 xl:gap-4 2xl:gap-5 items-start'>
+          <div className='hidden xl:flex flex-col gap-2 lg:gap-4 xl:gap-4 2xl:gap-5 items-start'>
             {navbarSections.map((item) => (
               <LocaleTransitionLink
                 href={item.paths[locale as Locale] as Pathnames}
@@ -66,6 +67,18 @@ export default function Home() {
                 <ArrowRightIcon weight='regular' className='text-orochimaru size-6 xl:hidden' />
               </LocaleTransitionLink>
             ))}
+          </div>
+          <div className='block xl:hidden'>
+            <IosPicker
+              loop
+              items={navbarSections.map((item) => ({
+                title: t(item.titleKey),
+                href: item.paths[locale as Locale] as Pathnames,
+                id: item.id,
+                disabled: item.disabled,
+                isExternal: item.isExternal,
+              }))}
+            />
           </div>
           {/* SCROLL DOWN */}
           <div className='relative animate-bounce-translate hidden xl:block xl:size-16'>
