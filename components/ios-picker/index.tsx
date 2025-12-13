@@ -9,6 +9,7 @@ import useEmblaCarousel from "embla-carousel-react"
 import { useLocale } from "next-intl"
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import styles from "./styles.module.css"
+import { routeConfig } from "@/lib/constants"
 
 const CIRCLE_DEGREES = 360 // Total degrees of the wheel (360 = full circle)
 const WHEEL_ITEM_SIZE = 50 // Height of each item in pixels
@@ -214,7 +215,7 @@ export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
             {duplicatedItems.map((item, index) => (
               <LocaleTransitionLink
                 locale={locale as Locale}
-                href={item.disabled ? "#" : item.href}
+                href={item.id === routeConfig["/residence-plan"].id ? "#" : item.href}
                 {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
                 className={cn(
                   styles.slide,
@@ -227,6 +228,7 @@ export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
                   "transition-colors duration-300",
                   {
                     [styles.disabled]: item.disabled,
+                    "pointer-events-none!": item.id === routeConfig["/residence-plan"].id,
                   }
                 )}
                 key={index}
