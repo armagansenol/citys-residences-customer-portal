@@ -8,6 +8,8 @@ import type { EmblaCarouselType } from "embla-carousel"
 import useEmblaCarousel from "embla-carousel-react"
 import { useLocale } from "next-intl"
 import React, { useCallback, useEffect, useRef, useState } from "react"
+
+const LAST_VISITED_ROUTE_KEY = "ios-picker-last-route"
 import styles from "./styles.module.css"
 import { routeConfig } from "@/lib/constants"
 
@@ -217,6 +219,12 @@ export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
                 locale={locale as Locale}
                 href={item.id === routeConfig["/residence-plan"].id ? "#" : item.href}
                 {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
+                onClick={() => {
+                  // Store the item id before navigation so we can restore position on return
+                  if (item.id && !item.disabled && item.id !== routeConfig["/residence-plan"].id) {
+                    sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
+                  }
+                }}
                 className={cn(
                   styles.slide,
                   "text-gray-500",
@@ -255,34 +263,18 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
   const [isReady, setIsReady] = useState(false)
   const [pickerKey, setPickerKey] = useState(() => Date.now())
   const containerRef = useRef<HTMLDivElement>(null)
-  const wasHiddenRef = useRef(false)
 
-  // Use IntersectionObserver to detect when component becomes visible again
-  useEffect(() => {
-    const element = containerRef.current
-    if (!element) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          // Component is now visible
-          if (wasHiddenRef.current) {
-            // Was hidden before, now visible again - reset animation
-            setIsReady(false)
-            setPickerKey(Date.now())
-          }
-          wasHiddenRef.current = false
-        } else {
-          // Component is not visible (navigated away)
-          wasHiddenRef.current = true
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    observer.observe(element)
-    return () => observer.disconnect()
-  }, [])
+  // Calculate initial index from sessionStorage on each mount
+  const currentInitialIndex = (() => {
+    if (typeof window !== "undefined") {
+      const lastItemId = sessionStorage.getItem(LAST_VISITED_ROUTE_KEY)
+      if (lastItemId) {
+        const index = items.findIndex((item) => item.id === lastItemId)
+        if (index >= 0) return index
+      }
+    }
+    return initialIndex
+  })()
 
   // Track when animation has completed
   const handleReady = useCallback(() => {
@@ -309,7 +301,7 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
         perspective='center'
         loop={loop}
         onSelect={onSelect}
-        initialIndex={initialIndex}
+        initialIndex={currentInitialIndex}
         onReady={handleReady}
       />
     </div>
