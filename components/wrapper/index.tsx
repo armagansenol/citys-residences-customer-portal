@@ -37,7 +37,7 @@ export function Wrapper({
   return (
     <>
       <Header />
-      <main className={cn("flex-1 flex flex-col", className)} {...props}>
+      <main className={cn("flex-1 flex flex-col relative z-40", className)} {...props}>
         {children}
       </main>
       {lenis && <SmoothScroll root />}
