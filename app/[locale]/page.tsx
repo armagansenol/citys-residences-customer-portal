@@ -1,5 +1,7 @@
 "use client"
 
+import masterplan from "@/public/img/masterplan.jpg"
+
 import { useMemo, useRef } from "react"
 
 import { cn } from "@/lib/utils"
@@ -15,6 +17,7 @@ import { useSectionTracker } from "@/hooks"
 import type { Locale, Pathnames } from "@/i18n/routing"
 import { residencePlanMedia, routeConfig } from "@/lib/constants"
 import { IosPicker } from "@/components/ios-picker"
+import { Image } from "@/components/image"
 
 export default function Home() {
   const locale = useLocale()
@@ -166,6 +169,14 @@ export default function Home() {
             )
         )}
       </div>
+      {/* PRELOAD MASTERPLAN IMAGE */}
+      <Image
+        src={masterplan.src}
+        className='sr-only'
+        alt='Preview masterplan'
+        width={masterplan.width}
+        height={masterplan.height}
+      />
     </Wrapper>
   )
 }
