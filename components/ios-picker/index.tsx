@@ -98,15 +98,14 @@ type IosPickerItemProps = {
   onReady?: () => void
 }
 
-export const IosPickerItem: React.FC<IosPickerItemProps> = (props) => {
+export function IosPickerItem(props: IosPickerItemProps) {
   const { items, perspective = "center", loop = false, onSelect, initialIndex = 0, className, onReady } = props
   // Duplicate items to fill the wheel (original example expects many items)
-  const duplicatedItems = [...items, ...items, ...items, ...items, ...items]
+  const duplicatedItems = [...items]
   const slideCount = duplicatedItems.length
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop,
     axis: "y",
-    dragFree: true, // Must be true for custom snap logic in pointerUp
     containScroll: false,
     watchSlides: false,
     startIndex: initialIndex,
@@ -307,5 +306,3 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
     </div>
   )
 }
-
-export default IosPicker

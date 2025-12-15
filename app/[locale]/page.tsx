@@ -5,6 +5,7 @@ import { useMemo, useRef } from "react"
 import { cn } from "@/lib/utils"
 import { FacebookLogoIcon, InstagramLogoIcon, XLogoIcon, YoutubeLogoIcon } from "@phosphor-icons/react/ssr"
 import { useLocale, useTranslations } from "next-intl"
+import { ArrowRightIcon } from "@phosphor-icons/react"
 
 import { AutoplayVideo } from "@/components/autoplay-video"
 import { IconCollab, IconScrollDown } from "@/components/icons"
@@ -13,8 +14,7 @@ import { Wrapper } from "@/components/wrapper"
 import { useSectionTracker } from "@/hooks"
 import type { Locale, Pathnames } from "@/i18n/routing"
 import { residencePlanMedia, routeConfig } from "@/lib/constants"
-import { ArrowRightIcon } from "@phosphor-icons/react"
-import IosPicker from "@/components/ios-picker"
+import { IosPicker } from "@/components/ios-picker"
 
 export default function Home() {
   const locale = useLocale()
@@ -68,9 +68,9 @@ export default function Home() {
               </LocaleTransitionLink>
             ))}
           </div>
-          <div className='block xl:hidden'>
+          <div className='block xl:hidden -my-4'>
             <IosPicker
-              loop
+              loop={false}
               items={navbarSections.map((item) => ({
                 title: t(item.titleKey),
                 href: item.paths[locale as Locale] as Pathnames,
