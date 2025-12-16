@@ -19,8 +19,16 @@ declare global {
 export function PDFViewer({ file, title }: PDFViewerProps) {
   const [hasError, setHasError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [pdfjsReady, setPdfjsReady] = useState(false)
+  // Check if pdfjsLib is already loaded (e.g., from a previous mount)
+  const [pdfjsReady, setPdfjsReady] = useState(() => typeof window !== "undefined" && !!window.pdfjsLib)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  // Also check on mount in case SSR hydration set it to false
+  useEffect(() => {
+    if (window.pdfjsLib && !pdfjsReady) {
+      setPdfjsReady(true)
+    }
+  }, [])
 
   useEffect(() => {
     async function renderPDF() {
