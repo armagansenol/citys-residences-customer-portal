@@ -21,8 +21,9 @@ export function toTitleCase(str: string): string {
     .join(" ")
 }
 
-export function toAllUppercase(str: string): string {
-  return str.toUpperCase()
+export function toAllUppercase(str: string, locale?: string): string {
+  // locale-aware uppercasing ensures characters like Turkish "i/ı" are handled correctly
+  return locale ? str.toLocaleUpperCase(locale) : str.toLocaleUpperCase()
 }
 
 export function calculateRatio(width: number, height: number): number {

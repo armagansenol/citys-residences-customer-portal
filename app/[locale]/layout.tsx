@@ -5,6 +5,10 @@ import localFont from "next/font/local"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations } from "next-intl/server"
 import { PrefetchRoutes } from "@/components/prefetch-routes"
+import { QueryClientProviderWrapper } from "@/components/query-client-provider"
+import { CitysLivingModal } from "@/components/dialogs/citys-living-modal"
+import { MasterplanModal } from "@/components/dialogs/masterplan-modal"
+import { ResidencePlanModal } from "@/components/dialogs/residence-plan-modal"
 
 const suisseIntl = localFont({
   src: [
@@ -81,8 +85,13 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={`${suisseIntl.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          <PrefetchRoutes />
-          {children}
+          <QueryClientProviderWrapper>
+            <PrefetchRoutes />
+            <CitysLivingModal />
+            <MasterplanModal />
+            <ResidencePlanModal />
+            {children}
+          </QueryClientProviderWrapper>
         </NextIntlClientProvider>
       </body>
     </html>

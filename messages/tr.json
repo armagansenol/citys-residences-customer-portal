@@ -53,7 +53,8 @@
         "legalDisclaimer": "City’s Residences, Hayat A.Ş.'nin tescilli bir markasıdır. Markanın tüm kullanım hakları, operasyonel faaliyetleri ve temsiliyeti, muvafakatname ile CITYS GAYRİMENKUL A.Ş. tarafından yürütülmektedir.",
         "residencePlan": {
             "ctaLabel": "Daire Planı"
-        }
+        },
+        "backToProposals": "Tekliflere Geri Dön"
     },
     "citysLiving": {
         "park": {

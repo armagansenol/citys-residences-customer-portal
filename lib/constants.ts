@@ -114,7 +114,7 @@ export const routeConfig: Record<string, RouteConfig> = {
     titleKey: "navigation.residencePlan",
     id: SectionId.RESIDENCE_PLAN,
     order: 1,
-    disabled: true,
+    disabled: false,
     isExternal: false,
     inNavbar: true,
     media: residencePlanMedia,

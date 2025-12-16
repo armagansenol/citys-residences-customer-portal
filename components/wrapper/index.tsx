@@ -1,6 +1,5 @@
 "use client"
 
-import { Header } from "@/components/header"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { cn } from "@/lib/utils"
 import { useLocale, useTranslations } from "next-intl"
@@ -36,7 +35,6 @@ export function Wrapper({
 
   return (
     <>
-      <Header />
       <main className={cn("flex-1 flex flex-col relative z-40", className)} {...props}>
         {children}
       </main>

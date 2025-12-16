@@ -12,8 +12,8 @@ export function PrefetchRoutes() {
 
   useEffect(() => {
     // router.prefetch(routeConfig["/residence-plan"].paths[locale as Locale])
-    router.prefetch(routeConfig["/masterplan"].paths[locale as Locale])
-    router.prefetch(routeConfig["/citys-living"].paths[locale as Locale])
+    // router.prefetch(routeConfig["/masterplan"].paths[locale as Locale]) // Now a modal, no need to prefetch
+    // router.prefetch(routeConfig["/citys-living"].paths[locale as Locale]) // Now a modal, no need to prefetch
   }, [router, locale])
 
   return null

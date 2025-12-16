@@ -1,17 +1,17 @@
 "use client"
 
 import { LocaleTransitionLink } from "@/components/locale-transition-link"
-import { Locale } from "@/i18n/routing"
+import { LoadingSpinner } from "@/components/loading-spinner"
 import { cn } from "@/lib/utils"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import type { EmblaCarouselType } from "embla-carousel"
 import useEmblaCarousel from "embla-carousel-react"
-import { useLocale } from "next-intl"
 import React, { useCallback, useEffect, useRef, useState } from "react"
 
 const LAST_VISITED_ROUTE_KEY = "ios-picker-last-route"
 import styles from "./styles.module.css"
-import { routeConfig } from "@/lib/constants"
+import { routeConfig, SectionId } from "@/lib/constants"
+import { useStore } from "@/lib/store/ui"
 
 const CIRCLE_DEGREES = 360 // Total degrees of the wheel (360 = full circle)
 const WHEEL_ITEM_SIZE = 50 // Height of each item in pixels
@@ -86,6 +86,8 @@ export type NavigationItem = {
   id?: string
   disabled?: boolean
   isExternal?: boolean
+  isModal?: boolean
+  isLoading?: boolean
 }
 
 type IosPickerItemProps = {
@@ -100,6 +102,9 @@ type IosPickerItemProps = {
 
 export function IosPickerItem(props: IosPickerItemProps) {
   const { items, perspective = "center", loop = false, onSelect, initialIndex = 0, className, onReady } = props
+  const setIsCitysLivingModalOpen = useStore((state) => state.setIsCitysLivingModalOpen)
+  const setIsMasterplanModalOpen = useStore((state) => state.setIsMasterplanModalOpen)
+  const setIsResidencePlanModalOpen = useStore((state) => state.setIsResidencePlanModalOpen)
   // Duplicate items to fill the wheel (original example expects many items)
   const duplicatedItems = [...items]
   const slideCount = duplicatedItems.length
@@ -194,8 +199,6 @@ export function IosPickerItem(props: IosPickerItemProps) {
     }
   }, [emblaApi, inactivateEmblaTransform, rotateWheel, onSelect, items])
 
-  const locale = useLocale()
-
   return (
     <div className={cn(styles.iosPicker, className)}>
       {isReady && (
@@ -213,36 +216,141 @@ export function IosPickerItem(props: IosPickerItemProps) {
           ref={emblaRef}
         >
           <div className={styles.container}>
-            {duplicatedItems.map((item, index) => (
-              <LocaleTransitionLink
-                locale={locale as Locale}
-                href={item.id === routeConfig["/residence-plan"].id ? "#" : item.href}
-                {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
-                onClick={() => {
-                  // Store the item id before navigation so we can restore position on return
-                  if (item.id && !item.disabled && item.id !== routeConfig["/residence-plan"].id) {
-                    sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
-                  }
-                }}
-                className={cn(
-                  styles.slide,
-                  "text-gray-500",
-                  "size-full",
-                  "text-[7vw]/[1] font-regular",
-                  "flex items-center justify-start",
-                  "text-left",
-                  "px-14",
-                  "transition-colors duration-300",
-                  {
-                    [styles.disabled]: item.disabled,
-                    "pointer-events-none!": item.id === routeConfig["/residence-plan"].id,
-                  }
-                )}
-                key={index}
-              >
-                {item.title}
-              </LocaleTransitionLink>
-            ))}
+            {duplicatedItems.map((item, index) => {
+              const isResidencePlan =
+                item.id === routeConfig["/residence-plan"].id || (item.isModal && item.id === SectionId.RESIDENCE_PLAN)
+              const isCitysLiving =
+                item.id === SectionId.CITYS_LIVING || (item.isModal && item.id === SectionId.CITYS_LIVING)
+              const isMasterplan =
+                item.id === SectionId.MASTERPLAN || (item.isModal && item.id === SectionId.MASTERPLAN)
+
+              if (isCitysLiving) {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      if (!item.disabled) {
+                        setIsCitysLivingModalOpen(true)
+                        if (item.id) {
+                          sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
+                        }
+                      }
+                    }}
+                    disabled={item.disabled}
+                    className={cn(
+                      styles.slide,
+                      "text-gray-500",
+                      "size-full",
+                      "text-[7vw]/[1] md:text-[4vw]/[1] lg:text-[3.5vw]/[1] font-regular",
+                      "flex items-center justify-start",
+                      "text-left",
+                      "px-14 md:px-[15vw] lg:px-[14vw]",
+                      "transition-colors duration-300",
+                      {
+                        [styles.disabled]: item.disabled,
+                      }
+                    )}
+                  >
+                    {item.title}
+                  </button>
+                )
+              }
+
+              if (isMasterplan) {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      if (!item.disabled) {
+                        setIsMasterplanModalOpen(true)
+                        if (item.id) {
+                          sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
+                        }
+                      }
+                    }}
+                    disabled={item.disabled}
+                    className={cn(
+                      styles.slide,
+                      "text-gray-500",
+                      "size-full",
+                      "text-[7vw]/[1] md:text-[4vw]/[1] lg:text-[3.5vw]/[1] font-regular",
+                      "flex items-center justify-start",
+                      "text-left",
+                      "px-14 md:px-[15vw] lg:px-[14vw]",
+                      "transition-colors duration-300",
+                      {
+                        [styles.disabled]: item.disabled,
+                      }
+                    )}
+                  >
+                    {item.title}
+                  </button>
+                )
+              }
+
+              if (isResidencePlan) {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      if (!item.disabled) {
+                        setIsResidencePlanModalOpen(true)
+                        if (item.id) {
+                          sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
+                        }
+                      }
+                    }}
+                    disabled={item.disabled}
+                    className={cn(
+                      styles.slide,
+                      "text-gray-500",
+                      "size-full",
+                      "text-[7vw]/[1] md:text-[4vw]/[1] lg:text-[3.5vw]/[1] font-regular",
+                      "flex items-center justify-start gap-3",
+                      "text-left",
+                      "px-14 md:px-[15vw] lg:px-[14vw]",
+                      "transition-colors duration-300",
+                      {
+                        [styles.disabled]: item.disabled,
+                      }
+                    )}
+                  >
+                    {item.title}
+                    {item.isLoading && <LoadingSpinner className='size-5 text-bricky-brick' />}
+                  </button>
+                )
+              }
+
+              return (
+                <LocaleTransitionLink
+                  href={isResidencePlan ? "#" : item.href}
+                  {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
+                  onClick={() => {
+                    // Store the item id before navigation so we can restore position on return
+                    if (item.id && !item.disabled && !isResidencePlan) {
+                      sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
+                    }
+                  }}
+                  className={cn(
+                    styles.slide,
+                    "text-gray-500",
+                    "size-full",
+                    "text-[7vw]/[1] md:text-[4vw]/[1] lg:text-[3.5vw]/[1] font-regular",
+                    "flex items-center justify-start",
+                    "text-left",
+                    "px-14 md:px-[15vw] lg:px-[14vw]",
+                    "transition-colors duration-300",
+                    {
+                      [styles.disabled]: item.disabled,
+                      "pointer-events-none!": isResidencePlan,
+                    }
+                  )}
+                  key={index}
+                >
+                  {item.title}
+                </LocaleTransitionLink>
+              )
+            })}
           </div>
         </div>
       </div>
@@ -263,17 +371,8 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
   const [pickerKey, setPickerKey] = useState(() => Date.now())
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // Calculate initial index from sessionStorage on each mount
-  const currentInitialIndex = (() => {
-    if (typeof window !== "undefined") {
-      const lastItemId = sessionStorage.getItem(LAST_VISITED_ROUTE_KEY)
-      if (lastItemId) {
-        const index = items.findIndex((item) => item.id === lastItemId)
-        if (index >= 0) return index
-      }
-    }
-    return initialIndex
-  })()
+  // Always start at the first item (index 0)
+  const currentInitialIndex = initialIndex
 
   // Track when animation has completed
   const handleReady = useCallback(() => {

@@ -10,9 +10,8 @@ import { useLocale, useTranslations } from "next-intl"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 
 import { AutoplayVideo } from "@/components/autoplay-video"
-import { IconCollab, IconScrollDown } from "@/components/icons"
+import { IconCollab, IconScrollDown, Logo } from "@/components/icons"
 import { LocaleTransitionLink } from "@/components/locale-transition-link"
-import { Wrapper } from "@/components/wrapper"
 import { useSectionTracker } from "@/hooks"
 import type { Locale } from "@/i18n/routing"
 import { residencePlanMedia, routeConfig, SectionId } from "@/lib/constants"
@@ -20,7 +19,25 @@ import { IosPicker } from "@/components/ios-picker"
 import { Image } from "@/components/image"
 import { useStore } from "@/lib/store/ui"
 
-export default function Home() {
+import { useQuery } from "@tanstack/react-query"
+import { useParams } from "next/navigation"
+
+import { LoadingSpinner } from "@/components/loading-spinner"
+import { Wrapper } from "@/components/wrapper"
+import { fetchProposalById } from "@/lib/api/proposals"
+
+export default function Page() {
+  const params = useParams()
+  const proposalId = params?.id as string
+
+  // Prefetch proposal data in background - modal will use cached data
+  const { isLoading: isProposalLoading, isError: isProposalError } = useQuery({
+    queryKey: ["proposal", proposalId],
+    queryFn: () => fetchProposalById(proposalId),
+    enabled: Boolean(proposalId),
+    staleTime: 1000 * 60 * 60, // Cache for 1 hour
+  })
+
   const locale = useLocale()
   const t = useTranslations("common")
   const sectionsWrapperRef = useRef<HTMLDivElement | null>(null)
@@ -37,24 +54,46 @@ export default function Home() {
   )
 
   // Track active section for both vertical (desktop) and horizontal (mobile) scroll
-  const { activeSection, setActiveSection, registerSectionRef } = useSectionTracker({
+  const { activeSection, registerSectionRef } = useSectionTracker({
     direction: "vertical",
     scope: sectionsWrapperRef,
+    enabled: true,
   })
+
+  // Residence plan button is disabled while loading or if there's an error
+  const isResidencePlanDisabled = isProposalLoading || isProposalError
 
   return (
     <Wrapper>
+      <div className='h-header-height-mobile 2xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16'>
+        {/* Close Button */}
+        <button
+          className={cn(
+            "size-24 sm:size-24 lg:size-36",
+            "flex items-center justify-center",
+            "text-bricky-brick",
+            "transition-opacity duration-300 hover:opacity-70",
+            "cursor-pointer"
+          )}
+          aria-label='Close'
+        >
+          <Logo className='size-full text-bricky-brick' />
+        </button>
+      </div>
       <div
-        className={cn("h-screen xl:h-auto xl:fixed z-50 xl:inset-0", "pt-header-height-mobile 2xl:pt-header-height")}
+        className={cn(
+          "fixed inset-0 z-50 xl:h-auto",
+          "pt-header-height-mobile 2xl:pt-[calc(var(--spacing-header-height)/1.25)]"
+        )}
       >
         <div
           className={cn(
-            "w-full size-full mx-auto px-8 lg:px-16 xl:px-16 pb-4 lg:pb-16 2xl:20 pt-0 lg:pt-20 xl:pt-8 2xl:pt-20",
-            "flex flex-col gap-0 lg:gap-4 3xl:gap-6"
+            "w-full size-full mx-auto px-8 lg:px-16 xl:px-16 pb-4 lg:pb-16 2xl:20 ",
+            "flex flex-col gap-6 lg:gap-4 3xl:gap-6"
           )}
         >
           {/* NAVIGATION */}
-          <div className='hidden xl:flex flex-col gap-2 lg:gap-4 xl:gap-4 2xl:gap-5 items-start'>
+          <div className='hidden xl:flex flex-col gap-2 lg:gap-4 xl:gap-4 2xl:gap-5 items-start pt-0 lg:pt-20 xl:pt-8 2xl:pt-20'>
             {navbarSections.map((item) => {
               const isCitysLiving = item.id === SectionId.CITYS_LIVING
               const isMasterplan = item.id === SectionId.MASTERPLAN
@@ -65,6 +104,7 @@ export default function Home() {
                     key={item.id}
                     onClick={() => setIsCitysLivingModalOpen(true)}
                     className={cn(
+                      "cursor-pointer",
                       "flex items-center gap-2",
                       "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-5xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
                       "-tracking-[0.025em]",
@@ -84,6 +124,7 @@ export default function Home() {
                     key={item.id}
                     onClick={() => setIsMasterplanModalOpen(true)}
                     className={cn(
+                      "cursor-pointer",
                       "flex items-center gap-2",
                       "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-5xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
                       "-tracking-[0.025em]",
@@ -102,16 +143,19 @@ export default function Home() {
                   <button
                     key={item.id}
                     onClick={() => setIsResidencePlanModalOpen(true)}
+                    disabled={isResidencePlanDisabled}
                     className={cn(
+                      "cursor-pointer",
                       "flex items-center gap-2",
                       "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-5xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
                       "-tracking-[0.025em]",
                       "transition-colors duration-300 hover:text-tangerine-flake",
                       activeSection === item.id && "xl:text-bricky-brick",
-                      item.disabled && "pointer-events-none"
+                      (item.disabled || isResidencePlanDisabled) && "pointer-events-none opacity-50"
                     )}
                   >
                     <span>{t(item.titleKey)}</span>
+                    {isProposalLoading && <LoadingSpinner className='size-5 xl:size-6 text-bricky-brick' />}
                     <ArrowRightIcon weight='regular' className='text-orochimaru size-6 xl:hidden' />
                   </button>
                 )
@@ -122,6 +166,7 @@ export default function Home() {
                   key={item.id}
                   {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
                   className={cn(
+                    "cursor-pointer",
                     "flex items-center gap-2",
                     "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-5xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
                     "-tracking-[0.025em]",
@@ -143,12 +188,13 @@ export default function Home() {
                 title: t(item.titleKey),
                 href: item.paths[locale as Locale],
                 id: item.id,
-                disabled: item.disabled,
+                disabled: item.id === SectionId.RESIDENCE_PLAN ? isResidencePlanDisabled : item.disabled,
                 isExternal: item.isExternal,
                 isModal:
                   item.id === SectionId.CITYS_LIVING ||
                   item.id === SectionId.MASTERPLAN ||
                   item.id === SectionId.RESIDENCE_PLAN,
+                isLoading: item.id === SectionId.RESIDENCE_PLAN ? isProposalLoading : false,
               }))}
             />
           </div>
@@ -158,10 +204,10 @@ export default function Home() {
             <span className='sr-only'>Scroll Down</span>
           </div>
           {/* MOBILE VIDEO */}
-          <div className='w-full aspect-video xs:aspect-16/11 xsm:aspect-16/12 sm:aspect-16/14 md:aspect-16/10 block xl:hidden'>
+          <div className='w-full flex-1 min-h-0 xl:hidden'>
             <AutoplayVideo playbackId={residencePlanMedia.muxSrc} />
           </div>
-          <div className='flex flex-col gap-3 mt-4 xl:mt-auto'>
+          <div className='flex flex-col gap-3 mt-auto'>
             {/* YASAM YENİDEN TASARLANDI */}
             <div className='flex items-center justify-start '>
               <span
@@ -221,13 +267,13 @@ export default function Home() {
               <div
                 key={item.id}
                 ref={registerSectionRef(item.id)}
-                className='w-screen h-screen shrink-0 flex items-center justify-end px-8 lg:px-16 xl:px-16 pb-36 pt-84 lg:pt-[420px] lg:pb-48 xl:pb-16 xl:pt-16 2xl:py-20 3xl:pb-16 2xl:pt-header-height'
+                className='w-screen h-screen shrink-0 flex items-center justify-end px-8 lg:px-16 xl:px-16 pb-36 pt-84 lg:pt-[420px] lg:pb-48 xl:pb-16 xl:pt-16 2xl:py-20 3xl:pb-16 2xl:pt-[calc(var(--spacing-header-height)/1.5)]'
               >
                 {item.id === SectionId.CITYS_LIVING ? (
                   <button
                     onClick={() => setIsCitysLivingModalOpen(true)}
                     className={cn(
-                      "w-full xl:w-auto xl:h-full aspect-16/10 xl:aspect-16/14 2xl:aspect-16/15 3xl:aspect-16/14",
+                      "w-full xl:w-auto xl:h-full aspect-16/10 xl:aspect-16/14 2xl:aspect-16/15 3xl:aspect-16/14 cursor-pointer",
                       item.disabled && "pointer-events-none"
                     )}
                   >
@@ -237,7 +283,7 @@ export default function Home() {
                   <button
                     onClick={() => setIsMasterplanModalOpen(true)}
                     className={cn(
-                      "w-full xl:w-auto xl:h-full aspect-16/10 xl:aspect-16/14 2xl:aspect-16/15 3xl:aspect-16/14",
+                      "w-full xl:w-auto xl:h-full aspect-16/10 xl:aspect-16/14 2xl:aspect-16/15 3xl:aspect-16/14 cursor-pointer",
                       item.disabled && "pointer-events-none"
                     )}
                   >
@@ -246,19 +292,25 @@ export default function Home() {
                 ) : item.id === SectionId.RESIDENCE_PLAN ? (
                   <button
                     onClick={() => setIsResidencePlanModalOpen(true)}
+                    disabled={isResidencePlanDisabled}
                     className={cn(
-                      "w-full xl:w-auto xl:h-full aspect-16/10 xl:aspect-16/14 2xl:aspect-16/15 3xl:aspect-16/14",
-                      item.disabled && "pointer-events-none"
+                      "w-full xl:w-auto xl:h-full aspect-16/10 xl:aspect-16/14 2xl:aspect-16/15 3xl:aspect-16/14 cursor-pointer relative",
+                      (item.disabled || isResidencePlanDisabled) && "pointer-events-none"
                     )}
                   >
                     <AutoplayVideo playbackId={item.media?.muxSrc} />
+                    {isProposalLoading && (
+                      <div className='absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg'>
+                        <LoadingSpinner className='size-10 text-white' />
+                      </div>
+                    )}
                   </button>
-                )                 : (
+                ) : (
                   <LocaleTransitionLink
                     href={item.paths[locale as Locale]}
                     {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
                     className={cn(
-                      "w-full xl:w-auto xl:h-full aspect-16/10 xl:aspect-16/14 2xl:aspect-16/15 3xl:aspect-16/14",
+                      "w-full xl:w-auto xl:h-full aspect-16/10 xl:aspect-16/14 2xl:aspect-16/15 3xl:aspect-16/14 cursor-pointer",
                       item.disabled && "pointer-events-none"
                     )}
                   >

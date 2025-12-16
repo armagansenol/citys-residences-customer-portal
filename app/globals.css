@@ -39,7 +39,10 @@
   --font-mono: var(--font-geist-mono);
   --font-primary: var(--font-suisse-intl);
 
-  --spacing-header-height: 120px;
+  --spacing-header-height-home: 120px;
+  --spacing-header-height-home-mobile: 90px;
+
+  --spacing-header-height: 160px;
   --spacing-header-height-mobile: 90px;
 }
 

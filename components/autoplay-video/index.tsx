@@ -189,11 +189,11 @@ export function AutoplayVideo({
           <ArrowsOutIcon className='pointer-events-none size-full text-black' weight='thin' aria-hidden />
         </span>
       </span>
-      <div className='absolute top-12 left-10 xl:left-14 xl:top-14 3xl:left-24 3xl:top-24 z-50 font-primary text-6xl/none font-light xl:text-8xl/none text-white'>
+      <div className='absolute top-12 left-10 lg:left-14 lg:top-14 xl:left-14 xl:top-14 3xl:left-24 3xl:top-24 z-50 font-primary text-6xl/none font-light xl:text-8xl/none text-white'>
         <div className='flex items-center justify-center gap-2'>
           <div className='relative font-primary text-5xl/none font-light xl:text-6xl/none 3xl:text-7xl/none'>
             {tLifeIn5Minutes("mainTitle.number")}
-            <div className='absolute left-1/2 top-1/2 size-[100px] -translate-x-[50%] -translate-y-[60%] opacity-90 xl:size-[120px] 3xl:size-[160px]'>
+            <div className='absolute left-1/2 top-1/2 size-[100px] -translate-x-[50%] -translate-y-[60%] opacity-90 lg:size-[110px] xl:size-[120px] 3xl:size-[160px]'>
               <SvgFiveMins />
             </div>
           </div>
@@ -219,13 +219,13 @@ export function AutoplayVideo({
           <div className='flex items-end justify-evenly w-full'>
             {lifeIn5Minutes.map((item, idx) => (
               <Fragment key={item.title}>
-                <div className='flex items-center justify-center gap-x-1 lg:gap-x-4 xl:gap-x-2 2xl:gap-x-3'>
-                  <div className='size-5 xl:size-8 3xl:size-10'>{item.icon}</div>
+                <div className='flex items-center justify-center gap-x-1 md:gap-x-2 lg:gap-x-4 xl:gap-x-2 2xl:gap-x-3'>
+                  <div className='size-5 md:size-6 lg:size-7 xl:size-8 3xl:size-10'>{item.icon}</div>
                   <div className='flex flex-col items-start justify-center'>
-                    <div className='whitespace-nowrap font-primary text-[8px]/tight font-medium xl:text-sm/tight 3xl:text-lg/tight'>
+                    <div className='whitespace-nowrap font-primary text-[8px]/tight md:text-[10px]/tight lg:text-[12px]/tight font-medium xl:text-sm/tight 3xl:text-lg/tight'>
                       {item.d1}
                     </div>
-                    <div className='whitespace-nowrap font-primary text-[8px]/tight font-light xl:text-sm/tight 3xl:text-lg/tight'>
+                    <div className='whitespace-nowrap font-primary text-[8px]/tight md:text-[10px]/tight lg:text-[12px]/tight font-light xl:text-sm/tight 3xl:text-lg/tight'>
                       {item.d2}
                     </div>
                   </div>

@@ -7,7 +7,7 @@ import { useMemo, useRef } from "react"
 import { AutoplayVideo } from "@/components/autoplay-video"
 import { gsap, ScrollTrigger, useGSAP } from "@/components/gsap"
 import { LocaleTransitionLink } from "@/components/locale-transition-link"
-import type { Locale, Pathnames } from "@/i18n/routing"
+import type { Locale } from "@/i18n/routing"
 import { routeConfig, type SectionIdType } from "@/lib/constants"
 
 export interface HorizontalScrollProps {
@@ -85,8 +85,7 @@ export function HorizontalScroll({ onSectionChange }: HorizontalScrollProps) {
             <div key={item.id} data-slide={item.id} className='w-screen shrink-0 px-8'>
               <div className='flex w-full items-center justify-center'>
                 <LocaleTransitionLink
-                  href={item.paths[locale as Locale] as Pathnames}
-                  locale={locale as Locale}
+                  href={item.paths[locale as Locale]}
                   className='w-full aspect-16/14'
                 >
                   <AutoplayVideo playbackId={item.media?.muxSrc} />

@@ -1,49 +1,40 @@
 "use client"
 
-import { useLocale, useTranslations } from "next-intl"
+import { cn } from "@/lib/utils"
 
-import { IconScrollDown, Logo } from "@/components/icons"
-import { usePathname } from "@/i18n/navigation"
-import { routing, type Locale } from "@/i18n/routing"
+import { Logo } from "@/components/icons"
 import { LocaleTransitionLink } from "@/components/locale-transition-link"
-import { routeConfig } from "@/lib/constants"
-import { cn, toAllUppercase } from "@/lib/utils"
-import { XIcon } from "@phosphor-icons/react"
-
-const isLocale = (value: string): value is Locale => routing.locales.some((locale) => locale === value)
+import { usePathname } from "@/i18n/navigation"
 
 export function Header() {
-  const locale = useLocale() as Locale
   const pathname = usePathname()
-  const segments = pathname.split("/").filter(Boolean)
-  const normalizedSegments = segments.length > 0 && isLocale(segments[0]) ? segments.slice(1) : segments
-  const navigationKey = normalizedSegments.length ? `/${normalizedSegments[0]}` : "/"
-  const navigationItem = routeConfig[navigationKey]
-  const t = useTranslations("common")
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 h-header-height-mobile 2xl:h-header-height pt-3"
+        "fixed top-0 left-0 right-0 z-50 h-header-height-mobile 2xl:h-header-height"
         // "before:pointer-events-none before:absolute before:top-0 before:left-0 before:right-0 before:z-20 before:h-[150%] xl:before:h-full before:gradient-top-white-smooth"
       )}
     >
-      <div className='w-full px-8 lg:px-16 xl:px-16 mx-auto flex items-center justify-between h-full z-50 relative'>
+      <div className='w-full px-6 lg:px-16 xl:px-16 mx-auto flex items-center justify-between h-full z-50 relative'>
         <LocaleTransitionLink
           href='/'
-          locale={locale as Locale}
-          className='block size-28 xl:size-30 2xl:size-36 3xl:size-40 3xl:translate-y-4'
+          className={cn(
+            "block size-24 xl:size-24 2xl:size-32 3xl:size-36",
+            pathname === "/" && "xl:translate-y-4 3xl:translate-y-8",
+            pathname === "/" && "size-24 xl:size-30 2xl:size-36 3xl:size-40"
+          )}
         >
           <Logo className='text-bricky-brick' />
         </LocaleTransitionLink>
         {/* SCROLL DOWN */}
-        {pathname === "/" && (
+        {/* {pathname === "/" && (
           <div className='relative animate-bounce-translate hidden size-10'>
             <IconScrollDown className='text-bricky-brick size-full' />
             <span className='sr-only'>Scroll Down</span>
           </div>
-        )}
-        {pathname !== "/" && (
+        )} */}
+        {/* {pathname !== "/" && (
           <div
             className={cn(
               "text-bricky-brick font-medium mr-auto relative tracking-[0.25em]",
@@ -52,15 +43,9 @@ export function Header() {
               'before:content-[""] before:absolute before:-left-4 sm:before:-left-6 lg:before:-left-10 before:top-1/2 before:-translate-y-1/2 before:bg-bricky-brick/80 before:h-16 lg:before:h-12 before:w-px before:block'
             )}
           >
-            {toAllUppercase(t(navigationItem?.titleKey))}
+            {toAllUppercase(t(navigationItem?.titleKey), locale)}
           </div>
-        )}
-        {pathname !== "/" && (
-          <LocaleTransitionLink className='ml-auto' href='/' locale={locale as Locale}>
-            <XIcon className='size-9 sm:size-10 lg:size-12 text-bricky-brick' weight='light' />
-            <span className='sr-only'>Close</span>
-          </LocaleTransitionLink>
-        )}
+        )} */}
       </div>
     </header>
   )

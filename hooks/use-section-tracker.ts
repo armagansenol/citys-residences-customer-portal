@@ -39,6 +39,11 @@ export interface UseSectionTrackerOptions {
    * Scope ref for GSAP context (required for automatic cleanup with useGSAP)
    */
   scope?: React.RefObject<HTMLElement | null>
+  /**
+   * Whether the tracker is enabled. Use this to delay setup until data/sections are ready.
+   * @default true
+   */
+  enabled?: boolean
 }
 
 export interface UseSectionTrackerReturn {
@@ -102,7 +107,7 @@ function getDefaultPositions(direction: ScrollDirection) {
  * })
  */
 export function useSectionTracker(options: UseSectionTrackerOptions = {}): UseSectionTrackerReturn {
-  const { onSectionChange, direction = "vertical", containerAnimation, start, end, autoSetup = true, scope } = options
+  const { onSectionChange, direction = "vertical", containerAnimation, start, end, autoSetup = true, scope, enabled = true } = options
 
   const [activeSection, setActiveSectionState] = useState<SectionIdType | null>(SectionId.RESIDENCE_PLAN)
   const sectionRefs = useRef<Record<SectionIdType, HTMLElement | null>>({} as Record<SectionIdType, HTMLElement | null>)
@@ -165,7 +170,7 @@ export function useSectionTracker(options: UseSectionTrackerOptions = {}): UseSe
   // Auto setup for vertical scroll when using useGSAP scope
   useGSAP(
     () => {
-      if (!autoSetup || direction !== "vertical") return
+      if (!enabled || !autoSetup || direction !== "vertical") return
 
       // Skip if scope element is hidden (e.g., on mobile when using display: none)
       const scopeElement = scope?.current
@@ -191,14 +196,14 @@ export function useSectionTracker(options: UseSectionTrackerOptions = {}): UseSe
     },
     {
       scope: scope ?? undefined,
-      dependencies: [autoSetup, direction, start, end, setActiveSection],
+      dependencies: [enabled, autoSetup, direction, start, end, setActiveSection],
       revertOnUpdate: true,
     }
   )
 
   // Auto setup for horizontal scroll when containerAnimation is provided
   useEffect(() => {
-    if (!autoSetup || direction !== "horizontal" || !containerAnimation) return
+    if (!enabled || !autoSetup || direction !== "horizontal" || !containerAnimation) return
 
     setupTriggers(containerAnimation)
 
@@ -206,7 +211,7 @@ export function useSectionTracker(options: UseSectionTrackerOptions = {}): UseSe
       triggersRef.current.forEach((trigger) => trigger.kill())
       triggersRef.current = []
     }
-  }, [autoSetup, direction, containerAnimation, setupTriggers])
+  }, [enabled, autoSetup, direction, containerAnimation, setupTriggers])
 
   return {
     activeSection,
