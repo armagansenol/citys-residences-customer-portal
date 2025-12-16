@@ -169,7 +169,7 @@ export function ResidencePlanModal() {
               {/* Fixed Header Background */}
               <div
                 className={cn(
-                  "fixed top-0 left-0 right-0 z-40 h-header-height-mobile 2xl:[calc(var(--spacing-header-height)-1rem)]",
+                  "fixed top-0 left-0 right-0 z-40 h-header-height-mobile 2xl:h-[calc(var(--spacing-header-height)/1.35)]",
                   "gradient-bg-white"
                 )}
               ></div>
