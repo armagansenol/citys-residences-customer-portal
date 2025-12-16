@@ -46,7 +46,7 @@ export function ResidencePlanCard({
         <div className='absolute inset-0 flex flex-col justify-end py-6 lg:py-12 text-white gap-4 lg:gap-16'>
           <div className='flex flex-col items-center gap-1 text-center drop-shadow-[0_8px_16px_rgba(0,0,0,0.45)]'>
             <p className='font-primary text-lg/[1] xl:text-4xl/[1] font-semibold'>{block} BLOK</p>
-            <p className='font-primary text-base/[1] xl:text-3xl/[1] font-regular'>{floor}</p>
+            <p className='font-primary text-base/[1] xl:text-3xl/[1] font-regular'>Kat {floor}</p>
             <p className='font-primary text-base/[1] xl:text-3xl/[1] font-regular'>{number}</p>
           </div>
           <div className='flex justify-center'>

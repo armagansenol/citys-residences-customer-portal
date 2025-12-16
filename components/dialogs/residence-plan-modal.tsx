@@ -173,7 +173,6 @@ export function ResidencePlanModal() {
                   "gradient-bg-white"
                 )}
               ></div>
-
               {isLoading ? (
                 <section className='w-full px-8 lg:px-16 xl:px-24 2xl:px-32'>
                   <div className='flex min-h-screen items-center justify-center'>
@@ -216,7 +215,6 @@ export function ResidencePlanModal() {
                       )
                       .map((proposal, index) => {
                         const proposalSlug = generateProposalSlug(proposal)
-
                         return (
                           <ResidencePlanCard
                             key={`${proposal.Block}-${proposal.UnitNo}-${proposal.UnitType}`}
@@ -225,7 +223,7 @@ export function ResidencePlanModal() {
                             href='#'
                             image={getPlaceholderImage(index)}
                             block={proposal.Block}
-                            floor='' // API doesn't provide floor info
+                            floor={proposal.Floor}
                             number={`No ${proposal.UnitNo} | ${proposal.UnitType}`}
                           />
                         )

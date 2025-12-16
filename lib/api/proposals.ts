@@ -3,6 +3,7 @@ export type ProposalStatus = "active" | "expired"
 export interface ProposalItem {
   Block: string
   UnitType: string
+  Floor: string
   UnitNo: string
   ProposalDate: string
   ProposalExpireDate: string
