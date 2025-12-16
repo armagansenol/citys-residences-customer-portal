@@ -70,9 +70,9 @@ export function PDFViewer({ file, title }: PDFViewerProps) {
           const baseScale = containerWidth / viewport.width
           const devicePixelRatio = window.devicePixelRatio || 1
 
-          // Use higher of: devicePixelRatio or minimum 2.5x for crisp rendering
+          // Use higher of: devicePixelRatio or minimum 5x for crisp rendering
           // This ensures small screens still get high-quality renders
-          const qualityMultiplier = Math.max(devicePixelRatio, 2.5)
+          const qualityMultiplier = Math.max(devicePixelRatio, 5)
           const renderScale = baseScale * qualityMultiplier
           const scaledViewport = page.getViewport({ scale: renderScale })
 
