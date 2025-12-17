@@ -1,12 +1,13 @@
 "use client"
 
-import { LocaleTransitionLink } from "@/components/locale-transition-link"
-import { LoadingSpinner } from "@/components/loading-spinner"
 import { cn } from "@/lib/utils"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import type { EmblaCarouselType } from "embla-carousel"
 import useEmblaCarousel from "embla-carousel-react"
 import React, { useCallback, useEffect, useRef, useState } from "react"
+
+import { LocaleTransitionLink } from "@/components/locale-transition-link"
+import { LoadingSpinner } from "@/components/loading-spinner"
 
 const LAST_VISITED_ROUTE_KEY = "ios-picker-last-route"
 import styles from "./styles.module.css"
@@ -65,7 +66,7 @@ const setSlideStyles = (
     slideNode.style.opacity = "1"
     slideNode.style.transform = `translateY(-${index * 100}%) rotateX(${angle}deg) translateZ(${WHEEL_RADIUS}px)`
     slideNode.style.color = isActive ? "#CC4429" : ""
-    slideNode.style.pointerEvents = isActive ? "auto" : "none"
+    slideNode.style.pointerEvents = "auto"
   } else {
     slideNode.style.opacity = "0"
     slideNode.style.transform = "none"
@@ -120,6 +121,78 @@ export function IosPickerItem(props: IosPickerItemProps) {
   const rotationOffset = loop ? 0 : WHEEL_ITEM_RADIUS
   const [activeSlideIndex, setActiveSlideIndex] = useState<number | null>(null)
   const [isReady, setIsReady] = useState(false)
+
+  // Execute action for a specific item by its index
+  const executeItemAction = useCallback(
+    (itemIndex: number) => {
+      const item = duplicatedItems[itemIndex]
+      if (!item || item.disabled) return
+
+      const isResidencePlan =
+        item.id === routeConfig["/residence-plan"].id || (item.isModal && item.id === SectionId.RESIDENCE_PLAN)
+      const isCitysLiving = item.id === SectionId.CITYS_LIVING || (item.isModal && item.id === SectionId.CITYS_LIVING)
+      const isMasterplan = item.id === SectionId.MASTERPLAN || (item.isModal && item.id === SectionId.MASTERPLAN)
+
+      if (item.id) {
+        sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
+      }
+
+      if (isCitysLiving) {
+        setIsCitysLivingModalOpen(true)
+      } else if (isMasterplan) {
+        setIsMasterplanModalOpen(true)
+      } else if (isResidencePlan) {
+        setIsResidencePlanModalOpen(true)
+      } else {
+        // For regular links, we need to navigate programmatically
+        // Return the href so the caller can handle navigation
+        return item.href
+      }
+      return null
+    },
+    [duplicatedItems, setIsCitysLivingModalOpen, setIsMasterplanModalOpen, setIsResidencePlanModalOpen]
+  )
+
+  const handleSlideClick = useCallback(
+    (e: React.MouseEvent) => {
+      if (!emblaApi || !rootNodeRef.current) return
+
+      // Get click position relative to the picker center
+      const rect = rootNodeRef.current.getBoundingClientRect()
+      const centerY = rect.top + rect.height / 2
+      const clickY = e.clientY
+      const offsetFromCenter = clickY - centerY
+
+      // Calculate how many items away from center the click was
+      const itemOffset = Math.round(offsetFromCenter / WHEEL_ITEM_SIZE)
+
+      const currentIndex = emblaApi.selectedScrollSnap()
+
+      // If clicking on the center item (active), execute its action
+      if (itemOffset === 0) {
+        const href = executeItemAction(currentIndex)
+        // If it returned an href, we need to navigate (handled by the link itself)
+        // For modals, the action was already executed
+        if (href) {
+          // Allow the link's default behavior for navigation
+          return true
+        }
+        // Prevent default for modal items
+        e.preventDefault()
+        return false
+      } else {
+        // Calculate target index and scroll to it
+        e.preventDefault()
+        const targetIndex = currentIndex + itemOffset
+
+        // Clamp to valid range
+        const clampedIndex = Math.max(0, Math.min(targetIndex, slideCount - 1))
+        emblaApi.scrollTo(clampedIndex)
+        return false
+      }
+    },
+    [emblaApi, slideCount, executeItemAction]
+  )
 
   const inactivateEmblaTransform = useCallback((emblaApi: EmblaCarouselType) => {
     if (!emblaApi) return
@@ -223,19 +296,13 @@ export function IosPickerItem(props: IosPickerItemProps) {
                 item.id === SectionId.CITYS_LIVING || (item.isModal && item.id === SectionId.CITYS_LIVING)
               const isMasterplan =
                 item.id === SectionId.MASTERPLAN || (item.isModal && item.id === SectionId.MASTERPLAN)
-
-              if (isCitysLiving) {
+              // All items use the same unified click handler
+              // Modal items (CityLiving, Masterplan, ResidencePlan) are rendered as buttons
+              if (isCitysLiving || isMasterplan || isResidencePlan) {
                 return (
                   <button
                     key={index}
-                    onClick={() => {
-                      if (!item.disabled) {
-                        setIsCitysLivingModalOpen(true)
-                        if (item.id) {
-                          sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
-                        }
-                      }
-                    }}
+                    onClick={handleSlideClick}
                     disabled={item.disabled}
                     className={cn(
                       styles.slide,
@@ -248,87 +315,81 @@ export function IosPickerItem(props: IosPickerItemProps) {
                       "transition-colors duration-300",
                       {
                         [styles.disabled]: item.disabled,
+                        "gap-3": isResidencePlan,
                       }
                     )}
                   >
                     {item.title}
+                    {isResidencePlan && item.isLoading && <LoadingSpinner className='size-5 text-bricky-brick' />}
                   </button>
                 )
               }
-
-              if (isMasterplan) {
-                return (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      if (!item.disabled) {
-                        setIsMasterplanModalOpen(true)
-                        if (item.id) {
-                          sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
-                        }
-                      }
-                    }}
-                    disabled={item.disabled}
-                    className={cn(
-                      styles.slide,
-                      "text-gray-500",
-                      "size-full",
-                      "text-[7vw]/[1] md:text-[4vw]/[1] lg:text-[3.5vw]/[1] font-regular",
-                      "flex items-center justify-start",
-                      "text-left",
-                      "px-14 md:px-[15vw] lg:px-[14vw]",
-                      "transition-colors duration-300",
-                      {
-                        [styles.disabled]: item.disabled,
-                      }
-                    )}
-                  >
-                    {item.title}
-                  </button>
-                )
-              }
-
-              if (isResidencePlan) {
-                return (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      if (!item.disabled) {
-                        setIsResidencePlanModalOpen(true)
-                        if (item.id) {
-                          sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
-                        }
-                      }
-                    }}
-                    disabled={item.disabled}
-                    className={cn(
-                      styles.slide,
-                      "text-gray-500",
-                      "size-full",
-                      "text-[7vw]/[1] md:text-[4vw]/[1] lg:text-[3.5vw]/[1] font-regular",
-                      "flex items-center justify-start gap-3",
-                      "text-left",
-                      "px-14 md:px-[15vw] lg:px-[14vw]",
-                      "transition-colors duration-300",
-                      {
-                        [styles.disabled]: item.disabled,
-                      }
-                    )}
-                  >
-                    {item.title}
-                    {item.isLoading && <LoadingSpinner className='size-5 text-bricky-brick' />}
-                  </button>
-                )
-              }
-
+              // Regular navigation links
               return (
                 <LocaleTransitionLink
-                  href={isResidencePlan ? "#" : item.href}
+                  href={item.href}
                   {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
-                  onClick={() => {
-                    // Store the item id before navigation so we can restore position on return
-                    if (item.id && !item.disabled && !isResidencePlan) {
-                      sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
+                  onClick={(e) => {
+                    if (!emblaApi || !rootNodeRef.current) return
+
+                    // Get click position relative to the picker center
+                    const rect = rootNodeRef.current.getBoundingClientRect()
+                    const centerY = rect.top + rect.height / 2
+                    const clickY = e.clientY
+                    const offsetFromCenter = clickY - centerY
+
+                    // Calculate how many items away from center the click was
+                    const itemOffset = Math.round(offsetFromCenter / WHEEL_ITEM_SIZE)
+
+                    const currentIndex = emblaApi.selectedScrollSnap()
+
+                    // If not clicking on the center item, scroll to target
+                    if (itemOffset !== 0) {
+                      e.preventDefault()
+                      const targetIndex = currentIndex + itemOffset
+                      const clampedIndex = Math.max(0, Math.min(targetIndex, slideCount - 1))
+                      emblaApi.scrollTo(clampedIndex)
+                      return
+                    }
+
+                    // Clicking on center - get the actual selected item and navigate to it
+                    const selectedItem = duplicatedItems[currentIndex]
+                    if (selectedItem) {
+                      if (selectedItem.id) {
+                        sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, selectedItem.id)
+                      }
+                      // Check if the selected item is a modal type
+                      const selectedIsCitysLiving =
+                        selectedItem.id === SectionId.CITYS_LIVING ||
+                        (selectedItem.isModal && selectedItem.id === SectionId.CITYS_LIVING)
+                      const selectedIsMasterplan =
+                        selectedItem.id === SectionId.MASTERPLAN ||
+                        (selectedItem.isModal && selectedItem.id === SectionId.MASTERPLAN)
+                      const selectedIsResidencePlan =
+                        selectedItem.id === routeConfig["/residence-plan"].id ||
+                        (selectedItem.isModal && selectedItem.id === SectionId.RESIDENCE_PLAN)
+
+                      if (selectedIsCitysLiving) {
+                        e.preventDefault()
+                        setIsCitysLivingModalOpen(true)
+                        return
+                      }
+                      if (selectedIsMasterplan) {
+                        e.preventDefault()
+                        setIsMasterplanModalOpen(true)
+                        return
+                      }
+                      if (selectedIsResidencePlan) {
+                        e.preventDefault()
+                        setIsResidencePlanModalOpen(true)
+                        return
+                      }
+                      // For regular links, allow navigation but update href first
+                      if (selectedItem.href !== item.href) {
+                        e.preventDefault()
+                        window.location.href = selectedItem.href
+                        return
+                      }
                     }
                   }}
                   className={cn(
@@ -342,7 +403,6 @@ export function IosPickerItem(props: IosPickerItemProps) {
                     "transition-colors duration-300",
                     {
                       [styles.disabled]: item.disabled,
-                      "pointer-events-none!": isResidencePlan,
                     }
                   )}
                   key={index}
