@@ -26,6 +26,31 @@ export const WHEEL_RADIUS = Math.round(WHEEL_ITEM_SIZE / 2 / Math.tan(Math.PI / 
 const isInView = (wheelLocation: number, slidePosition: number): boolean =>
   Math.abs(wheelLocation - slidePosition) < IN_VIEW_DEGREES
 
+const getDistanceFromCenter = (
+  emblaApi: EmblaCarouselType,
+  index: number,
+  loop: boolean,
+  slideCount: number,
+  totalRadius: number
+): number => {
+  const wheelLocation = emblaApi.scrollProgress() * totalRadius
+  const positionDefault = emblaApi.scrollSnapList()[index] * totalRadius
+  const positionLoopStart = positionDefault + totalRadius
+  const positionLoopEnd = positionDefault - totalRadius
+
+  let distanceFromCenter = Math.abs(wheelLocation - positionDefault)
+
+  if (loop && isInView(wheelLocation, positionLoopEnd)) {
+    distanceFromCenter = Math.abs(wheelLocation - positionLoopEnd)
+  }
+
+  if (loop && isInView(wheelLocation, positionLoopStart)) {
+    distanceFromCenter = Math.abs(wheelLocation - positionLoopStart)
+  }
+
+  return distanceFromCenter
+}
+
 const setSlideStyles = (
   emblaApi: EmblaCarouselType,
   index: number,
@@ -66,7 +91,8 @@ const setSlideStyles = (
     slideNode.style.opacity = "1"
     slideNode.style.transform = `translateY(-${index * 100}%) rotateX(${angle}deg) translateZ(${WHEEL_RADIUS}px)`
     slideNode.style.color = isActive ? "#CC4429" : ""
-    slideNode.style.pointerEvents = "auto"
+    // Only allow clicking on the active (centered) item
+    slideNode.style.pointerEvents = isActive ? "auto" : "none"
   } else {
     slideNode.style.opacity = "0"
     slideNode.style.transform = "none"
@@ -119,7 +145,6 @@ export function IosPickerItem(props: IosPickerItemProps) {
   const rootNodeRef = useRef<HTMLDivElement>(null)
   const totalRadius = slideCount * WHEEL_ITEM_RADIUS
   const rotationOffset = loop ? 0 : WHEEL_ITEM_RADIUS
-  const [activeSlideIndex, setActiveSlideIndex] = useState<number | null>(null)
   const [isReady, setIsReady] = useState(false)
 
   // Execute action for a specific item by its index
@@ -153,45 +178,26 @@ export function IosPickerItem(props: IosPickerItemProps) {
     [duplicatedItems, setIsCitysLivingModalOpen, setIsMasterplanModalOpen, setIsResidencePlanModalOpen]
   )
 
-  const handleSlideClick = useCallback(
-    (e: React.MouseEvent) => {
-      if (!emblaApi || !rootNodeRef.current) return
+  // Create a click handler for modal items (buttons) that uses element index
+  const createButtonClickHandler = useCallback(
+    (itemIndex: number) => (e: React.MouseEvent) => {
+      if (!emblaApi) return
 
-      // Get click position relative to the picker center
-      const rect = rootNodeRef.current.getBoundingClientRect()
-      const centerY = rect.top + rect.height / 2
-      const clickY = e.clientY
-      const offsetFromCenter = clickY - centerY
+      const dist = getDistanceFromCenter(emblaApi, itemIndex, loop, slideCount, totalRadius)
+      const isSnapMatch = emblaApi.selectedScrollSnap() === itemIndex
 
-      // Calculate how many items away from center the click was
-      const itemOffset = Math.round(offsetFromCenter / WHEEL_ITEM_SIZE)
-
-      const currentIndex = emblaApi.selectedScrollSnap()
-
-      // If clicking on the center item (active), execute its action
-      if (itemOffset === 0) {
-        const href = executeItemAction(currentIndex)
-        // If it returned an href, we need to navigate (handled by the link itself)
-        // For modals, the action was already executed
-        if (href) {
-          // Allow the link's default behavior for navigation
-          return true
-        }
-        // Prevent default for modal items
+      // If clicking on this item but it's not the center item (neither visually nor logically), scroll to it
+      if (!isSnapMatch && dist > WHEEL_ITEM_RADIUS / 2) {
         e.preventDefault()
-        return false
-      } else {
-        // Calculate target index and scroll to it
-        e.preventDefault()
-        const targetIndex = currentIndex + itemOffset
-
-        // Clamp to valid range
-        const clampedIndex = Math.max(0, Math.min(targetIndex, slideCount - 1))
-        emblaApi.scrollTo(clampedIndex)
-        return false
+        emblaApi.scrollTo(itemIndex)
+        return
       }
+
+      // Clicking on the center item - execute its action
+      e.preventDefault()
+      executeItemAction(itemIndex)
     },
-    [emblaApi, slideCount, executeItemAction]
+    [emblaApi, executeItemAction, loop, slideCount, totalRadius]
   )
 
   const inactivateEmblaTransform = useCallback((emblaApi: EmblaCarouselType) => {
@@ -210,16 +216,9 @@ export function IosPickerItem(props: IosPickerItemProps) {
       const rotation = slideCount * WHEEL_ITEM_RADIUS - rotationOffset
       const wheelRotation = rotation * emblaApi.scrollProgress()
       setContainerStyles(emblaApi, wheelRotation)
-      let activeIndex: number | null = null
       emblaApi.slideNodes().forEach((_, index) => {
-        const isActive = setSlideStyles(emblaApi, index, loop, slideCount, totalRadius)
-        if (isActive) {
-          activeIndex = index
-        }
+        setSlideStyles(emblaApi, index, loop, slideCount, totalRadius)
       })
-      if (activeIndex !== null) {
-        setActiveSlideIndex(activeIndex)
-      }
     },
     [slideCount, rotationOffset, totalRadius, loop]
   )
@@ -302,7 +301,7 @@ export function IosPickerItem(props: IosPickerItemProps) {
                 return (
                   <button
                     key={index}
-                    onClick={handleSlideClick}
+                    onClick={createButtonClickHandler(index)}
                     disabled={item.disabled}
                     className={cn(
                       styles.slide,
@@ -324,79 +323,71 @@ export function IosPickerItem(props: IosPickerItemProps) {
                   </button>
                 )
               }
-              // Regular navigation links
+              // External links use plain <a> tag (Next.js Link doesn't handle external URLs well)
+              if (item.isExternal) {
+                return (
+                  <a
+                    href={item.href}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    onClick={(e) => {
+                      if (!emblaApi) return
+
+                      const dist = getDistanceFromCenter(emblaApi, index, loop, slideCount, totalRadius)
+                      const isSnapMatch = emblaApi.selectedScrollSnap() === index
+
+                      if (!isSnapMatch && dist > WHEEL_ITEM_RADIUS / 2) {
+                        e.preventDefault()
+                        emblaApi.scrollTo(index)
+                        return
+                      }
+
+                      // Clicking on the center item - save to session storage and let anchor handle navigation
+                      if (item.id) {
+                        sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
+                      }
+                      // Don't prevent default - anchor will open in new tab
+                    }}
+                    className={cn(
+                      styles.slide,
+                      "text-gray-500",
+                      "size-full",
+                      "text-[7vw]/[1] md:text-[4vw]/[1] lg:text-[3.5vw]/[1] font-regular",
+                      "flex items-center justify-start",
+                      "text-left",
+                      "px-14 md:px-[15vw] lg:px-[14vw]",
+                      "transition-colors duration-300",
+                      {
+                        [styles.disabled]: item.disabled,
+                      }
+                    )}
+                    key={index}
+                  >
+                    {item.title}
+                  </a>
+                )
+              }
+              // Regular internal navigation links
               return (
                 <LocaleTransitionLink
                   href={item.href}
-                  {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
                   onClick={(e) => {
-                    if (!emblaApi || !rootNodeRef.current) return
+                    if (!emblaApi) return
 
-                    // Get click position relative to the picker center
-                    const rect = rootNodeRef.current.getBoundingClientRect()
-                    const centerY = rect.top + rect.height / 2
-                    const clickY = e.clientY
-                    const offsetFromCenter = clickY - centerY
+                    const dist = getDistanceFromCenter(emblaApi, index, loop, slideCount, totalRadius)
+                    const isSnapMatch = emblaApi.selectedScrollSnap() === index
 
-                    // Calculate how many items away from center the click was
-                    const itemOffset = Math.round(offsetFromCenter / WHEEL_ITEM_SIZE)
-
-                    const currentIndex = emblaApi.selectedScrollSnap()
-
-                    // If not clicking on the center item, scroll to target
-                    if (itemOffset !== 0) {
+                    if (!isSnapMatch && dist > WHEEL_ITEM_RADIUS / 2) {
                       e.preventDefault()
-                      const targetIndex = currentIndex + itemOffset
-                      const clampedIndex = Math.max(0, Math.min(targetIndex, slideCount - 1))
-                      emblaApi.scrollTo(clampedIndex)
+                      emblaApi.scrollTo(index)
                       return
                     }
 
-                    // Clicking on center - get the actual selected item and navigate to it
-                    const selectedItem = duplicatedItems[currentIndex]
-                    if (selectedItem) {
-                      if (selectedItem.id) {
-                        sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, selectedItem.id)
-                      }
-                      // Check if the selected item is a modal type
-                      const selectedIsCitysLiving =
-                        selectedItem.id === SectionId.CITYS_LIVING ||
-                        (selectedItem.isModal && selectedItem.id === SectionId.CITYS_LIVING)
-                      const selectedIsMasterplan =
-                        selectedItem.id === SectionId.MASTERPLAN ||
-                        (selectedItem.isModal && selectedItem.id === SectionId.MASTERPLAN)
-                      const selectedIsResidencePlan =
-                        selectedItem.id === routeConfig["/residence-plan"].id ||
-                        (selectedItem.isModal && selectedItem.id === SectionId.RESIDENCE_PLAN)
-
-                      if (selectedIsCitysLiving) {
-                        e.preventDefault()
-                        setIsCitysLivingModalOpen(true)
-                        return
-                      }
-                      if (selectedIsMasterplan) {
-                        e.preventDefault()
-                        setIsMasterplanModalOpen(true)
-                        return
-                      }
-                      if (selectedIsResidencePlan) {
-                        e.preventDefault()
-                        setIsResidencePlanModalOpen(true)
-                        return
-                      }
-                      // For external links, explicitly open in new tab
-                      if (selectedItem.isExternal) {
-                        e.preventDefault()
-                        window.open(selectedItem.href, "_blank", "noopener,noreferrer")
-                        return
-                      }
-                      // For regular links, allow navigation but update href first
-                      if (selectedItem.href !== item.href) {
-                        e.preventDefault()
-                        window.location.href = selectedItem.href
-                        return
-                      }
+                    // Clicking on the center item - save to session storage and let link handle navigation
+                    if (item.id) {
+                      sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
                     }
+                    // Don't prevent default - link will navigate
                   }}
                   className={cn(
                     styles.slide,
