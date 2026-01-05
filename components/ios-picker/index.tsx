@@ -384,6 +384,12 @@ export function IosPickerItem(props: IosPickerItemProps) {
                         setIsResidencePlanModalOpen(true)
                         return
                       }
+                      // For external links, explicitly open in new tab
+                      if (selectedItem.isExternal) {
+                        e.preventDefault()
+                        window.open(selectedItem.href, "_blank", "noopener,noreferrer")
+                        return
+                      }
                       // For regular links, allow navigation but update href first
                       if (selectedItem.href !== item.href) {
                         e.preventDefault()
