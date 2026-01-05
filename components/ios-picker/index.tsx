@@ -125,10 +125,20 @@ type IosPickerItemProps = {
   initialIndex?: number
   className?: string
   onReady?: () => void
+  onEmblaApi?: (api: EmblaCarouselType | undefined) => void
 }
 
 export function IosPickerItem(props: IosPickerItemProps) {
-  const { items, perspective = "center", loop = false, onSelect, initialIndex = 0, className, onReady } = props
+  const {
+    items,
+    perspective = "center",
+    loop = false,
+    onSelect,
+    initialIndex = 0,
+    className,
+    onReady,
+    onEmblaApi,
+  } = props
   const setIsCitysLivingModalOpen = useStore((state) => state.setIsCitysLivingModalOpen)
   const setIsMasterplanModalOpen = useStore((state) => state.setIsMasterplanModalOpen)
   const setIsResidencePlanModalOpen = useStore((state) => state.setIsResidencePlanModalOpen)
@@ -222,6 +232,11 @@ export function IosPickerItem(props: IosPickerItemProps) {
     },
     [slideCount, rotationOffset, totalRadius, loop]
   )
+
+  // Pass emblaApi to parent
+  useEffect(() => {
+    onEmblaApi?.(emblaApi)
+  }, [emblaApi, onEmblaApi])
 
   useEffect(() => {
     if (!emblaApi) return
@@ -427,6 +442,7 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
   const [isReady, setIsReady] = useState(false)
   const [pickerKey, setPickerKey] = useState(() => Date.now())
   const containerRef = useRef<HTMLDivElement>(null)
+  const [emblaApi, setEmblaApi] = useState<EmblaCarouselType | undefined>(undefined)
 
   // Always start at the first item (index 0)
   const currentInitialIndex = initialIndex
@@ -435,6 +451,16 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
   const handleReady = useCallback(() => {
     setIsReady(true)
   }, [])
+
+  // Scroll to previous item
+  const scrollPrev = useCallback(() => {
+    emblaApi?.scrollPrev()
+  }, [emblaApi])
+
+  // Scroll to next item
+  const scrollNext = useCallback(() => {
+    emblaApi?.scrollNext()
+  }, [emblaApi])
 
   return (
     <div
@@ -450,6 +476,7 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
         } as React.CSSProperties
       }
     >
+      <div className={styles.overlayTop} onClick={scrollPrev} />
       <IosPickerItem
         key={pickerKey}
         items={items}
@@ -458,7 +485,9 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
         onSelect={onSelect}
         initialIndex={currentInitialIndex}
         onReady={handleReady}
+        onEmblaApi={setEmblaApi}
       />
+      <div className={styles.overlayBottom} onClick={scrollNext} />
     </div>
   )
 }

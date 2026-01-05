@@ -8,27 +8,27 @@
   margin-right: auto;
 }
 
-.embla::before,
-.embla::after {
+.overlayTop,
+.overlayBottom {
   position: absolute;
   left: 0;
   right: 0;
-  content: "";
   display: block;
   height: calc(50% - var(--wheel-item-size) / 1.5);
   z-index: 1;
   opacity: var(--pseudo-opacity, 0);
   transition: opacity 500ms ease-in-out;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
-.embla::before {
+.overlayTop {
   top: -0.5px;
   border-bottom: 0.5px solid rgba(204, 68, 41, 0.3);
   background: linear-gradient(to top, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
-.embla::after {
+.overlayBottom {
   bottom: -0.5px;
   border-top: 0.5px solid rgba(204, 68, 41, 0.3);
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 1) 100%);
