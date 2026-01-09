@@ -5,18 +5,17 @@ import masterplan from "@/public/img/masterplan.jpg"
 import { useMemo, useRef } from "react"
 
 import { cn } from "@/lib/utils"
-import { FacebookLogoIcon, InstagramLogoIcon, XLogoIcon, YoutubeLogoIcon } from "@phosphor-icons/react/ssr"
+import { FacebookLogoIcon, InstagramLogoIcon, XLogoIcon } from "@phosphor-icons/react/ssr"
 import { useLocale, useTranslations } from "next-intl"
-import { ArrowRightIcon } from "@phosphor-icons/react"
 
 import { AutoplayVideo } from "@/components/autoplay-video"
 import { IconCollab, IconScrollDown, Logo } from "@/components/icons"
+import { Image } from "@/components/image"
+import { IosPicker } from "@/components/ios-picker"
 import { LocaleTransitionLink } from "@/components/locale-transition-link"
 import { useSectionTracker } from "@/hooks"
 import type { Locale } from "@/i18n/routing"
-import { residencePlanMedia, routeConfig, SectionId } from "@/lib/constants"
-import { IosPicker } from "@/components/ios-picker"
-import { Image } from "@/components/image"
+import { residencePlanMedia, routeConfig, SectionId, socialMedia } from "@/lib/constants"
 import { useStore } from "@/lib/store/ui"
 
 import { useQuery } from "@tanstack/react-query"
@@ -25,6 +24,8 @@ import { useSearchParams } from "next/navigation"
 import { LoadingSpinner } from "@/components/loading-spinner"
 import { Wrapper } from "@/components/wrapper"
 import { fetchProposalById } from "@/lib/api/proposals"
+import Link from "next/link"
+import { ArrowRightIcon, TiktokLogoIcon } from "@phosphor-icons/react"
 
 export default function Page() {
   const searchParams = useSearchParams()
@@ -240,22 +241,30 @@ export default function Page() {
             </div>
             {/* SOCIAL MEDIA */}
             <div className='mr-auto gap-4 flex 3xl:gap-6'>
-              <FacebookLogoIcon
-                weight='fill'
-                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-              />
-              <XLogoIcon
-                weight='regular'
-                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-              />
-              <InstagramLogoIcon
-                weight='regular'
-                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-              />
-              <YoutubeLogoIcon
-                weight='fill'
-                className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-              />
+              <Link href={socialMedia.facebook} target='_blank' rel='noopener noreferrer'>
+                <FacebookLogoIcon
+                  weight='fill'
+                  className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                />
+              </Link>
+              <Link href={socialMedia.x} target='_blank' rel='noopener noreferrer'>
+                <XLogoIcon
+                  weight='regular'
+                  className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                />
+              </Link>
+              <Link href={socialMedia.instagram} target='_blank' rel='noopener noreferrer'>
+                <InstagramLogoIcon
+                  weight='regular'
+                  className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                />
+              </Link>
+              <Link href={socialMedia.tiktok} target='_blank' rel='noopener noreferrer'>
+                <TiktokLogoIcon
+                  weight='regular'
+                  className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                />
+              </Link>
             </div>
           </div>
         </div>

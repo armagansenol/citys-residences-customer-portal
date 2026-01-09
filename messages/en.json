@@ -53,9 +53,18 @@
         "exploreAgain": "Explore Again",
         "legalDisclaimer": "City’s Residences is a registered trademark of Hayat A.Ş. All usage rights, operational activities, and representation of the brand are carried out by CITYS GAYRİMENKUL A.Ş. with consent.",
         "residencePlan": {
-            "ctaLabel": "Residence Plan"
+            "ctaLabel": "Residence Proposal",
+            "ctaLabel2": "12/24 MONTHS",
+            "months": "MONTHS"
         },
-        "backToProposals": "Back to Proposals"
+        "backToProposals": "Back to Proposals",
+        "expiredProposal": {
+            "title": "Your proposal has expired.",
+            "description": "You can contact your sales manager.",
+            "representativeName": "Name Surname",
+            "representativePhone": "+90 (216) 266 66 00",
+            "callNow": "CALL NOW"
+        }
     },
     "citysLiving": {
         "park": {

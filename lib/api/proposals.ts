@@ -9,6 +9,9 @@ export interface ProposalItem {
   ProposalExpireDate: string
   status: ProposalStatus
   File: string
+  InstallmentPeriod: string
+  User: string
+  UserMobilePhone: string
 }
 
 export interface ProposalResponse {

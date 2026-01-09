@@ -52,9 +52,18 @@
         "getDirections": "Yol <br></br> Tarifi Al",
         "legalDisclaimer": "City’s Residences, Hayat A.Ş.'nin tescilli bir markasıdır. Markanın tüm kullanım hakları, operasyonel faaliyetleri ve temsiliyeti, muvafakatname ile CITYS GAYRİMENKUL A.Ş. tarafından yürütülmektedir.",
         "residencePlan": {
-            "ctaLabel": "Daire Planı"
+            "ctaLabel": "Daire Teklifi",
+            "ctaLabel2": "12/24 AY",
+            "months": "AY"
         },
-        "backToProposals": "Tekliflere Geri Dön"
+        "backToProposals": "Tekliflere Geri Dön",
+        "expiredProposal": {
+            "title": "Teklifinizin süresi dolmuştur.",
+            "description": "Satış müdürünüzle iletişime geçebilirsiniz.",
+            "representativeName": "İsim Soyisim",
+            "representativePhone": "+90 (216) 266 66 00",
+            "callNow": "ŞİMDİ ARA"
+        }
     },
     "citysLiving": {
         "park": {

@@ -254,3 +254,10 @@ export const getMenuTextKey = (itemId: string): string => {
   }
   return keyMap[itemId] || itemId
 }
+
+export const socialMedia = {
+  facebook: "https://www.facebook.com/profile.php?id=61574032204752",
+  instagram: "https://www.instagram.com/citysresidences",
+  x: "https://www.x.com/citysresidences",
+  tiktok: "https://www.tiktok.com/@citysresidences",
+}

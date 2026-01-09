@@ -12,8 +12,10 @@ type ResidencePlanCardProps = {
   block: string
   floor: string
   number: string
+  installmentPeriod?: string
   href?: string
   ctaLabel?: string
+  ctaLabel2?: string
   priority?: boolean
   onClick?: () => void
 }
@@ -23,8 +25,10 @@ export function ResidencePlanCard({
   block,
   floor,
   number,
+  installmentPeriod,
   href = "#",
   ctaLabel = "residencePlan.ctaLabel",
+  ctaLabel2 = "residencePlan.ctaLabel2",
   onClick,
 }: ResidencePlanCardProps) {
   const t = useTranslations("common")
@@ -42,16 +46,23 @@ export function ResidencePlanCard({
           priority
         />
         <div className='absolute inset-0 bg-linear-to-t from-black/55 via-black/15 to-transparent' />
-        <div className='absolute inset-0 flex flex-col justify-end py-6 lg:py-12 text-white gap-4 lg:gap-16'>
-          <div className='flex flex-col items-center gap-1 text-center drop-shadow-[0_8px_16px_rgba(0,0,0,0.45)]'>
-            <p className='font-primary text-lg/[1] xl:text-4xl/[1] font-semibold'>{block} BLOK</p>
-            <p className='font-primary text-base/[1] xl:text-3xl/[1] font-regular'>Kat {floor}</p>
-            <p className='font-primary text-base/[1] xl:text-3xl/[1] font-regular'>{number}</p>
+        <div className='absolute inset-0 flex flex-col justify-end py-12 lg:py-12 text-white gap-16 xl:gap-16'>
+          <div className='flex flex-col items-center gap-2 xl:gap-1 text-center drop-shadow-[0_8px_16px_rgba(0,0,0,0.45)]'>
+            <p className='font-primary text-3xl/[1] xl:text-3xl/[1] 2xl:text-4xl/[1] font-semibold'>{block} BLOK</p>
+            <p className='font-primary text-3xl/[1] xl:text-2xl/[1] 2xl:text-4xl/[1] font-regular'>Kat {floor}</p>
+            <p className='font-primary text-3xl/[1] xl:text-2xl/[1] 2xl:text-4xl/[1] font-regular'>{number}</p>
           </div>
           <div className='flex justify-center'>
-            <div className='inline-flex items-center gap-3 gradient-submit-button px-4 xl:px-12 py-2 xl:py-4 text-[9px] xl:text-lg font-medium tracking-[0.28em] text-white whitespace-nowrap'>
-              {toAllUppercase(t(ctaLabel), locale)}
-              <CaretRightIcon weight='regular' className='text-white size-3 xl:size-6' />
+            <div className='inline-flex items-center gap-0.5 xl:gap-2 gradient-submit-button px-6 xl:px-4 py-2.5 xl:py-2 2xl:py-2.5 font-medium tracking-0.1em text-white whitespace-nowrap'>
+              <span className='text-base md:text-[7px]/[1] lg:text-[9px]/[1] xl:text-[12px]/[1] 2xl:text-[13px]/[1] 3xl:text-base tracking-widest'>
+                {toAllUppercase(t(ctaLabel), locale)}
+              </span>
+              <CaretRightIcon weight='regular' className='text-white size-5 xl:size-7 3xl:size-8 shrink-0' />
+              <span className='text-base md:text-[7px]/[1] lg:text-[9px]/[1] xl:text-[12px]/[1] 2xl:text-[13px]/[1] 3xl:text-base tracking-widest'>
+                {installmentPeriod &&
+                  installmentPeriod !== "0" &&
+                  toAllUppercase(`${installmentPeriod} ${t("residencePlan.months")}`, locale)}
+              </span>
             </div>
           </div>
         </div>

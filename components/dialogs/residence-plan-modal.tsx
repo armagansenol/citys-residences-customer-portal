@@ -5,17 +5,47 @@ import { useQuery } from "@tanstack/react-query"
 import { useLenis } from "lenis/react"
 import { AnimatePresence, motion } from "motion/react"
 import { useSearchParams } from "next/navigation"
-import { useEffect } from "react"
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useLocale, useTranslations } from "next-intl"
 
 import { Logo } from "@/components/icons"
 import { LoadingSpinner } from "@/components/loading-spinner"
+import { ExpiredProposalDialog } from "@/components/dialogs/expired-proposal-dialog"
 import { PDFViewer } from "@/components/residence-plan/pdf-viewer"
 import { ResidencePlanCard } from "@/components/residence-plan/residence-plan-card"
 import { useEsc } from "@/hooks/useEsc"
-import { fetchProposalById, generateProposalSlug } from "@/lib/api/proposals"
+import { useMobileLandscapeHeader } from "@/hooks/use-mobile-landscape-header"
+import { fetchProposalById, generateProposalSlug, type ProposalItem } from "@/lib/api/proposals"
 import { useStore } from "@/lib/store/ui"
 import { cn, toAllUppercase } from "@/lib/utils"
+
+/**
+ * Get the fetch URL for a PDF file (handles proxy for external URLs)
+ */
+function getPdfFetchUrl(file: string): string {
+  const isExternalUrl = file.startsWith("http://") || file.startsWith("https://")
+  return isExternalUrl ? `/api/pdf-proxy?url=${encodeURIComponent(file)}` : file
+}
+
+/**
+ * Prefetch PDF files to warm up the browser cache
+ * Uses low priority fetch to avoid blocking other requests
+ */
+async function prefetchPDF(file: string): Promise<void> {
+  try {
+    const url = getPdfFetchUrl(file)
+    await fetch(url, {
+      method: "GET",
+      // Use cache to ensure the response is stored
+      cache: "force-cache",
+      // Low priority to not block other requests
+      priority: "low",
+    } as RequestInit)
+  } catch {
+    // Silently fail - prefetch is an optimization, not critical
+    console.debug(`[PDF Prefetch] Failed to prefetch: ${file}`)
+  }
+}
 
 // Placeholder images - you can replace these with actual images or use a default
 const PLACEHOLDER_IMAGES = ["/img/rp-1.jpg", "/img/rp-2.jpg", "/img/rp-3.jpg", "/img/rp-4.jpg"]
@@ -34,6 +64,14 @@ export function ResidencePlanModal() {
   const proposalId = searchParams?.get("id") || null
   const locale = useLocale()
   const tCommon = useTranslations("common")
+  const [showExpiredDialog, setShowExpiredDialog] = useState(false)
+  const [expiredProposalUser, setExpiredProposalUser] = useState<{ name?: string; phone?: string }>({})
+
+  const prefetchedRef = useRef<Set<string>>(new Set())
+  const modalContentRef = useRef<HTMLDivElement>(null)
+
+  // Custom hook for mobile landscape header hide/show behavior
+  const { showHeader, isLandscape } = useMobileLandscapeHeader({ isOpen })
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["proposal", proposalId],
@@ -41,6 +79,33 @@ export function ResidencePlanModal() {
     enabled: Boolean(proposalId) && isOpen,
     staleTime: 1000 * 60 * 60, // Cache for 1 hour
   })
+
+  // Prefetch all PDFs when data loads and we're in list view
+  const prefetchAllPDFs = useCallback((proposals: ProposalItem[]) => {
+    proposals.forEach((proposal) => {
+      // Skip if already prefetched
+      if (prefetchedRef.current.has(proposal.File)) return
+
+      prefetchedRef.current.add(proposal.File)
+      prefetchPDF(proposal.File)
+    })
+  }, [])
+
+  // Trigger prefetch when modal opens and data is available
+  useEffect(() => {
+    if (isOpen && data && !slug) {
+      // Prefetch all PDFs from both active and expired lists
+      const allProposals = [...data.data.active, ...data.data.expired]
+      prefetchAllPDFs(allProposals)
+    }
+  }, [isOpen, data, slug, prefetchAllPDFs])
+
+  // Scroll modal content to top when switching views (slug changes)
+  useLayoutEffect(() => {
+    if (modalContentRef.current) {
+      modalContentRef.current.scrollTop = 0
+    }
+  }, [slug])
 
   useEsc(() => {
     if (slug) {
@@ -66,7 +131,18 @@ export function ResidencePlanModal() {
   }, [isOpen, lenis, setSlug])
 
   const handleCardClick = (selectedSlug: string) => {
-    setSlug(selectedSlug)
+    // Check if proposal is in the expired list
+    const expiredProposal = data?.data.expired.find((p) => generateProposalSlug(p) === selectedSlug)
+
+    if (expiredProposal) {
+      setExpiredProposalUser({
+        name: expiredProposal.User,
+        phone: expiredProposal.UserMobilePhone,
+      })
+      setShowExpiredDialog(true)
+    } else {
+      setSlug(selectedSlug)
+    }
   }
 
   const handleBack = () => {
@@ -98,6 +174,7 @@ export function ResidencePlanModal() {
 
           {/* Modal Content */}
           <motion.div
+            ref={modalContentRef}
             initial={{ opacity: 0, scale: 0.99 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.99 }}
@@ -105,8 +182,15 @@ export function ResidencePlanModal() {
             className='fixed inset-0 z-201 overflow-y-auto'
             onClick={(e) => e.stopPropagation()}
             data-lenis-prevent
+            data-modal-content
           >
-            <div className='h-header-height-mobile 2xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16'>
+            <div
+              className={cn(
+                "h-header-height-mobile 2xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16",
+                "transition-opacity duration-500 ease-in-out",
+                isLandscape && !showHeader && "opacity-0 pointer-events-none"
+              )}
+            >
               {/* Close Button */}
               <button
                 onClick={() => setIsOpen(false)}
@@ -170,7 +254,9 @@ export function ResidencePlanModal() {
               <div
                 className={cn(
                   "fixed top-0 left-0 right-0 z-40 h-header-height-mobile 2xl:h-[calc(var(--spacing-header-height)/1.35)]",
-                  "gradient-bg-white"
+                  "gradient-bg-white",
+                  "transition-opacity duration-500 ease-in-out",
+                  isLandscape && !showHeader && "opacity-0"
                 )}
               ></div>
               {isLoading ? (
@@ -199,39 +285,35 @@ export function ResidencePlanModal() {
                 </section>
               ) : (
                 // List View
-                <section className='w-full px-8 lg:px-16 xl:px-24 2xl:px-32'>
-                  <div className='grid grid-cols-2 gap-4 md:gap-8 xl:gap-10 sm:grid-cols-2 lg:grid-cols-4 pt-12'>
-                    {data.data.active
-                      .filter(
-                        (proposal, index, self) =>
-                          index < 5 &&
-                          index ===
-                            self.findIndex(
-                              (p) =>
-                                p.Block === proposal.Block &&
-                                p.UnitNo === proposal.UnitNo &&
-                                p.UnitType === proposal.UnitType
-                            )
+                <section className='w-full px-6 lg:px-16 xl:px-24 2xl:px-32'>
+                  <div className='flex flex-col gap-8 lg:gap-8 xl:gap-6 2xl:gap-4 3xl:gap-8 pt-12 lg:grid lg:grid-cols-3 xl:grid-cols-4'>
+                    {[...data.data.active, ...data.data.expired].map((proposal, index) => {
+                      const proposalSlug = generateProposalSlug(proposal)
+                      return (
+                        <ResidencePlanCard
+                          key={`${proposal.Block}-${proposal.UnitNo}-${proposal.UnitType}-${index}`}
+                          onClick={() => handleCardClick(proposalSlug)}
+                          href='#'
+                          image={getPlaceholderImage(index)}
+                          block={proposal.Block}
+                          floor={proposal.Floor}
+                          number={`No ${proposal.UnitNo} | ${proposal.UnitType}`}
+                          installmentPeriod={proposal.InstallmentPeriod}
+                        />
                       )
-                      .map((proposal, index) => {
-                        const proposalSlug = generateProposalSlug(proposal)
-                        return (
-                          <ResidencePlanCard
-                            key={`${proposal.Block}-${proposal.UnitNo}-${proposal.UnitType}`}
-                            onClick={() => handleCardClick(proposalSlug)}
-                            href='#'
-                            image={getPlaceholderImage(index)}
-                            block={proposal.Block}
-                            floor={proposal.Floor}
-                            number={`No ${proposal.UnitNo} | ${proposal.UnitType}`}
-                          />
-                        )
-                      })}
+                    })}
                   </div>
                 </section>
               )}
             </div>
           </motion.div>
+
+          <ExpiredProposalDialog
+            isOpen={showExpiredDialog}
+            onClose={() => setShowExpiredDialog(false)}
+            userName={expiredProposalUser.name}
+            userPhone={expiredProposalUser.phone}
+          />
         </>
       )}
     </AnimatePresence>

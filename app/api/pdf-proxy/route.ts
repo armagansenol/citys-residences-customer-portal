@@ -15,10 +15,7 @@ export async function GET(request: NextRequest) {
     })
 
     if (!response.ok) {
-      return NextResponse.json(
-        { error: `Failed to fetch PDF: ${response.status}` },
-        { status: response.status }
-      )
+      return NextResponse.json({ error: `Failed to fetch PDF: ${response.status}` }, { status: response.status })
     }
 
     const pdfBuffer = await response.arrayBuffer()
@@ -32,10 +29,6 @@ export async function GET(request: NextRequest) {
     })
   } catch (error) {
     console.error("PDF proxy error:", error)
-    return NextResponse.json(
-      { error: "Failed to fetch PDF" },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: "Failed to fetch PDF" }, { status: 500 })
   }
 }
-

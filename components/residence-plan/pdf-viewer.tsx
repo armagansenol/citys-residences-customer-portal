@@ -70,9 +70,9 @@ export function PDFViewer({ file, title }: PDFViewerProps) {
           const baseScale = containerWidth / viewport.width
           const devicePixelRatio = window.devicePixelRatio || 1
 
-          // Use higher of: devicePixelRatio or minimum 5x for crisp rendering
-          // This ensures small screens still get high-quality renders
-          const qualityMultiplier = Math.max(devicePixelRatio, 5)
+          // Use a multiplier that scales with device pixel ratio but stays within a stable range (2x to 3x).
+          // 5x was causing extremely large canvases on desktop, leading to rendering artifacts ("over-resolutioned" look).
+          const qualityMultiplier = Math.min(Math.max(devicePixelRatio, 2), 3)
           const renderScale = baseScale * qualityMultiplier
           const scaledViewport = page.getViewport({ scale: renderScale })
 
@@ -84,14 +84,19 @@ export function PDFViewer({ file, title }: PDFViewerProps) {
           // Set CSS dimensions to display at correct size (scale back down)
           canvas.style.width = `${scaledViewport.width / qualityMultiplier}px`
           canvas.style.height = `${scaledViewport.height / qualityMultiplier}px`
-          canvas.className = "block w-full"
+          canvas.className = "block w-full h-auto"
           canvas.style.marginBottom = pageNum < pdf.numPages ? "1rem" : "0"
+          canvas.style.imageRendering = "auto" // Ensure smooth downscaling
 
           container.appendChild(canvas)
 
           // Render PDF page to canvas
+          const context = canvas.getContext("2d")!
+          context.imageSmoothingEnabled = true
+          context.imageSmoothingQuality = "high"
+
           const renderContext = {
-            canvasContext: canvas.getContext("2d")!,
+            canvasContext: context,
             viewport: scaledViewport,
             canvas: canvas,
           }
