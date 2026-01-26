@@ -70,10 +70,10 @@
             "title": "City's Park",
             "items": [
                 "City's Lounge",
-                "Açık Yüzme Havuzları",
-                "Evcil Hayvan Parkı",
                 "Açık Spor Alanları",
+                "Açık Yüzme Havuzları",
                 "Yürüyüş/Koşu Parkuru",
+                "Evcil Hayvan Parkı",
                 "Çocuk Parkları"
             ]
         },
@@ -81,34 +81,34 @@
             "title": "City's Life",
             "items": [
                 "Resepsiyon & Concierge Hizmetleri",
+                "PSM <strong>x JUST EVENTS</strong>",
                 "Vale & Otopark Hizmetleri",
-                "Kargo Teslim Servisi",
-                "Paylaşımlı Ofis ve Toplantı Salonları <strong>x JUSTWORK</strong>",
-                "Yeni Nesil Hotel Odaları <strong>x JUST STAY</strong>",
-                "Performans Sanatları Merkezi <strong>x JUST EVENTS</strong>",
                 "Evcil Hayvan Oteli <strong>x PET HOTEL</strong>",
+                "Kargo Teslim Servisi",
                 "Veteriner Hizmetleri <strong>x PET HOSPITAL</strong>",
-                "City's AVM'lerinde Ayrıcalıklar"
+                "Paylaşımlı Ofis <strong>x JUSTWORK</strong>",
+                "City's AVM'lerinde Ayrıcalıklar",
+                "Yeni Nesil Hotel Odaları <strong>x JUST STAY</strong>"
             ]
         },
         "members": {
             "title": "City's Members Club",
             "items": [
                 "Kapalı Yüzme Havuzu",
-                "Spor Kulübü",
-                "SPA & Wellness",
-                "Basketbol Sahası",
-                "Padel Tenis Kortu",
-                "Golf Simülatör Sahası",
-                "Masa Tenisi",
-                "Yoga Stüdyosu",
                 "Meditasyon Odası",
+                "Spor Kulübü",
                 "Özel Sinema Salonu",
+                "SPA & Wellness",
                 "Yemek Atölyesi",
+                "Basketbol Sahası",
                 "Sanat Atölyesi",
+                "Padel Tenis Kortu",
                 "Müzik/Karaoke Stüdyosu",
+                "Golf Simülatör Sahası",
                 "Podcast Stüdyosu",
+                "Masa Tenisi",
                 "Playstation Odası",
+                "Yoga Stüdyosu",
                 "Kids Club <strong>x CITY'S KIDS CLUB</strong>"
             ]
         }
