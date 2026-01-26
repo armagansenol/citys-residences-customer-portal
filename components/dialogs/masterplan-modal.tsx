@@ -83,7 +83,7 @@ export function MasterplanModal() {
             onClick={(e) => e.stopPropagation()}
             data-lenis-prevent
           >
-            <div className='h-header-height-mobile 2xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16'>
+            <div className='h-header-height-mobile xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16'>
               {/* Close Button */}
               <button
                 onClick={() => setIsOpen(false)}
@@ -95,6 +95,7 @@ export function MasterplanModal() {
                   "cursor-pointer"
                 )}
                 aria-label='Close'
+                type='button'
               >
                 <Logo className='size-full text-bricky-brick' />
               </button>
@@ -119,6 +120,7 @@ export function MasterplanModal() {
                   "transition-opacity duration-300 hover:opacity-70",
                   "cursor-pointer"
                 )}
+                type='button'
                 aria-label='Close'
               >
                 <XIcon className='size-full' weight='light' />

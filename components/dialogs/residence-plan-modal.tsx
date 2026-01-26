@@ -186,7 +186,7 @@ export function ResidencePlanModal() {
           >
             <div
               className={cn(
-                "h-header-height-mobile 2xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16",
+                "h-header-height-mobile xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16",
                 "transition-opacity duration-500 ease-in-out",
                 isLandscape && !showHeader && "opacity-0 pointer-events-none"
               )}

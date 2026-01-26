@@ -21,7 +21,7 @@ function ModalHeader({ onClose, isVisible }: { onClose: () => void; isVisible: b
       initial={{ opacity: 1 }}
       animate={{ opacity: isVisible ? 1 : 0 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className='h-header-height-mobile 2xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16 mix-blend-difference pointer-events-none'
+      className='h-header-height-mobile xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16 mix-blend-difference pointer-events-none'
     >
       <div className='flex items-center justify-between w-full pointer-events-auto'>
         {/* Close Button */}

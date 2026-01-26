@@ -66,17 +66,18 @@ export default function Page() {
 
   return (
     <Wrapper>
-      <div className='h-header-height-mobile 2xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16'>
+      <div className='h-header-height-mobile xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16'>
         {/* Close Button */}
         <button
           className={cn(
-            "size-24 sm:size-24 lg:size-36",
+            "size-24 sm:size-24 lg:size-36 xl:size-36 2xl:size-36 3xl:size-36",
             "flex items-center justify-center",
             "text-bricky-brick",
             "transition-opacity duration-300 hover:opacity-70",
             "cursor-pointer"
           )}
           aria-label='Close'
+          type='button'
         >
           <Logo className='size-full text-bricky-brick' />
         </button>
@@ -89,7 +90,7 @@ export default function Page() {
       >
         <div
           className={cn(
-            "w-full size-full mx-auto px-8 lg:px-16 xl:px-16 pb-4 lg:pb-16 2xl:20 ",
+            "w-full size-full mx-auto px-8 lg:px-16 xl:px-16 pb-4 lg:pb-16 xl:pt-8 2xl:pt-0",
             "flex flex-col gap-6 lg:gap-4 3xl:gap-6"
           )}
         >
@@ -102,12 +103,13 @@ export default function Page() {
               if (isCitysLiving) {
                 return (
                   <button
+                    type='button'
                     key={item.id}
                     onClick={() => setIsCitysLivingModalOpen(true)}
                     className={cn(
                       "cursor-pointer",
                       "flex items-center gap-2",
-                      "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-5xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
+                      "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-4xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
                       "-tracking-[0.025em]",
                       "transition-colors duration-300 hover:text-tangerine-flake",
                       activeSection === item.id && "xl:text-bricky-brick",
@@ -122,12 +124,13 @@ export default function Page() {
               if (isMasterplan) {
                 return (
                   <button
+                    type='button'
                     key={item.id}
                     onClick={() => setIsMasterplanModalOpen(true)}
                     className={cn(
                       "cursor-pointer",
                       "flex items-center gap-2",
-                      "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-5xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
+                      "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-4xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
                       "-tracking-[0.025em]",
                       "transition-colors duration-300 hover:text-tangerine-flake",
                       activeSection === item.id && "xl:text-bricky-brick",
@@ -142,13 +145,14 @@ export default function Page() {
               if (isResidencePlan) {
                 return (
                   <button
+                    type='button'
                     key={item.id}
                     onClick={() => setIsResidencePlanModalOpen(true)}
                     disabled={isResidencePlanDisabled}
                     className={cn(
                       "cursor-pointer",
                       "flex items-center gap-2",
-                      "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-5xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
+                      "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-4xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
                       "-tracking-[0.025em]",
                       "transition-colors duration-300 hover:text-tangerine-flake",
                       activeSection === item.id && "xl:text-bricky-brick",
@@ -169,7 +173,7 @@ export default function Page() {
                   className={cn(
                     "cursor-pointer",
                     "flex items-center gap-2",
-                    "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-5xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
+                    "font-primary text-[8vw]/[1] xs:text-[8vw]/[1] xsm:text-[9vw]/[1] sm:text-2xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-4xl/[1] 2xl:text-6xl/[1] font-normal text-orochimaru",
                     "-tracking-[0.025em]",
                     "transition-colors duration-300 hover:text-tangerine-flake",
                     activeSection === item.id && "xl:text-bricky-brick",
@@ -280,6 +284,7 @@ export default function Page() {
               >
                 {item.id === SectionId.CITYS_LIVING ? (
                   <button
+                    type='button'
                     onClick={() => setIsCitysLivingModalOpen(true)}
                     className={cn(
                       "w-full xl:w-auto xl:h-full aspect-16/10 xl:aspect-16/14 2xl:aspect-16/15 3xl:aspect-16/14 cursor-pointer",
@@ -290,6 +295,7 @@ export default function Page() {
                   </button>
                 ) : item.id === SectionId.MASTERPLAN ? (
                   <button
+                    type='button'
                     onClick={() => setIsMasterplanModalOpen(true)}
                     className={cn(
                       "w-full xl:w-auto xl:h-full aspect-16/10 xl:aspect-16/14 2xl:aspect-16/15 3xl:aspect-16/14 cursor-pointer",
@@ -300,6 +306,7 @@ export default function Page() {
                   </button>
                 ) : item.id === SectionId.RESIDENCE_PLAN ? (
                   <button
+                    type='button'
                     onClick={() => setIsResidencePlanModalOpen(true)}
                     disabled={isResidencePlanDisabled}
                     className={cn(
