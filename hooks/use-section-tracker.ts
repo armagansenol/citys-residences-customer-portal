@@ -107,7 +107,16 @@ function getDefaultPositions(direction: ScrollDirection) {
  * })
  */
 export function useSectionTracker(options: UseSectionTrackerOptions = {}): UseSectionTrackerReturn {
-  const { onSectionChange, direction = "vertical", containerAnimation, start, end, autoSetup = true, scope, enabled = true } = options
+  const {
+    onSectionChange,
+    direction = "vertical",
+    containerAnimation,
+    start,
+    end,
+    autoSetup = true,
+    scope,
+    enabled = true,
+  } = options
 
   const [activeSection, setActiveSectionState] = useState<SectionIdType | null>(SectionId.RESIDENCE_PLAN)
   const sectionRefs = useRef<Record<SectionIdType, HTMLElement | null>>({} as Record<SectionIdType, HTMLElement | null>)
@@ -135,7 +144,9 @@ export function useSectionTracker(options: UseSectionTrackerOptions = {}): UseSe
   const setupTriggers = useCallback(
     (containerAnim?: gsap.core.Tween) => {
       // Clean up existing triggers
-      triggersRef.current.forEach((trigger) => trigger.kill())
+      triggersRef.current.forEach((trigger) => {
+        trigger.kill()
+      })
       triggersRef.current = []
 
       gsap.registerPlugin(ScrollTrigger)
@@ -208,7 +219,9 @@ export function useSectionTracker(options: UseSectionTrackerOptions = {}): UseSe
     setupTriggers(containerAnimation)
 
     return () => {
-      triggersRef.current.forEach((trigger) => trigger.kill())
+      triggersRef.current.forEach((trigger) => {
+        trigger.kill()
+      })
       triggersRef.current = []
     }
   }, [enabled, autoSetup, direction, containerAnimation, setupTriggers])

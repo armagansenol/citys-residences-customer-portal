@@ -202,6 +202,7 @@ export function ResidencePlanModal() {
                   "cursor-pointer"
                 )}
                 aria-label='Close'
+                type='button'
               >
                 <Logo className='size-full text-bricky-brick' />
               </button>
@@ -233,6 +234,7 @@ export function ResidencePlanModal() {
                   "cursor-pointer"
                 )}
                 aria-label={slug ? "Back" : "Close"}
+                type='button'
               >
                 {slug ? (
                   // <span className='flex items-center justify-center'>

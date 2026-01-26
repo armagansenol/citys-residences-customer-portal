@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+import { create } from "zustand"
 
 interface State {
   resetAnimatedLogo: boolean
@@ -21,25 +21,25 @@ interface State {
   setIsStickySidebarVisible: (status: boolean) => void
 }
 
-export const useStore = create<State>(set => ({
+export const useStore = create<State>((set) => ({
   isMenuOpen: false,
-  setIsMenuOpen: status => set({ isMenuOpen: status }),
+  setIsMenuOpen: (status) => set({ isMenuOpen: status }),
   resetAnimatedLogo: false,
-  setResetAnimatedLogo: status => set({ resetAnimatedLogo: status }),
+  setResetAnimatedLogo: (status) => set({ resetAnimatedLogo: status }),
   isModalContactFormOpen: false,
-  setIsModalContactFormOpen: status => set({ isModalContactFormOpen: status }),
+  setIsModalContactFormOpen: (status) => set({ isModalContactFormOpen: status }),
   isCitysLivingModalOpen: false,
-  setIsCitysLivingModalOpen: status => set({ isCitysLivingModalOpen: status }),
+  setIsCitysLivingModalOpen: (status) => set({ isCitysLivingModalOpen: status }),
   isMasterplanModalOpen: false,
-  setIsMasterplanModalOpen: status => set({ isMasterplanModalOpen: status }),
+  setIsMasterplanModalOpen: (status) => set({ isMasterplanModalOpen: status }),
   isResidencePlanModalOpen: false,
-  setIsResidencePlanModalOpen: status => set({ isResidencePlanModalOpen: status }),
+  setIsResidencePlanModalOpen: (status) => set({ isResidencePlanModalOpen: status }),
   residencePlanModalSlug: null,
-  setResidencePlanModalSlug: slug => set({ residencePlanModalSlug: slug }),
+  setResidencePlanModalSlug: (slug) => set({ residencePlanModalSlug: slug }),
   isInquiryVisible: true,
-  setIsInquiryVisible: status => set({ isInquiryVisible: status }),
+  setIsInquiryVisible: (status) => set({ isInquiryVisible: status }),
   isStickySidebarVisible: true,
-  setIsStickySidebarVisible: status => set({ isStickySidebarVisible: status }),
+  setIsStickySidebarVisible: (status) => set({ isStickySidebarVisible: status }),
 }))
 
 export const useUiStore = useStore

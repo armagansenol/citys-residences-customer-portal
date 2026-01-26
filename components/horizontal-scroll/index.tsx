@@ -44,7 +44,7 @@ export function HorizontalScroll({ onSectionChange }: HorizontalScrollProps) {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: () => "+=" + (pin.scrollWidth - window.innerWidth),
+          end: () => `+=${pin.scrollWidth - window.innerWidth}`,
           pin: true,
           scrub: true,
           invalidateOnRefresh: true,
@@ -54,7 +54,8 @@ export function HorizontalScroll({ onSectionChange }: HorizontalScrollProps) {
       // Track active section during horizontal scroll
       navbarSections.forEach((item) => {
         if (!item.id) return
-        const slide = pin.querySelector<HTMLElement>(`[data-slide="${item.id}"]`)
+        const itemId = item.id
+        const slide = pin.querySelector<HTMLElement>(`[data-slide="${itemId}"]`)
         if (!slide) return
 
         ScrollTrigger.create({
@@ -63,8 +64,8 @@ export function HorizontalScroll({ onSectionChange }: HorizontalScrollProps) {
           end: "right center",
           containerAnimation,
           toggleClass: { targets: slide, className: "active" },
-          onEnter: () => onSectionChange?.(item.id!),
-          onEnterBack: () => onSectionChange?.(item.id!),
+          onEnter: () => onSectionChange?.(itemId),
+          onEnterBack: () => onSectionChange?.(itemId),
         })
       })
 
@@ -84,10 +85,7 @@ export function HorizontalScroll({ onSectionChange }: HorizontalScrollProps) {
           {navbarSections.map((item) => (
             <div key={item.id} data-slide={item.id} className='w-screen shrink-0 px-8'>
               <div className='flex w-full items-center justify-center'>
-                <LocaleTransitionLink
-                  href={item.paths[locale as Locale]}
-                  className='w-full aspect-16/14'
-                >
+                <LocaleTransitionLink href={item.paths[locale as Locale]} className='w-full aspect-16/14'>
                   <AutoplayVideo playbackId={item.media?.muxSrc} />
                 </LocaleTransitionLink>
               </div>
