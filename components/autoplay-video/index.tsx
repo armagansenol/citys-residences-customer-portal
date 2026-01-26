@@ -18,6 +18,7 @@ interface AutoplayVideoProps {
   aspectRatio?: number
   horizontalPosition?: number
   verticalPosition?: number
+  hasIcons?: boolean
 }
 
 export function AutoplayVideo({
@@ -26,6 +27,7 @@ export function AutoplayVideo({
   aspectRatio,
   horizontalPosition = 50,
   verticalPosition = 50,
+  hasIcons = true,
 }: AutoplayVideoProps) {
   const { width: windowWidth } = useWindowSize(100)
   const isMobile = typeof windowWidth === "number" && windowWidth < breakpoints.breakpointMobile
@@ -180,62 +182,69 @@ export function AutoplayVideo({
   const container = (
     <div className={cn("group", "relative h-full w-full")} ref={setContainerRef}>
       {videoContent}
-      <span
-        className={cn(
-          "pointer-events-none absolute inset-0 z-30 bg-black/10 transition-all duration-300 ease-in-out group-hover:bg-black/0"
-        )}
-      >
-        <span className='size-16 lg:size-24 xl:size-16 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-gray-100 rounded-full p-4 lg:p-6 xl:p-4 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100'>
-          <ArrowsOutIcon className='pointer-events-none size-full text-black' weight='thin' aria-hidden />
-        </span>
-      </span>
-      <div className='absolute top-12 left-10 lg:left-14 lg:top-14 xl:left-14 xl:top-14 3xl:left-24 3xl:top-24 z-50 font-primary text-6xl/none font-light xl:text-8xl/none text-white'>
-        <div className='flex items-center justify-center gap-2'>
-          <div className='relative font-primary text-5xl/none font-light xl:text-6xl/none 3xl:text-7xl/none'>
-            {tLifeIn5Minutes("mainTitle.number")}
-            <div className='absolute left-1/2 top-1/2 size-[100px] -translate-x-[50%] -translate-y-[60%] opacity-90 lg:size-[110px] xl:size-[120px] 3xl:size-[160px]'>
-              <SvgFiveMins />
-            </div>
-          </div>
-          <div className='flex flex-col items-start justify-center'>
-            <div className='font-primary text-sm/none font-normal xl:text-xl/none 3xl:text-2xl/none'>
-              {tLifeIn5Minutes("mainTitle.line1")}
-            </div>
-            <div className='font-primary text-sm/none font-light xl:text-xl/none 3xl:text-2xl/none'>
-              {tLifeIn5Minutes("mainTitle.line2")}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className={cn(
-          "absolute inset-0 z-50 h-full w-full",
-          "before:pointer-events-none before:absolute before:bottom-0 before:left-0 before:z-20 before:h-[50%] before:w-full before:bg-linear-to-t before:from-black/90 before:to-transparent",
-          "flex items-end justify-center lg:justify-end",
-          "font-primary text-white"
-        )}
-      >
-        <div className='w-full relative z-30 flex flex-col items-center justify-end gap-4 py-4 lg:flex-row lg:gap-0 xl:items-stretch xl:py-8 2xl:py-6 3xl:py-8'>
-          <div className='flex items-end justify-evenly w-full'>
-            {lifeIn5Minutes.map((item, idx) => (
-              <Fragment key={item.title}>
-                <div className='flex items-center justify-center gap-x-1 md:gap-x-2 lg:gap-x-4 xl:gap-x-2 2xl:gap-x-3'>
-                  <div className='size-5 md:size-6 lg:size-7 xl:size-8 3xl:size-10'>{item.icon}</div>
-                  <div className='flex flex-col items-start justify-center'>
-                    <div className='whitespace-nowrap font-primary text-[8px]/tight md:text-[10px]/tight lg:text-[12px]/tight font-medium xl:text-sm/tight 3xl:text-lg/tight'>
-                      {item.d1}
-                    </div>
-                    <div className='whitespace-nowrap font-primary text-[8px]/tight md:text-[10px]/tight lg:text-[12px]/tight font-light xl:text-sm/tight 3xl:text-lg/tight'>
-                      {item.d2}
-                    </div>
-                  </div>
+
+      {hasIcons && (
+        <>
+          <span
+            className={cn(
+              "pointer-events-none absolute inset-0 z-30 bg-black/10 transition-all duration-300 ease-in-out group-hover:bg-black/0"
+            )}
+          >
+            <span className='size-16 lg:size-24 xl:size-16 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-gray-100 rounded-full p-4 lg:p-6 xl:p-4 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100'>
+              <ArrowsOutIcon className='pointer-events-none size-full text-black' weight='thin' aria-hidden />
+            </span>
+          </span>
+          <div className='absolute top-12 left-10 lg:left-14 lg:top-14 xl:left-14 xl:top-14 3xl:left-24 3xl:top-24 z-50 font-primary text-6xl/none font-light xl:text-8xl/none text-white'>
+            <div className='flex items-center justify-center gap-2'>
+              <div className='relative font-primary text-5xl/none font-light xl:text-6xl/none 3xl:text-7xl/none'>
+                {tLifeIn5Minutes("mainTitle.number")}
+                <div className='absolute left-1/2 top-1/2 size-[100px] -translate-x-[50%] -translate-y-[60%] opacity-90 lg:size-[110px] xl:size-[120px] 3xl:size-[160px]'>
+                  <SvgFiveMins />
                 </div>
-                {idx !== lifeIn5Minutes.length - 1 && <span className='block w-px h-6 xl:h-10 bg-white/30 shrink-0' />}
-              </Fragment>
-            ))}
+              </div>
+              <div className='flex flex-col items-start justify-center'>
+                <div className='font-primary text-sm/none font-normal xl:text-xl/none 3xl:text-2xl/none'>
+                  {tLifeIn5Minutes("mainTitle.line1")}
+                </div>
+                <div className='font-primary text-sm/none font-light xl:text-xl/none 3xl:text-2xl/none'>
+                  {tLifeIn5Minutes("mainTitle.line2")}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+          <div
+            className={cn(
+              "absolute inset-0 z-50 h-full w-full",
+              "before:pointer-events-none before:absolute before:bottom-0 before:left-0 before:z-20 before:h-[50%] before:w-full before:bg-linear-to-t before:from-black/90 before:to-transparent",
+              "flex items-end justify-center lg:justify-end",
+              "font-primary text-white"
+            )}
+          >
+            <div className='w-full relative z-30 flex flex-col items-center justify-end gap-4 py-4 lg:flex-row lg:gap-0 xl:items-stretch xl:py-8 2xl:py-6 3xl:py-8'>
+              <div className='flex items-end justify-evenly w-full'>
+                {lifeIn5Minutes.map((item, idx) => (
+                  <Fragment key={item.title}>
+                    <div className='flex items-center justify-center gap-x-1 md:gap-x-2 lg:gap-x-4 xl:gap-x-2 2xl:gap-x-3'>
+                      <div className='size-5 md:size-6 lg:size-7 xl:size-8 3xl:size-10'>{item.icon}</div>
+                      <div className='flex flex-col items-start justify-center'>
+                        <div className='whitespace-nowrap font-primary text-[8px]/tight md:text-[10px]/tight lg:text-[12px]/tight font-medium xl:text-sm/tight 3xl:text-lg/tight'>
+                          {item.d1}
+                        </div>
+                        <div className='whitespace-nowrap font-primary text-[8px]/tight md:text-[10px]/tight lg:text-[12px]/tight font-light xl:text-sm/tight 3xl:text-lg/tight'>
+                          {item.d2}
+                        </div>
+                      </div>
+                    </div>
+                    {idx !== lifeIn5Minutes.length - 1 && (
+                      <span className='block w-px h-6 xl:h-10 bg-white/30 shrink-0' />
+                    )}
+                  </Fragment>
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 

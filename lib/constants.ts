@@ -93,6 +93,22 @@ type RouteConfig = {
   media?: Media
 }
 
+export const citysIstanbulAvmBanner: Media = {
+  name: "citys istanbul avm banner",
+  aspect: () => {
+    return calculateRatio(16, 9)
+  },
+  aspectMobile: () => {
+    return calculateRatio(2160, 3840)
+  },
+  mediaId: "a5b5zn9o9x",
+  muxSrc: "Zq5jSeSQegjDYMVonJbtidTBV01IusZ00yePcyQT3rUgc",
+  muxSrcMobile: "m3Uji9xDCxVh7AUZ7M9opTY02yOH25FPqisHx3MbW7NQ",
+  thumbnail: "https://image.mux.com/hLCddwmtOdUZ3vvZFqxAXvwusE9f8M3qg5KDXqVBGHY/thumbnail.webp?width=1920&time=0",
+  thumbnailMobile:
+    "https://image.mux.com/dMs3k8j02Rre5EE02b4VjR8ygDa01t7ZeISDdMFDSoemYE/thumbnail.webp?width=560&time=0",
+}
+
 export const routeConfig: Record<string, RouteConfig> = {
   "/": {
     paths: {
