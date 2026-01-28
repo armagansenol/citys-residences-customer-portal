@@ -58,6 +58,7 @@
             "months": "MONTHS"
         },
         "backToProposals": "Back to Proposals",
+        "rotatePhone": "Please turn your phone to landscape for a better experience",
         "expiredProposal": {
             "title": "Your proposal has expired.",
             "description": "You can contact your sales manager.",

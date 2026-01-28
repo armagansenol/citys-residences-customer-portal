@@ -1,32 +1,140 @@
 "use client"
 
-import { Image } from "@/components/image"
-import { cn, toAllUppercase } from "@/lib/utils"
-import { calculateRatio } from "@/lib/utils"
-import { useStore } from "@/lib/store/ui"
-import { useEsc } from "@/hooks/useEsc"
-import { useLenis } from "lenis/react"
-import { AnimatePresence, MotionConfig, motion } from "motion/react"
-import { type MouseEvent, useEffect, useState } from "react"
-import InnerImageZoom from "react-inner-image-zoom"
-import { ArrowsOutSimpleIcon, XIcon } from "@phosphor-icons/react"
 import { Logo } from "@/components/icons"
-import masterplanZoom from "@/public/img/masterplan-zoom.jpg"
-import masterplan from "@/public/img/masterplan.jpg"
+import { Image } from "@/components/image"
+import { useEsc } from "@/hooks/useEsc"
+import { useStore } from "@/lib/store/ui"
+import { calculateRatio, cn, toAllUppercase } from "@/lib/utils"
+import masterplanDrone from "@/public/img/masterplan-drone.jpg"
+import { ArrowCounterClockwiseIcon, XIcon } from "@phosphor-icons/react"
+import { useLenis } from "lenis/react"
+import { AnimatePresence, motion } from "motion/react"
 import { useLocale, useTranslations } from "next-intl"
+import { useEffect, useState } from "react"
+
+const hotspots = [
+  {
+    id: "c1",
+    x: 20,
+    y: 55,
+    label: "C1",
+    title: "C1 BLOK",
+    description: "Yukarıdan bakan bir şehir deneyimi.",
+    image: "/img/rp-1.jpg",
+  },
+  {
+    id: "c2",
+    x: 25,
+    y: 51,
+    label: "C2",
+    title: "C2 BLOK",
+    description: "Yukarıdan bakan bir şehir deneyimi.",
+    image: "/img/rp-2.jpg",
+  },
+  {
+    id: "c3",
+    x: 30,
+    y: 47,
+    label: "C3",
+    title: "C3 BLOK",
+    description: "Yukarıdan bakan bir şehir deneyimi.",
+    image: "/img/rp-3.jpg",
+  },
+  {
+    id: "b5",
+    x: 37,
+    y: 44,
+    label: "B5",
+    title: "B5 BLOK",
+    description: "Yukarıdan bakan bir şehir deneyimi.",
+    image: "/img/rp-4.jpg",
+  },
+  {
+    id: "b4",
+    x: 45,
+    y: 49,
+    label: "B4",
+    title: "B4 BLOK",
+    description: "Yukarıdan bakan bir şehir deneyimi.",
+    image: "/img/rp-1.jpg",
+  },
+  {
+    id: "b3",
+    x: 52,
+    y: 44,
+    label: "B3",
+    title: "B3 BLOK",
+    description: "Yukarıdan bakan bir şehir deneyimi.",
+    image: "/img/rp-2.jpg",
+  },
+  {
+    id: "b2",
+    x: 60,
+    y: 49,
+    label: "B2",
+    title: "B2 BLOK",
+    description: "Yukarıdan bakan bir şehir deneyimi.",
+    image: "/img/rp-3.jpg",
+  },
+  {
+    id: "b1",
+    x: 66,
+    y: 44,
+    label: "B1",
+    title: "B1 BLOK",
+    description: "Yukarıdan bakan bir şehir deneyimi.",
+    image: "/img/rp-4.jpg",
+  },
+  {
+    id: "a2",
+    x: 72,
+    y: 36.2,
+    label: "A2",
+    title: "A2 BLOK",
+    description: "Yukarıdan bakan bir şehir deneyimi.",
+    image: "/img/rp-1.jpg",
+  },
+  {
+    id: "a1",
+    x: 80,
+    y: 50,
+    label: "A1",
+    title: "A1 BLOK",
+    description: "Yukarıdan bakan bir şehir deneyimi.",
+    image: "/img/rp-2.jpg",
+  },
+]
 
 export function MasterplanModal() {
   const isOpen = useStore((state) => state.isMasterplanModalOpen)
   const setIsOpen = useStore((state) => state.setIsMasterplanModalOpen)
   const lenis = useLenis()
-  const aspectRatio = calculateRatio(masterplan.width, masterplan.height)
-  const [isZoomed, setIsZoomed] = useState(false)
+  const aspectRatio = calculateRatio(masterplanDrone.width, masterplanDrone.height)
+  const [selectedHotspot, setSelectedHotspot] = useState<(typeof hotspots)[0] | null>(null)
+  const [isPortrait, setIsPortrait] = useState(false)
   const tCommon = useTranslations("common")
   const locale = useLocale()
 
+  useEffect(() => {
+    const checkOrientation = () => {
+      const isMobile = window.innerWidth < 1024
+      const isPortraitMode = window.innerHeight > window.innerWidth
+      setIsPortrait(isMobile && isPortraitMode)
+    }
+
+    checkOrientation()
+    window.addEventListener("resize", checkOrientation)
+    window.addEventListener("orientationchange", checkOrientation)
+
+    return () => {
+      window.removeEventListener("resize", checkOrientation)
+      window.removeEventListener("orientationchange", checkOrientation)
+    }
+  }, [])
+
   useEsc(() => {
-    if (isZoomed) {
-      setIsZoomed(false)
+    if (selectedHotspot) {
+      setSelectedHotspot(null)
     } else {
       setIsOpen(false)
     }
@@ -39,7 +147,7 @@ export function MasterplanModal() {
     } else {
       lenis?.start()
       document.body.style.overflow = ""
-      setIsZoomed(false)
+      setSelectedHotspot(null)
     }
 
     return () => {
@@ -47,78 +155,75 @@ export function MasterplanModal() {
     }
   }, [isOpen, lenis])
 
-  const openZoom = () => setIsZoomed(true)
-  const closeZoom = () => setIsZoomed(false)
-  const stopEventPropagation = (event: MouseEvent) => event.stopPropagation()
-
   return (
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Preload Images */}
-          <Image
-            src={masterplanZoom.src}
-            className='sr-only'
-            alt='Preview masterplan zoomed'
-            width={masterplanZoom.width}
-            height={masterplanZoom.height}
-          />
           {/* Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className='fixed inset-0 z-200 bg-white'
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className='fixed inset-0 z-200 bg-black'
             onClick={() => setIsOpen(false)}
           />
 
           {/* Modal Content */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.99 }}
+            initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.99 }}
-            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-            className='fixed inset-0 z-201 overflow-y-auto'
-            onClick={(e) => e.stopPropagation()}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className='fixed inset-0 z-201 overflow-hidden flex items-center justify-center'
+            onClick={() => setIsOpen(false)}
             data-lenis-prevent
           >
-            <div className='h-header-height-mobile xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16'>
-              {/* Close Button */}
-              <button
-                onClick={() => setIsOpen(false)}
-                className={cn(
-                  "size-24 sm:size-24 lg:size-36",
-                  "flex items-center justify-center",
-                  "text-bricky-brick",
-                  "transition-opacity duration-300 hover:opacity-70",
-                  "cursor-pointer"
-                )}
-                aria-label='Close'
-                type='button'
-              >
-                <Logo className='size-full text-bricky-brick' />
-              </button>
-              <span
-                className={cn(
-                  "block ml-8 xl:ml-24",
-                  "text-bricky-brick font-medium mr-auto relative tracking-[0.25em] whitespace-nowrap",
-                  "text-xs xl:text-lg 2xl:text-xl 3xl:text-xl",
-                  'before:content-[""] before:absolute before:-left-4 sm:before:-left-6 lg:before:-left-10 before:top-1/2 before:-translate-y-1/2 before:bg-bricky-brick/80 before:h-16 lg:before:h-12 before:w-px before:block'
-                )}
-              >
-                {toAllUppercase(tCommon("navigation.masterplan"), locale)}
-              </span>
+            {/* Header */}
+            <div className='h-header-height-mobile xl:h-header-height fixed top-0 left-0 right-0 z-202 flex items-center justify-between px-6 lg:px-16 xl:px-16 pointer-events-none'>
+              <div className='flex items-center pointer-events-auto'>
+                {/* Logo Button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setIsOpen(false)
+                  }}
+                  className={cn(
+                    "size-24 sm:size-24 lg:size-36",
+                    "flex items-center justify-center",
+                    "text-white",
+                    "transition-opacity duration-300 hover:opacity-70",
+                    "cursor-pointer"
+                  )}
+                  aria-label='Close'
+                  type='button'
+                >
+                  <Logo className='size-full' />
+                </button>
+                <span
+                  className={cn(
+                    "block ml-8 xl:ml-24",
+                    "text-white font-medium mr-auto relative tracking-[0.25em] whitespace-nowrap",
+                    "text-xs xl:text-lg 2xl:text-xl 3xl:text-xl",
+                    'before:content-[""] before:absolute before:-left-4 sm:before:-left-6 lg:before:-left-10 before:top-1/2 before:-translate-y-1/2 before:bg-white/80 before:h-16 lg:before:h-12 before:w-px before:block'
+                  )}
+                >
+                  {toAllUppercase(tCommon("navigation.masterplan"), locale)}
+                </span>
+              </div>
 
               {/* Close Button */}
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIsOpen(false)
+                }}
                 className={cn(
                   "size-10 sm:size-12 lg:size-14",
                   "flex items-center justify-center",
-                  "text-bricky-brick",
+                  "text-white",
                   "transition-opacity duration-300 hover:opacity-70",
-                  "cursor-pointer"
+                  "cursor-pointer pointer-events-auto"
                 )}
                 type='button'
                 aria-label='Close'
@@ -127,136 +232,133 @@ export function MasterplanModal() {
               </button>
             </div>
 
-            {/* Content */}
-            <div className='min-h-screen w-full px-8 xl:px-[20vw] py-header-height-mobile lg:pt-header-height flex items-center justify-center'>
-              <MotionConfig
-                transition={{
-                  type: "tween",
-                  duration: 0.4,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                <section className='flex items-center justify-center flex-1 w-full'>
+            {/* Orientation Warning Overlay */}
+            <AnimatePresence>
+              {isPortrait && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className='fixed inset-0 z-201 flex flex-col items-center justify-center bg-black/60 backdrop-blur-2xl px-10 text-center'
+                >
                   <motion.div
-                    layoutId='masterplan-image'
-                    className='relative block w-full max-w-6xl cursor-pointer overflow-hidden'
-                    style={{ aspectRatio: aspectRatio }}
-                    onClick={openZoom}
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ type: "tween", duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className='flex flex-col items-center gap-6'
                   >
-                    <Image
-                      src={masterplan.src}
-                      className='object-contain'
-                      alt='Masterplan'
-                      fill
-                      desktopSize='80vw'
-                      mobileSize='90vw'
-                      priority
-                      fetchPriority='high'
-                    />
-                    <motion.button
-                      type='button'
-                      onClick={openZoom}
-                      aria-label='Open zoomed masterplan'
-                      className={cn(
-                        "absolute right-6 bottom-6 cursor-pointer",
-                        "flex size-12 items-center justify-center",
-                        "rounded-full bg-bricky-brick p-3 text-white xl:size-16",
-                        "xl:block hidden"
-                      )}
-                      whileHover={{ scale: 1.2 }}
-                      transition={{ type: "tween", duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                      <ArrowsOutSimpleIcon className='size-full' weight='thin' />
-                    </motion.button>
+                    <ArrowCounterClockwiseIcon className='size-16 text-white' weight='light' />
+                    <p className='text-white text-lg font-normal leading-relaxed max-w-[280px]'>
+                      {tCommon("rotatePhone")}
+                    </p>
                   </motion.div>
-                  <button
-                    type='button'
-                    onClick={openZoom}
-                    aria-label='Open zoomed masterplan'
-                    className={cn(
-                      "fixed bottom-12 left-1/2 -translate-x-1/2",
-                      "flex size-12 items-center justify-center",
-                      "rounded-full bg-bricky-brick p-3 text-white xl:size-16",
-                      "block xl:hidden z-202"
-                    )}
-                  >
-                    <ArrowsOutSimpleIcon className='size-full' weight='thin' />
-                  </button>
-                  <AnimatePresence>
-                    {isZoomed ? (
-                      <motion.div
-                        className='fixed inset-0 z-300 flex items-center justify-center'
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ type: "tween", duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                        onClick={closeZoom}
-                        data-lenis-prevent-touch
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Content Area */}
+            <div className='relative w-full h-full flex items-center justify-center' data-lenis-prevent-touch>
+              {/* Background click catcher */}
+              <button
+                className='absolute inset-0 cursor-default outline-none'
+                onClick={() => setSelectedHotspot(null)}
+                type='button'
+                aria-label='Deselect hotspot'
+              />
+
+              <div
+                className='relative h-full xl:h-auto w-auto xl:w-full max-w-full max-h-full pointer-events-none'
+                style={{ aspectRatio }}
+              >
+                <Image src={masterplanDrone.src} className='object-cover' alt='Masterplan Drone View' fill priority />
+
+                {hotspots.map((hotspot) => {
+                  const isActive = selectedHotspot?.id === hotspot.id
+                  const isOnRight = hotspot.x > 75
+                  const isOnLeft = hotspot.x < 25
+
+                  return (
+                    <div
+                      key={hotspot.id}
+                      className='absolute z-10 pointer-events-auto'
+                      style={{
+                        left: `${hotspot.x}%`,
+                        top: `${hotspot.y}%`,
+                        transform: "translate(-50%, -50%)",
+                      }}
+                    >
+                      <motion.button
+                        whileHover={{ scale: 1.15 }}
+                        whileTap={{ scale: 0.9 }}
+                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setSelectedHotspot(isActive ? null : hotspot)
+                        }}
+                        className={cn(
+                          "cursor-pointer",
+                          "size-10 md:size-12 lg:size-12 rounded-full",
+                          "flex items-center justify-center shadow-2xl backdrop-blur-xs",
+                          "text-[10px] md:text-sm font-medium",
+                          isActive ? "bg-white text-gray-900 scale-110" : "bg-white/30 text-white hover:bg-white/60"
+                        )}
                       >
-                        <motion.div
-                          className='absolute inset-0 bg-black/90'
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ type: "tween", duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                        />
-                        <motion.div
-                          layoutId='masterplan-image'
-                          className='relative max-w-screen w-full xl:w-auto xl:max-w-[65vw] 2xl:max-w-[70vw] 3xl:max-w-[70vw] overflow-hidden'
-                          style={{ aspectRatio: aspectRatio }}
-                          initial={{ scale: 0.96 }}
-                          animate={{ scale: 1 }}
-                          exit={{ scale: 0.97 }}
-                          transition={{ type: "tween", duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                          onClick={stopEventPropagation}
-                        >
-                          <div className='hidden h-full w-full md:block'>
-                            <InnerImageZoom
-                              src={masterplan.src}
-                              zoomSrc={masterplanZoom.src ?? masterplan.src}
-                              hideHint
-                              hideCloseButton
-                              zoomPreload
-                              className='h-full w-full bg-black/20'
-                              width={masterplan.width}
-                              height={masterplan.height}
-                            />
-                          </div>
-                          <div className='block h-full w-full md:hidden'>
-                            <Image
-                              src={masterplanZoom.src ?? masterplan.src}
-                              className='object-contain'
-                              alt='Masterplan zoomed'
-                              fill
-                              desktopSize='90vw'
-                              mobileSize='100vw'
-                              priority
-                            />
-                          </div>
-                        </motion.div>
-                        <button
-                          type='button'
-                          aria-label='Close zoomed masterplan'
-                          onClick={(event: MouseEvent<HTMLButtonElement>) => {
-                            event.stopPropagation()
-                            closeZoom()
-                          }}
-                          className={cn(
-                            "cursor-pointer absolute right-7 xl:right-14 top-7 xl:top-14 text-white/90 transition hover:scale-105 z-301",
-                            "size-8 sm:size-12 lg:size-14",
-                            "flex items-center justify-center",
-                            "cursor-pointer"
-                          )}
-                        >
-                          <XIcon className='size-full' />
-                        </button>
-                      </motion.div>
-                    ) : null}
-                  </AnimatePresence>
-                </section>
-              </MotionConfig>
+                        {hotspot.label}
+                      </motion.button>
+
+                      <AnimatePresence>
+                        {isActive && (
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: isOnRight ? -30 : isOnLeft ? 30 : 0,
+                              y: isOnRight || isOnLeft ? 0 : 30,
+                              scale: 0.9,
+                            }}
+                            animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                            exit={{
+                              opacity: 0,
+                              x: isOnRight ? -30 : isOnLeft ? 30 : 0,
+                              y: isOnRight || isOnLeft ? 0 : 30,
+                              scale: 0.9,
+                            }}
+                            transition={{
+                              duration: 0.5,
+                              ease: [0.16, 1, 0.3, 1],
+                            }}
+                            className={cn(
+                              "absolute z-20 pointer-events-auto",
+                              "w-[220px] md:w-[320px] bg-white/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-4 md:p-6",
+                              isOnRight
+                                ? "right-full mr-6 top-1/2 -translate-y-1/2"
+                                : isOnLeft
+                                ? "left-full ml-6 top-1/2 -translate-y-1/2"
+                                : "left-1/2 -translate-x-1/2 bottom-full mb-6"
+                            )}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <div className='flex flex-col gap-3 md:gap-4'>
+                              <div>
+                                <h3 className='text-base md:text-2xl font-bold text-gray-900 leading-tight tracking-tight'>
+                                  {hotspot.title}
+                                </h3>
+                                <p className='text-[10px] md:text-sm text-gray-500 font-medium mt-1'>
+                                  {hotspot.description}
+                                </p>
+                              </div>
+                              <div className='relative size-full overflow-hidden rounded-xl bg-gray-50/50 border border-gray-100'>
+                                <Image src={hotspot.image} fill className='object-cover' alt={hotspot.title} />
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           </motion.div>
         </>

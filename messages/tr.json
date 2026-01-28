@@ -57,6 +57,7 @@
             "months": "AY"
         },
         "backToProposals": "Tekliflere Geri Dön",
+        "rotatePhone": "Daha iyi bir deneyim için telefonunuzu yan çeviriniz",
         "expiredProposal": {
             "title": "Teklifinizin süresi dolmuştur.",
             "description": "Satış müdürünüzle iletişime geçebilirsiniz.",
