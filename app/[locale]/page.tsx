@@ -93,7 +93,7 @@ export default function Page() {
         <div
           className={cn(
             "w-full size-full mx-auto px-8 lg:px-16 xl:px-16 pb-4 lg:pb-16 xl:pt-8 2xl:pt-0",
-            "flex flex-col gap-6 lg:gap-4 3xl:gap-6 [@media(orientation:landscape)_and_(max-height:500px)]:gap-2"
+            "flex flex-col gap-6 lg:gap-4 3xl:gap-6 [@media(orientation:landscape)_and_(max-height:500px)]:flex-row [@media(orientation:landscape)_and_(max-height:500px)]:gap-10"
           )}
         >
           {/* NAVIGATION */}
@@ -188,93 +188,95 @@ export default function Page() {
               )
             })}
           </div>
-          <div className='block xl:hidden'>
-            <IosPicker
-              loop={false}
-              items={navbarSections.map((item) => ({
-                title: t(item.titleKey),
-                href: item.paths[locale as Locale],
-                id: item.id,
-                disabled: item.id === SectionId.RESIDENCE_PLAN ? isResidencePlanDisabled : item.disabled,
-                isExternal: item.isExternal,
-                isModal:
-                  item.id === SectionId.CITYS_LIVING ||
-                  item.id === SectionId.MASTERPLAN ||
-                  item.id === SectionId.RESIDENCE_PLAN,
-                isLoading: item.id === SectionId.RESIDENCE_PLAN ? isProposalLoading : false,
-              }))}
-            />
-          </div>
-          {/* SCROLL DOWN */}
-          <div className='relative animate-bounce-translate hidden xl:block xl:size-16'>
-            <IconScrollDown className='text-bricky-brick size-full' />
-            <span className='sr-only'>Scroll Down</span>
+          <div className='flex flex-col flex-1 min-h-0 [@media(orientation:landscape)_and_(max-height:500px)]:w-[45%]'>
+            <div className='block xl:hidden'>
+              <IosPicker
+                loop={false}
+                items={navbarSections.map((item) => ({
+                  title: t(item.titleKey),
+                  href: item.paths[locale as Locale],
+                  id: item.id,
+                  disabled: item.id === SectionId.RESIDENCE_PLAN ? isResidencePlanDisabled : item.disabled,
+                  isExternal: item.isExternal,
+                  isModal:
+                    item.id === SectionId.CITYS_LIVING ||
+                    item.id === SectionId.MASTERPLAN ||
+                    item.id === SectionId.RESIDENCE_PLAN,
+                  isLoading: item.id === SectionId.RESIDENCE_PLAN ? isProposalLoading : false,
+                }))}
+              />
+            </div>
+            {/* SCROLL DOWN */}
+            <div className='relative animate-bounce-translate hidden xl:block xl:size-16'>
+              <IconScrollDown className='text-bricky-brick size-full' />
+              <span className='sr-only'>Scroll Down</span>
+            </div>
+            <div className='flex flex-col gap-3 mt-auto [@media(orientation:landscape)_and_(max-height:500px)]:items-start [@media(orientation:landscape)_and_(max-height:500px)]:gap-2 [@media(orientation:landscape)_and_(max-height:500px)]:mt-4'>
+              {/* YASAM YENİDEN TASARLANDI */}
+              <div className='flex items-center justify-start [@media(orientation:landscape)_and_(max-height:500px)]:justify-start '>
+                <span
+                  className={cn(
+                    "whitespace-nowrap text-center font-primary font-medium text-bricky-brick",
+                    "-tracking-[0.025em]",
+                    "text-[14px]/[1] xs:text-[4.5vw]/[1] sm:text-xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]",
+                    "[@media(orientation:landscape)_and_(max-height:500px)]:text-[19px]",
+                    "flex flex-col items-center justify-center gap-3 sm:gap-4 lg:flex-row lg:gap-2"
+                  )}
+                >
+                  {t("lifeReimagined")}
+                </span>
+                <span
+                  className={cn(
+                    "mx-2 sm:mx-3 md:mx-4 xl:mx-3 2xl:mx-4 3xl:mx-4",
+                    "size-5 sm:size-6 md:size-8 xl:size-8 2xl:size-8 3xl:size-10",
+                    "[@media(orientation:landscape)_and_(max-height:500px)]:size-6 [@media(orientation:landscape)_and_(max-height:500px)]:mx-2"
+                  )}
+                >
+                  <IconCollab className='text-bricky-brick size-full' />
+                </span>
+                <span
+                  className={cn(
+                    "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
+                    "-tracking-[0.015em]",
+                    "text-[14px]/[1] xs:text-[4.5vw]/[1] sm:text-xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]",
+                    "[@media(orientation:landscape)_and_(max-height:500px)]:text-[19px]"
+                  )}
+                >
+                  CITY&apos;S
+                </span>
+              </div>
+              {/* SOCIAL MEDIA */}
+              <div className='mr-auto gap-4 flex 3xl:gap-6 [@media(orientation:landscape)_and_(max-height:500px)]:mr-auto [@media(orientation:landscape)_and_(max-height:500px)]:ml-0 [@media(orientation:landscape)_and_(max-height:500px)]:gap-4'>
+                <Link href={socialMedia.facebook} target='_blank' rel='noopener noreferrer'>
+                  <FacebookLogoIcon
+                    weight='fill'
+                    className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                  />
+                </Link>
+                <Link href={socialMedia.x} target='_blank' rel='noopener noreferrer'>
+                  <XLogoIcon
+                    weight='regular'
+                    className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                  />
+                </Link>
+                <Link href={socialMedia.instagram} target='_blank' rel='noopener noreferrer'>
+                  <InstagramLogoIcon
+                    weight='regular'
+                    className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                  />
+                </Link>
+                <Link href={socialMedia.tiktok} target='_blank' rel='noopener noreferrer'>
+                  <TiktokLogoIcon
+                    weight='regular'
+                    className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                  />
+                </Link>
+              </div>
+            </div>
           </div>
           {/* MOBILE VIDEO */}
-          <div className='w-full flex-1 min-h-0 xl:hidden landscape:hidden'>
+          <div className='w-full flex-1 min-h-0 xl:hidden [@media(orientation:landscape)_and_(max-height:500px)]:flex [@media(orientation:landscape)_and_(max-height:500px)]:w-[55%] [@media(orientation:landscape)_and_(max-height:500px)]:h-full landscape:hidden'>
             <AutoplayVideo playbackId={residencePlanMedia.muxSrc} />
-          </div>
-          <div className='flex flex-col gap-3 mt-auto [@media(orientation:landscape)_and_(max-height:500px)]:flex-row [@media(orientation:landscape)_and_(max-height:500px)]:items-center [@media(orientation:landscape)_and_(max-height:500px)]:justify-between [@media(orientation:landscape)_and_(max-height:500px)]:gap-2 [@media(orientation:landscape)_and_(max-height:500px)]:mt-4'>
-            {/* YASAM YENİDEN TASARLANDI */}
-            <div className='flex items-center justify-start '>
-              <span
-                className={cn(
-                  "whitespace-nowrap text-center font-primary font-medium text-bricky-brick",
-                  "-tracking-[0.025em]",
-                  "text-[14px]/[1] xs:text-[4.5vw]/[1] sm:text-xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]",
-                  "[@media(orientation:landscape)_and_(max-height:500px)]:text-[19px]",
-                  "flex flex-col items-center justify-center gap-3 sm:gap-4 lg:flex-row lg:gap-2"
-                )}
-              >
-                {t("lifeReimagined")}
-              </span>
-              <span
-                className={cn(
-                  "mx-2 sm:mx-3 md:mx-4 xl:mx-3 2xl:mx-4 3xl:mx-4",
-                  "size-5 sm:size-6 md:size-8 xl:size-8 2xl:size-8 3xl:size-10",
-                  "[@media(orientation:landscape)_and_(max-height:500px)]:size-6 [@media(orientation:landscape)_and_(max-height:500px)]:mx-2"
-                )}
-              >
-                <IconCollab className='text-bricky-brick size-full' />
-              </span>
-              <span
-                className={cn(
-                  "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
-                  "-tracking-[0.015em]",
-                  "text-[14px]/[1] xs:text-[4.5vw]/[1] sm:text-xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]",
-                  "[@media(orientation:landscape)_and_(max-height:500px)]:text-[19px]"
-                )}
-              >
-                CITY&apos;S
-              </span>
-            </div>
-            {/* SOCIAL MEDIA */}
-            <div className='mr-auto gap-4 flex 3xl:gap-6 [@media(orientation:landscape)_and_(max-height:500px)]:mr-0 [@media(orientation:landscape)_and_(max-height:500px)]:gap-4'>
-              <Link href={socialMedia.facebook} target='_blank' rel='noopener noreferrer'>
-                <FacebookLogoIcon
-                  weight='fill'
-                  className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-                />
-              </Link>
-              <Link href={socialMedia.x} target='_blank' rel='noopener noreferrer'>
-                <XLogoIcon
-                  weight='regular'
-                  className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-                />
-              </Link>
-              <Link href={socialMedia.instagram} target='_blank' rel='noopener noreferrer'>
-                <InstagramLogoIcon
-                  weight='regular'
-                  className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-                />
-              </Link>
-              <Link href={socialMedia.tiktok} target='_blank' rel='noopener noreferrer'>
-                <TiktokLogoIcon
-                  weight='regular'
-                  className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
-                />
-              </Link>
-            </div>
           </div>
         </div>
       </div>

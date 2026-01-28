@@ -277,6 +277,7 @@ export function MasterplanModal() {
                   alt='Masterplan Drone View'
                   fill
                   priority
+                  fetchPriority='high'
                 />
 
                 {hotspots.map((hotspot) => {
