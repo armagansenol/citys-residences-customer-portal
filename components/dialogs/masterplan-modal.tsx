@@ -268,10 +268,16 @@ export function MasterplanModal() {
               />
 
               <div
-                className='relative h-full xl:h-auto w-auto xl:w-full max-w-full max-h-full pointer-events-none'
+                className='relative h-full xl:h-auto w-full max-w-full max-h-full pointer-events-none'
                 style={{ aspectRatio }}
               >
-                <Image src={masterplanDrone.src} className='object-cover' alt='Masterplan Drone View' fill priority />
+                <Image
+                  src={masterplanDrone.src}
+                  className='object-cover w-full h-full'
+                  alt='Masterplan Drone View'
+                  fill
+                  priority
+                />
 
                 {hotspots.map((hotspot) => {
                   const isActive = selectedHotspot?.id === hotspot.id
