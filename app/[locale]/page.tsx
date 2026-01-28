@@ -188,8 +188,9 @@ export default function Page() {
               )
             })}
           </div>
-          <div className='flex flex-col flex-1 min-h-0 [@media(orientation:landscape)_and_(max-height:500px)]:w-[45%]'>
-            <div className='block xl:hidden'>
+
+          <div className='contents [@media(orientation:landscape)_and_(max-height:500px)]:flex [@media(orientation:landscape)_and_(max-height:500px)]:flex-col [@media(orientation:landscape)_and_(max-height:500px)]:w-[45%] [@media(orientation:landscape)_and_(max-height:500px)]:justify-between'>
+            <div className='block xl:hidden order-1'>
               <IosPicker
                 loop={false}
                 items={navbarSections.map((item) => ({
@@ -211,7 +212,7 @@ export default function Page() {
               <IconScrollDown className='text-bricky-brick size-full' />
               <span className='sr-only'>Scroll Down</span>
             </div>
-            <div className='flex flex-col gap-3 mt-auto [@media(orientation:landscape)_and_(max-height:500px)]:items-start [@media(orientation:landscape)_and_(max-height:500px)]:gap-2 [@media(orientation:landscape)_and_(max-height:500px)]:mt-4'>
+            <div className='flex flex-col gap-3 mt-auto order-3 [@media(orientation:landscape)_and_(max-height:500px)]:items-start [@media(orientation:landscape)_and_(max-height:500px)]:gap-2 [@media(orientation:landscape)_and_(max-height:500px)]:mt-4'>
               {/* YASAM YENİDEN TASARLANDI */}
               <div className='flex items-center justify-start [@media(orientation:landscape)_and_(max-height:500px)]:justify-start '>
                 <span
@@ -274,8 +275,9 @@ export default function Page() {
               </div>
             </div>
           </div>
+
           {/* MOBILE VIDEO */}
-          <div className='w-full flex-1 min-h-0 xl:hidden [@media(orientation:landscape)_and_(max-height:500px)]:flex [@media(orientation:landscape)_and_(max-height:500px)]:w-[55%] [@media(orientation:landscape)_and_(max-height:500px)]:h-full landscape:hidden'>
+          <div className='w-full flex-1 min-h-0 xl:hidden order-2 [@media(orientation:landscape)_and_(max-height:500px)]:flex [@media(orientation:landscape)_and_(max-height:500px)]:w-[55%] [@media(orientation:landscape)_and_(max-height:500px)]:h-full'>
             <AutoplayVideo playbackId={residencePlanMedia.muxSrc} />
           </div>
         </div>
