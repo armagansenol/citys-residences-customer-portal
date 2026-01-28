@@ -15,8 +15,8 @@ import { useEffect, useState } from "react"
 const hotspots = [
   {
     id: "c1",
-    x: 20,
-    y: 55,
+    x: 18,
+    y: 58,
     label: "C1",
     title: "C1 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
@@ -25,7 +25,7 @@ const hotspots = [
   {
     id: "c2",
     x: 25,
-    y: 51,
+    y: 53,
     label: "C2",
     title: "C2 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
@@ -33,8 +33,8 @@ const hotspots = [
   },
   {
     id: "c3",
-    x: 30,
-    y: 47,
+    x: 31,
+    y: 48,
     label: "C3",
     title: "C3 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
@@ -303,7 +303,7 @@ export function MasterplanModal() {
                         }}
                         className={cn(
                           "cursor-pointer",
-                          "size-10 md:size-12 lg:size-12 rounded-full",
+                          "size-6 md:size-12 lg:size-12 rounded-full",
                           "flex items-center justify-center shadow-2xl backdrop-blur-xs",
                           "text-[10px] md:text-sm font-medium",
                           isActive ? "bg-white text-gray-900 scale-110" : "bg-white/30 text-white hover:bg-white/60"
@@ -332,7 +332,7 @@ export function MasterplanModal() {
                             }}
                             className={cn(
                               "absolute z-50 pointer-events-auto",
-                              "w-[220px] md:w-[240px] aspect-12/16 bg-white/95 backdrop-blur-xl rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-4 md:p-6",
+                              "w-[160px] md:w-[240px] aspect-12/16 bg-white/95 backdrop-blur-xl rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-4 md:p-6",
                               "top-1/2 -translate-y-[30%]",
                               showOnRight ? "left-full ml-4" : "right-full mr-4"
                             )}
