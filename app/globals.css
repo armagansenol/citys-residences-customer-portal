@@ -46,6 +46,12 @@
   --spacing-header-height-mobile: 90px;
 }
 
+@media (orientation: landscape) and (max-height: 500px) {
+  :root {
+    --spacing-header-height-mobile: 50px;
+  }
+}
+
 @theme {
   --breakpoint-xs: 360px;
   --breakpoint-xsm: 420px;

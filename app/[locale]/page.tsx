@@ -2,30 +2,26 @@
 
 import masterplan from "@/public/img/masterplan.jpg"
 
-import { useMemo, useRef } from "react"
-
-import { cn } from "@/lib/utils"
-import { FacebookLogoIcon, InstagramLogoIcon, XLogoIcon } from "@phosphor-icons/react/ssr"
-import { useLocale, useTranslations } from "next-intl"
-
 import { AutoplayVideo } from "@/components/autoplay-video"
 import { IconCollab, IconScrollDown, Logo } from "@/components/icons"
 import { Image } from "@/components/image"
 import { IosPicker } from "@/components/ios-picker"
+import { LoadingSpinner } from "@/components/loading-spinner"
 import { LocaleTransitionLink } from "@/components/locale-transition-link"
+import { Wrapper } from "@/components/wrapper"
 import { useSectionTracker } from "@/hooks"
 import type { Locale } from "@/i18n/routing"
+import { fetchProposalById } from "@/lib/api/proposals"
 import { residencePlanMedia, routeConfig, SectionId, socialMedia } from "@/lib/constants"
 import { useStore } from "@/lib/store/ui"
-
-import { useQuery } from "@tanstack/react-query"
-import { useSearchParams } from "next/navigation"
-
-import { LoadingSpinner } from "@/components/loading-spinner"
-import { Wrapper } from "@/components/wrapper"
-import { fetchProposalById } from "@/lib/api/proposals"
-import Link from "next/link"
+import { cn } from "@/lib/utils"
 import { ArrowRightIcon, TiktokLogoIcon } from "@phosphor-icons/react"
+import { FacebookLogoIcon, InstagramLogoIcon, XLogoIcon } from "@phosphor-icons/react/ssr"
+import { useQuery } from "@tanstack/react-query"
+import { useLocale, useTranslations } from "next-intl"
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { useMemo, useRef } from "react"
 
 export default function Page() {
   const searchParams = useSearchParams()
@@ -34,7 +30,12 @@ export default function Page() {
   // Prefetch proposal data in background - modal will use cached data
   const { isLoading: isProposalLoading, isError: isProposalError } = useQuery({
     queryKey: ["proposal", proposalId],
-    queryFn: () => fetchProposalById(proposalId!),
+    queryFn: () => {
+      if (!proposalId) {
+        throw new Error("Proposal ID is required")
+      }
+      return fetchProposalById(proposalId)
+    },
     enabled: Boolean(proposalId),
     staleTime: 1000 * 60 * 60, // Cache for 1 hour
   })
@@ -70,7 +71,8 @@ export default function Page() {
         {/* Close Button */}
         <button
           className={cn(
-            "size-24 sm:size-24 lg:size-36 xl:size-36 2xl:size-36 3xl:size-36",
+            "size-20 sm:size-24 lg:size-36 xl:size-36 2xl:size-36 3xl:size-36",
+            "[@media(orientation:landscape)_and_(max-height:500px)]:size-20",
             "flex items-center justify-center",
             "text-bricky-brick",
             "transition-opacity duration-300 hover:opacity-70",
@@ -91,7 +93,7 @@ export default function Page() {
         <div
           className={cn(
             "w-full size-full mx-auto px-8 lg:px-16 xl:px-16 pb-4 lg:pb-16 xl:pt-8 2xl:pt-0",
-            "flex flex-col gap-6 lg:gap-4 3xl:gap-6"
+            "flex flex-col gap-6 lg:gap-4 3xl:gap-6 [@media(orientation:landscape)_and_(max-height:500px)]:gap-2"
           )}
         >
           {/* NAVIGATION */}
@@ -209,10 +211,10 @@ export default function Page() {
             <span className='sr-only'>Scroll Down</span>
           </div>
           {/* MOBILE VIDEO */}
-          <div className='w-full flex-1 min-h-0 xl:hidden'>
+          <div className='w-full flex-1 min-h-0 xl:hidden landscape:hidden'>
             <AutoplayVideo playbackId={residencePlanMedia.muxSrc} />
           </div>
-          <div className='flex flex-col gap-3 mt-auto'>
+          <div className='flex flex-col gap-3 mt-auto [@media(orientation:landscape)_and_(max-height:500px)]:flex-row [@media(orientation:landscape)_and_(max-height:500px)]:items-center [@media(orientation:landscape)_and_(max-height:500px)]:justify-between [@media(orientation:landscape)_and_(max-height:500px)]:gap-2 [@media(orientation:landscape)_and_(max-height:500px)]:mt-4'>
             {/* YASAM YENİDEN TASARLANDI */}
             <div className='flex items-center justify-start '>
               <span
@@ -220,6 +222,7 @@ export default function Page() {
                   "whitespace-nowrap text-center font-primary font-medium text-bricky-brick",
                   "-tracking-[0.025em]",
                   "text-[14px]/[1] xs:text-[4.5vw]/[1] sm:text-xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]",
+                  "[@media(orientation:landscape)_and_(max-height:500px)]:text-[19px]",
                   "flex flex-col items-center justify-center gap-3 sm:gap-4 lg:flex-row lg:gap-2"
                 )}
               >
@@ -228,7 +231,8 @@ export default function Page() {
               <span
                 className={cn(
                   "mx-2 sm:mx-3 md:mx-4 xl:mx-3 2xl:mx-4 3xl:mx-4",
-                  "size-5 sm:size-6 md:size-8 xl:size-8 2xl:size-8 3xl:size-10"
+                  "size-5 sm:size-6 md:size-8 xl:size-8 2xl:size-8 3xl:size-10",
+                  "[@media(orientation:landscape)_and_(max-height:500px)]:size-6 [@media(orientation:landscape)_and_(max-height:500px)]:mx-2"
                 )}
               >
                 <IconCollab className='text-bricky-brick size-full' />
@@ -237,36 +241,37 @@ export default function Page() {
                 className={cn(
                   "whitespace-nowrap text-center font-primary font-semibold text-bricky-brick",
                   "-tracking-[0.015em]",
-                  "text-[14px]/[1] xs:text-[4.5vw]/[1] sm:text-xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]"
+                  "text-[14px]/[1] xs:text-[4.5vw]/[1] sm:text-xl/[1] md:text-3xl/[1] lg:text-4xl/[1] xl:text-2xl/[1] 2xl:text-3xl/[1] 3xl:text-4xl/[1]",
+                  "[@media(orientation:landscape)_and_(max-height:500px)]:text-[19px]"
                 )}
               >
                 CITY&apos;S
               </span>
             </div>
             {/* SOCIAL MEDIA */}
-            <div className='mr-auto gap-4 flex 3xl:gap-6'>
+            <div className='mr-auto gap-4 flex 3xl:gap-6 [@media(orientation:landscape)_and_(max-height:500px)]:mr-0 [@media(orientation:landscape)_and_(max-height:500px)]:gap-4'>
               <Link href={socialMedia.facebook} target='_blank' rel='noopener noreferrer'>
                 <FacebookLogoIcon
                   weight='fill'
-                  className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                  className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
                 />
               </Link>
               <Link href={socialMedia.x} target='_blank' rel='noopener noreferrer'>
                 <XLogoIcon
                   weight='regular'
-                  className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                  className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
                 />
               </Link>
               <Link href={socialMedia.instagram} target='_blank' rel='noopener noreferrer'>
                 <InstagramLogoIcon
                   weight='regular'
-                  className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                  className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
                 />
               </Link>
               <Link href={socialMedia.tiktok} target='_blank' rel='noopener noreferrer'>
                 <TiktokLogoIcon
                   weight='regular'
-                  className='size-6 sm:size-8 lg:size-9 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
+                  className='size-6 sm:size-8 lg:size-9 [@media(orientation:landscape)_and_(max-height:500px)]:size-8 cursor-pointer text-bricky-brick transition-opacity duration-300 hover:opacity-70'
                 />
               </Link>
             </div>

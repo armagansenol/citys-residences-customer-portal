@@ -15,97 +15,8 @@ import { routeConfig, SectionId } from "@/lib/constants"
 import { useStore } from "@/lib/store/ui"
 
 const CIRCLE_DEGREES = 360 // Total degrees of the wheel (360 = full circle)
-const WHEEL_ITEM_SIZE = 50 // Height of each item in pixels
 const WHEEL_ITEM_COUNT = 18 // Wheel geometry - controls curvature
 const WHEEL_ITEMS_IN_VIEW = 4 // Visible arc size
-
-export const WHEEL_ITEM_RADIUS = CIRCLE_DEGREES / WHEEL_ITEM_COUNT
-export const IN_VIEW_DEGREES = WHEEL_ITEM_RADIUS * WHEEL_ITEMS_IN_VIEW
-export const WHEEL_RADIUS = Math.round(WHEEL_ITEM_SIZE / 2 / Math.tan(Math.PI / WHEEL_ITEM_COUNT))
-
-const isInView = (wheelLocation: number, slidePosition: number): boolean =>
-  Math.abs(wheelLocation - slidePosition) < IN_VIEW_DEGREES
-
-const getDistanceFromCenter = (
-  emblaApi: EmblaCarouselType,
-  index: number,
-  loop: boolean,
-  slideCount: number,
-  totalRadius: number
-): number => {
-  const wheelLocation = emblaApi.scrollProgress() * totalRadius
-  const positionDefault = emblaApi.scrollSnapList()[index] * totalRadius
-  const positionLoopStart = positionDefault + totalRadius
-  const positionLoopEnd = positionDefault - totalRadius
-
-  let distanceFromCenter = Math.abs(wheelLocation - positionDefault)
-
-  if (loop && isInView(wheelLocation, positionLoopEnd)) {
-    distanceFromCenter = Math.abs(wheelLocation - positionLoopEnd)
-  }
-
-  if (loop && isInView(wheelLocation, positionLoopStart)) {
-    distanceFromCenter = Math.abs(wheelLocation - positionLoopStart)
-  }
-
-  return distanceFromCenter
-}
-
-const setSlideStyles = (
-  emblaApi: EmblaCarouselType,
-  index: number,
-  loop: boolean,
-  slideCount: number,
-  totalRadius: number
-): boolean => {
-  const slideNode = emblaApi.slideNodes()[index]
-  const wheelLocation = emblaApi.scrollProgress() * totalRadius
-  const positionDefault = emblaApi.scrollSnapList()[index] * totalRadius
-  const positionLoopStart = positionDefault + totalRadius
-  const positionLoopEnd = positionDefault - totalRadius
-
-  let inView = false
-  let angle = index * -WHEEL_ITEM_RADIUS
-  let distanceFromCenter = Math.abs(wheelLocation - positionDefault)
-
-  if (isInView(wheelLocation, positionDefault)) {
-    inView = true
-  }
-
-  if (loop && isInView(wheelLocation, positionLoopEnd)) {
-    inView = true
-    angle = -CIRCLE_DEGREES + (slideCount - index) * WHEEL_ITEM_RADIUS
-    distanceFromCenter = Math.abs(wheelLocation - positionLoopEnd)
-  }
-
-  if (loop && isInView(wheelLocation, positionLoopStart)) {
-    inView = true
-    angle = -(totalRadius % CIRCLE_DEGREES) - index * WHEEL_ITEM_RADIUS
-    distanceFromCenter = Math.abs(wheelLocation - positionLoopStart)
-  }
-
-  // Check if this slide is the active one (closest to center)
-  const isActive = distanceFromCenter < WHEEL_ITEM_RADIUS / 2
-
-  if (inView) {
-    slideNode.style.opacity = "1"
-    slideNode.style.transform = `translateY(-${index * 100}%) rotateX(${angle}deg) translateZ(${WHEEL_RADIUS}px)`
-    slideNode.style.color = isActive ? "#CC4429" : ""
-    // Only allow clicking on the active (centered) item
-    slideNode.style.pointerEvents = isActive ? "auto" : "none"
-  } else {
-    slideNode.style.opacity = "0"
-    slideNode.style.transform = "none"
-    slideNode.style.color = ""
-    slideNode.style.pointerEvents = "none"
-  }
-
-  return isActive
-}
-
-export const setContainerStyles = (emblaApi: EmblaCarouselType, wheelRotation: number): void => {
-  emblaApi.containerNode().style.transform = `translateZ(${WHEEL_RADIUS}px) rotateX(${wheelRotation}deg)`
-}
 
 export type NavigationItem = {
   title: string
@@ -139,12 +50,33 @@ export function IosPickerItem(props: IosPickerItemProps) {
     onReady,
     onEmblaApi,
   } = props
+
+  const [wheelItemSize, setWheelItemSize] = useState(50)
+
+  useEffect(() => {
+    const checkOrientation = () => {
+      if (window.innerHeight < 500 && window.innerWidth > window.innerHeight) {
+        setWheelItemSize(45)
+      } else {
+        setWheelItemSize(50)
+      }
+    }
+    checkOrientation()
+    window.addEventListener("resize", checkOrientation)
+    return () => window.removeEventListener("resize", checkOrientation)
+  }, [])
+
+  const wheelItemRadius = CIRCLE_DEGREES / WHEEL_ITEM_COUNT
+  const inViewDegrees = wheelItemRadius * WHEEL_ITEMS_IN_VIEW
+  const wheelRadius = Math.round(wheelItemSize / 2 / Math.tan(Math.PI / WHEEL_ITEM_COUNT))
+
   const setIsCitysLivingModalOpen = useStore((state) => state.setIsCitysLivingModalOpen)
   const setIsMasterplanModalOpen = useStore((state) => state.setIsMasterplanModalOpen)
   const setIsResidencePlanModalOpen = useStore((state) => state.setIsResidencePlanModalOpen)
-  // Duplicate items to fill the wheel (original example expects many items)
-  const duplicatedItems = [...items]
+
+  const duplicatedItems = React.useMemo(() => [...items], [items])
   const slideCount = duplicatedItems.length
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop,
     axis: "y",
@@ -152,12 +84,76 @@ export function IosPickerItem(props: IosPickerItemProps) {
     watchSlides: false,
     startIndex: initialIndex,
   })
+
   const rootNodeRef = useRef<HTMLDivElement>(null)
-  const totalRadius = slideCount * WHEEL_ITEM_RADIUS
-  const rotationOffset = loop ? 0 : WHEEL_ITEM_RADIUS
+  const totalRadius = slideCount * wheelItemRadius
+  const rotationOffset = loop ? 0 : wheelItemRadius
   const [isReady, setIsReady] = useState(false)
 
-  // Execute action for a specific item by its index
+  const isInView = useCallback(
+    (wheelLocation: number, slidePosition: number): boolean => Math.abs(wheelLocation - slidePosition) < inViewDegrees,
+    [inViewDegrees]
+  )
+
+  const setSlideStyles = useCallback(
+    (emblaApi: EmblaCarouselType, index: number, loop: boolean, slideCount: number, totalRadius: number): boolean => {
+      const slideNode = emblaApi.slideNodes()[index]
+      if (!slideNode) return false
+
+      const wheelLocation = emblaApi.scrollProgress() * totalRadius
+      const positionDefault = emblaApi.scrollSnapList()[index] * totalRadius
+      const positionLoopStart = positionDefault + totalRadius
+      const positionLoopEnd = positionDefault - totalRadius
+
+      let inView = false
+      let angle = index * -wheelItemRadius
+      let distanceFromCenter = Math.abs(wheelLocation - positionDefault)
+
+      if (isInView(wheelLocation, positionDefault)) {
+        inView = true
+      }
+
+      if (loop && isInView(wheelLocation, positionLoopEnd)) {
+        inView = true
+        angle = -CIRCLE_DEGREES + (slideCount - index) * wheelItemRadius
+        distanceFromCenter = Math.abs(wheelLocation - positionLoopEnd)
+      }
+
+      if (loop && isInView(wheelLocation, positionLoopStart)) {
+        inView = true
+        angle = -(totalRadius % CIRCLE_DEGREES) - index * wheelItemRadius
+        distanceFromCenter = Math.abs(wheelLocation - positionLoopStart)
+      }
+
+      const isActive = distanceFromCenter < wheelItemRadius / 2
+
+      if (inView) {
+        slideNode.style.opacity = "1"
+        slideNode.style.transform = `translateY(-${index * 100}%) rotateX(${angle}deg) translateZ(${wheelRadius}px)`
+        slideNode.style.color = isActive ? "#CC4429" : ""
+        slideNode.style.pointerEvents = isActive ? "auto" : "none"
+      } else {
+        slideNode.style.opacity = "0"
+        slideNode.style.transform = "none"
+        slideNode.style.color = ""
+        slideNode.style.pointerEvents = "none"
+      }
+
+      return isActive
+    },
+    [wheelItemRadius, wheelRadius, isInView]
+  )
+
+  const setContainerStyles = useCallback(
+    (emblaApi: EmblaCarouselType, wheelRotation: number): void => {
+      const container = emblaApi.containerNode()
+      if (container) {
+        container.style.transform = `translateZ(${wheelRadius}px) rotateX(${wheelRotation}deg)`
+      }
+    },
+    [wheelRadius]
+  )
+
   const executeItemAction = useCallback(
     (itemIndex: number) => {
       const item = duplicatedItems[itemIndex]
@@ -179,8 +175,6 @@ export function IosPickerItem(props: IosPickerItemProps) {
       } else if (isResidencePlan) {
         setIsResidencePlanModalOpen(true)
       } else {
-        // For regular links, we need to navigate programmatically
-        // Return the href so the caller can handle navigation
         return item.href
       }
       return null
@@ -188,26 +182,45 @@ export function IosPickerItem(props: IosPickerItemProps) {
     [duplicatedItems, setIsCitysLivingModalOpen, setIsMasterplanModalOpen, setIsResidencePlanModalOpen]
   )
 
-  // Create a click handler for modal items (buttons) that uses element index
+  const getDistanceFromCenter = useCallback(
+    (emblaApi: EmblaCarouselType, index: number, loop: boolean, totalRadius: number): number => {
+      const wheelLocation = emblaApi.scrollProgress() * totalRadius
+      const positionDefault = emblaApi.scrollSnapList()[index] * totalRadius
+      const positionLoopStart = positionDefault + totalRadius
+      const positionLoopEnd = positionDefault - totalRadius
+
+      let distanceFromCenter = Math.abs(wheelLocation - positionDefault)
+
+      if (loop && isInView(wheelLocation, positionLoopEnd)) {
+        distanceFromCenter = Math.abs(wheelLocation - positionLoopEnd)
+      }
+
+      if (loop && isInView(wheelLocation, positionLoopStart)) {
+        distanceFromCenter = Math.abs(wheelLocation - positionLoopStart)
+      }
+
+      return distanceFromCenter
+    },
+    [isInView]
+  )
+
   const createButtonClickHandler = useCallback(
     (itemIndex: number) => (e: React.MouseEvent) => {
       if (!emblaApi) return
 
-      const dist = getDistanceFromCenter(emblaApi, itemIndex, loop, slideCount, totalRadius)
+      const dist = getDistanceFromCenter(emblaApi, itemIndex, loop, totalRadius)
       const isSnapMatch = emblaApi.selectedScrollSnap() === itemIndex
 
-      // If clicking on this item but it's not the center item (neither visually nor logically), scroll to it
-      if (!isSnapMatch && dist > WHEEL_ITEM_RADIUS / 2) {
+      if (!isSnapMatch && dist > wheelItemRadius / 2) {
         e.preventDefault()
         emblaApi.scrollTo(itemIndex)
         return
       }
 
-      // Clicking on the center item - execute its action
       e.preventDefault()
       executeItemAction(itemIndex)
     },
-    [emblaApi, executeItemAction, loop, slideCount, totalRadius]
+    [emblaApi, executeItemAction, loop, totalRadius, getDistanceFromCenter, wheelItemRadius]
   )
 
   const inactivateEmblaTransform = useCallback((emblaApi: EmblaCarouselType) => {
@@ -223,17 +236,16 @@ export function IosPickerItem(props: IosPickerItemProps) {
 
   const rotateWheel = useCallback(
     (emblaApi: EmblaCarouselType) => {
-      const rotation = slideCount * WHEEL_ITEM_RADIUS - rotationOffset
+      const rotation = slideCount * wheelItemRadius - rotationOffset
       const wheelRotation = rotation * emblaApi.scrollProgress()
       setContainerStyles(emblaApi, wheelRotation)
       emblaApi.slideNodes().forEach((_, index) => {
         setSlideStyles(emblaApi, index, loop, slideCount, totalRadius)
       })
     },
-    [slideCount, rotationOffset, totalRadius, loop]
+    [slideCount, rotationOffset, totalRadius, loop, setContainerStyles, setSlideStyles, wheelItemRadius]
   )
 
-  // Pass emblaApi to parent
   useEffect(() => {
     onEmblaApi?.(emblaApi)
   }, [emblaApi, onEmblaApi])
@@ -244,7 +256,7 @@ export function IosPickerItem(props: IosPickerItemProps) {
     const handlePointerUp = (emblaApi: EmblaCarouselType) => {
       const { scrollTo, target, location } = emblaApi.internalEngine()
       const diffToTarget = target.get() - location.get()
-      const factor = Math.abs(diffToTarget) < WHEEL_ITEM_SIZE / 2.5 ? 10 : 0.1
+      const factor = Math.abs(diffToTarget) < wheelItemSize / 2.5 ? 10 : 0.1
       const distance = diffToTarget * factor
       scrollTo.distance(distance, true)
     }
@@ -252,7 +264,6 @@ export function IosPickerItem(props: IosPickerItemProps) {
     const handleSettle = () => {
       if (onSelect && emblaApi) {
         const selectedIndex = emblaApi.selectedScrollSnap()
-        // Map back to original item index
         const originalIndex = selectedIndex % items.length
         const selectedItem = items[originalIndex]
         if (selectedItem) {
@@ -271,7 +282,7 @@ export function IosPickerItem(props: IosPickerItemProps) {
 
     inactivateEmblaTransform(emblaApi)
     rotateWheel(emblaApi)
-    // Mark as ready after initial setup and browser paint
+
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         setIsReady(true)
@@ -284,7 +295,7 @@ export function IosPickerItem(props: IosPickerItemProps) {
       emblaApi.off("scroll", rotateWheel)
       emblaApi.off("settle", handleSettle)
     }
-  }, [emblaApi, inactivateEmblaTransform, rotateWheel, onSelect, items])
+  }, [emblaApi, inactivateEmblaTransform, rotateWheel, onSelect, items, wheelItemSize, onReady])
 
   return (
     <div className={cn(styles.iosPicker, className)}>
@@ -310,12 +321,12 @@ export function IosPickerItem(props: IosPickerItemProps) {
                 item.id === SectionId.CITYS_LIVING || (item.isModal && item.id === SectionId.CITYS_LIVING)
               const isMasterplan =
                 item.id === SectionId.MASTERPLAN || (item.isModal && item.id === SectionId.MASTERPLAN)
-              // All items use the same unified click handler
-              // Modal items (CityLiving, Masterplan, ResidencePlan) are rendered as buttons
+
               if (isCitysLiving || isMasterplan || isResidencePlan) {
                 return (
                   <button
                     key={index}
+                    type='button'
                     onClick={createButtonClickHandler(index)}
                     disabled={item.disabled}
                     className={cn(
@@ -323,9 +334,10 @@ export function IosPickerItem(props: IosPickerItemProps) {
                       "text-gray-500",
                       "size-full",
                       "text-[7vw]/[1] md:text-[4vw]/[1] lg:text-[3.5vw]/[1] font-regular",
+                      "[@media(orientation:landscape)_and_(max-height:500px)]:text-[20px]",
                       "flex items-center justify-start",
                       "text-left",
-                      "px-14 md:px-[15vw] lg:px-[14vw]",
+                      "px-14 md:px-[15vw] lg:px-[14vw] [@media(orientation:landscape)_and_(max-height:500px)]:px-10",
                       "transition-colors duration-300",
                       {
                         [styles.disabled]: item.disabled,
@@ -338,7 +350,7 @@ export function IosPickerItem(props: IosPickerItemProps) {
                   </button>
                 )
               }
-              // External links use plain <a> tag (Next.js Link doesn't handle external URLs well)
+
               if (item.isExternal) {
                 return (
                   <a
@@ -348,29 +360,28 @@ export function IosPickerItem(props: IosPickerItemProps) {
                     onClick={(e) => {
                       if (!emblaApi) return
 
-                      const dist = getDistanceFromCenter(emblaApi, index, loop, slideCount, totalRadius)
+                      const dist = getDistanceFromCenter(emblaApi, index, loop, totalRadius)
                       const isSnapMatch = emblaApi.selectedScrollSnap() === index
 
-                      if (!isSnapMatch && dist > WHEEL_ITEM_RADIUS / 2) {
+                      if (!isSnapMatch && dist > wheelItemRadius / 2) {
                         e.preventDefault()
                         emblaApi.scrollTo(index)
                         return
                       }
 
-                      // Clicking on the center item - save to session storage and let anchor handle navigation
                       if (item.id) {
                         sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
                       }
-                      // Don't prevent default - anchor will open in new tab
                     }}
                     className={cn(
                       styles.slide,
                       "text-gray-500",
                       "size-full",
                       "text-[7vw]/[1] md:text-[4vw]/[1] lg:text-[3.5vw]/[1] font-regular",
+                      "[@media(orientation:landscape)_and_(max-height:500px)]:text-[20px]",
                       "flex items-center justify-start",
                       "text-left",
-                      "px-14 md:px-[15vw] lg:px-[14vw]",
+                      "px-14 md:px-[15vw] lg:px-[14vw] [@media(orientation:landscape)_and_(max-height:500px)]:px-10",
                       "transition-colors duration-300",
                       {
                         [styles.disabled]: item.disabled,
@@ -382,36 +393,35 @@ export function IosPickerItem(props: IosPickerItemProps) {
                   </a>
                 )
               }
-              // Regular internal navigation links
+
               return (
                 <LocaleTransitionLink
                   href={item.href}
                   onClick={(e) => {
                     if (!emblaApi) return
 
-                    const dist = getDistanceFromCenter(emblaApi, index, loop, slideCount, totalRadius)
+                    const dist = getDistanceFromCenter(emblaApi, index, loop, totalRadius)
                     const isSnapMatch = emblaApi.selectedScrollSnap() === index
 
-                    if (!isSnapMatch && dist > WHEEL_ITEM_RADIUS / 2) {
+                    if (!isSnapMatch && dist > wheelItemRadius / 2) {
                       e.preventDefault()
                       emblaApi.scrollTo(index)
                       return
                     }
 
-                    // Clicking on the center item - save to session storage and let link handle navigation
                     if (item.id) {
                       sessionStorage.setItem(LAST_VISITED_ROUTE_KEY, item.id)
                     }
-                    // Don't prevent default - link will navigate
                   }}
                   className={cn(
                     styles.slide,
                     "text-gray-500",
                     "size-full",
                     "text-[7vw]/[1] md:text-[4vw]/[1] lg:text-[3.5vw]/[1] font-regular",
+                    "[@media(orientation:landscape)_and_(max-height:500px)]:text-[20px]",
                     "flex items-center justify-start",
                     "text-left",
-                    "px-14 md:px-[15vw] lg:px-[14vw]",
+                    "px-14 md:px-[15vw] lg:px-[14vw] [@media(orientation:landscape)_and_(max-height:500px)]:px-10",
                     "transition-colors duration-300",
                     {
                       [styles.disabled]: item.disabled,
@@ -440,24 +450,32 @@ type IosPickerProps = {
 
 export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIndex = 0, loop = false, className }) => {
   const [isReady, setIsReady] = useState(false)
-  const [pickerKey, setPickerKey] = useState(() => Date.now())
+  const [pickerKey] = useState(() => Date.now())
   const containerRef = useRef<HTMLDivElement>(null)
   const [emblaApi, setEmblaApi] = useState<EmblaCarouselType | undefined>(undefined)
+  const [wheelItemSize, setWheelItemSize] = useState(50)
 
-  // Always start at the first item (index 0)
-  const currentInitialIndex = initialIndex
+  useEffect(() => {
+    const checkOrientation = () => {
+      if (window.innerHeight < 500 && window.innerWidth > window.innerHeight) {
+        setWheelItemSize(45)
+      } else {
+        setWheelItemSize(50)
+      }
+    }
+    checkOrientation()
+    window.addEventListener("resize", checkOrientation)
+    return () => window.removeEventListener("resize", checkOrientation)
+  }, [])
 
-  // Track when animation has completed
   const handleReady = useCallback(() => {
     setIsReady(true)
   }, [])
 
-  // Scroll to previous item
   const scrollPrev = useCallback(() => {
     emblaApi?.scrollPrev()
   }, [emblaApi])
 
-  // Scroll to next item
   const scrollNext = useCallback(() => {
     emblaApi?.scrollNext()
   }, [emblaApi])
@@ -471,23 +489,23 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
       })}
       style={
         {
-          "--wheel-item-size": `${WHEEL_ITEM_SIZE}px`,
+          "--wheel-item-size": `${wheelItemSize}px`,
           "--pseudo-opacity": isReady ? "1" : "0",
         } as React.CSSProperties
       }
     >
-      <div className={styles.overlayTop} onClick={scrollPrev} />
+      <button type='button' className={styles.overlayTop} onClick={scrollPrev} aria-label='Scroll up' />
       <IosPickerItem
         key={pickerKey}
         items={items}
         perspective='center'
         loop={loop}
         onSelect={onSelect}
-        initialIndex={currentInitialIndex}
+        initialIndex={initialIndex}
         onReady={handleReady}
         onEmblaApi={setEmblaApi}
       />
-      <div className={styles.overlayBottom} onClick={scrollNext} />
+      <button type='button' className={styles.overlayBottom} onClick={scrollNext} aria-label='Scroll down' />
     </div>
   )
 }

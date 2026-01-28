@@ -20,7 +20,7 @@ const hotspots = [
     label: "C1",
     title: "C1 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/rp-1.jpg",
+    image: "/img/citys-block.png",
   },
   {
     id: "c2",
@@ -29,7 +29,7 @@ const hotspots = [
     label: "C2",
     title: "C2 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/rp-2.jpg",
+    image: "/img/citys-block.png",
   },
   {
     id: "c3",
@@ -38,7 +38,7 @@ const hotspots = [
     label: "C3",
     title: "C3 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/rp-3.jpg",
+    image: "/img/citys-block.png",
   },
   {
     id: "b5",
@@ -47,7 +47,7 @@ const hotspots = [
     label: "B5",
     title: "B5 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/rp-4.jpg",
+    image: "/img/citys-block.png",
   },
   {
     id: "b4",
@@ -56,7 +56,7 @@ const hotspots = [
     label: "B4",
     title: "B4 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/rp-1.jpg",
+    image: "/img/citys-block.png",
   },
   {
     id: "b3",
@@ -65,7 +65,7 @@ const hotspots = [
     label: "B3",
     title: "B3 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/rp-2.jpg",
+    image: "/img/citys-block.png",
   },
   {
     id: "b2",
@@ -74,7 +74,7 @@ const hotspots = [
     label: "B2",
     title: "B2 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/rp-3.jpg",
+    image: "/img/citys-block.png",
   },
   {
     id: "b1",
@@ -83,7 +83,7 @@ const hotspots = [
     label: "B1",
     title: "B1 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/rp-4.jpg",
+    image: "/img/citys-block.png",
   },
   {
     id: "a2",
@@ -92,7 +92,7 @@ const hotspots = [
     label: "A2",
     title: "A2 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/rp-1.jpg",
+    image: "/img/citys-block.png",
   },
   {
     id: "a1",
@@ -101,7 +101,7 @@ const hotspots = [
     label: "A1",
     title: "A1 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/rp-2.jpg",
+    image: "/img/citys-block.png",
   },
 ]
 
@@ -176,7 +176,6 @@ export function MasterplanModal() {
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className='fixed inset-0 z-201 overflow-hidden flex items-center justify-center'
-            onClick={() => setIsOpen(false)}
             data-lenis-prevent
           >
             {/* Header */}
@@ -276,13 +275,12 @@ export function MasterplanModal() {
 
                 {hotspots.map((hotspot) => {
                   const isActive = selectedHotspot?.id === hotspot.id
-                  const isOnRight = hotspot.x > 75
-                  const isOnLeft = hotspot.x < 25
+                  const showOnRight = hotspot.x < 50
 
                   return (
                     <div
                       key={hotspot.id}
-                      className='absolute z-10 pointer-events-auto'
+                      className={cn("absolute pointer-events-auto", isActive ? "z-20" : "z-10")}
                       style={{
                         left: `${hotspot.x}%`,
                         top: `${hotspot.y}%`,
@@ -313,15 +311,13 @@ export function MasterplanModal() {
                           <motion.div
                             initial={{
                               opacity: 0,
-                              x: isOnRight ? -30 : isOnLeft ? 30 : 0,
-                              y: isOnRight || isOnLeft ? 0 : 30,
+                              x: showOnRight ? -20 : 20,
                               scale: 0.9,
                             }}
-                            animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                            animate={{ opacity: 1, x: 0, scale: 1 }}
                             exit={{
                               opacity: 0,
-                              x: isOnRight ? -30 : isOnLeft ? 30 : 0,
-                              y: isOnRight || isOnLeft ? 0 : 30,
+                              x: showOnRight ? -20 : 20,
                               scale: 0.9,
                             }}
                             transition={{
@@ -329,27 +325,24 @@ export function MasterplanModal() {
                               ease: [0.16, 1, 0.3, 1],
                             }}
                             className={cn(
-                              "absolute z-20 pointer-events-auto",
-                              "w-[220px] md:w-[320px] bg-white/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-4 md:p-6",
-                              isOnRight
-                                ? "right-full mr-6 top-1/2 -translate-y-1/2"
-                                : isOnLeft
-                                ? "left-full ml-6 top-1/2 -translate-y-1/2"
-                                : "left-1/2 -translate-x-1/2 bottom-full mb-6"
+                              "absolute z-50 pointer-events-auto",
+                              "w-[220px] md:w-[240px] aspect-12/16 bg-white/95 backdrop-blur-xl rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-4 md:p-6",
+                              "top-1/2 -translate-y-[30%]",
+                              showOnRight ? "left-full ml-4" : "right-full mr-4"
                             )}
                             onClick={(e) => e.stopPropagation()}
                           >
-                            <div className='flex flex-col gap-3 md:gap-4'>
+                            <div className='flex flex-col h-full gap-3 md:gap-4'>
                               <div>
-                                <h3 className='text-base md:text-2xl font-bold text-gray-900 leading-tight tracking-tight'>
+                                <h3 className='text-base md:text-2xl font-medium text-gray-900 leading-tight tracking-tight'>
                                   {hotspot.title}
                                 </h3>
-                                <p className='text-[10px] md:text-sm text-gray-500 font-medium mt-1'>
+                                <p className='text-[10px] md:text-sm text-gray-800 mt-1 font-light'>
                                   {hotspot.description}
                                 </p>
                               </div>
-                              <div className='relative size-full overflow-hidden rounded-xl bg-gray-50/50 border border-gray-100'>
-                                <Image src={hotspot.image} fill className='object-cover' alt={hotspot.title} />
+                              <div className='relative flex-1 min-h-0 overflow-hidden'>
+                                <Image src={hotspot.image} fill className='object-contain' alt={hotspot.title} />
                               </div>
                             </div>
                           </motion.div>

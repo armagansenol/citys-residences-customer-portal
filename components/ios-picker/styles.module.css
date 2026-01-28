@@ -8,6 +8,15 @@
   margin-right: auto;
 }
 
+@media (orientation: landscape) and (max-height: 500px) {
+  .embla {
+    height: 11rem;
+    max-width: 300px;
+    margin-left: 0;
+    margin-right: auto;
+  }
+}
+
 .overlayTop,
 .overlayBottom {
   position: absolute;
@@ -42,6 +51,12 @@
   justify-content: center;
   line-height: 1;
   position: relative;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .iosPicker {
+    justify-content: flex-start;
+  }
 }
 
 .scene {
