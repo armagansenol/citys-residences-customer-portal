@@ -165,6 +165,8 @@ const hotspots = [
   },
 ]
 
+const hotspotImageSources = Array.from(new Set(hotspots.map((hotspot) => hotspot.image)))
+
 export function MasterplanModal() {
   // Global modal visibility state from store.
   const isOpen = useStore((state) => state.isMasterplanModalOpen)
@@ -253,6 +255,16 @@ export function MasterplanModal() {
       document.body.style.overflow = ""
     }
   }, [isOpen, lenis])
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    // Warm up hotspot card images so first reveal is instant.
+    hotspotImageSources.forEach((src) => {
+      const preloadImage = new window.Image()
+      preloadImage.src = src
+    })
+  }, [isOpen])
 
   return (
     <AnimatePresence>
@@ -406,7 +418,15 @@ export function MasterplanModal() {
                                     </h3>
                                   </div>
                                   <div className='relative flex-1 min-h-0 overflow-hidden'>
-                                    <Image src={hotspot.image} fill className='object-contain' alt={hotspot.title} />
+                                    <Image
+                                      src={hotspot.image}
+                                      fill
+                                      className='object-contain'
+                                      alt={hotspot.title}
+                                      priority
+                                      loading='eager'
+                                      fetchPriority='high'
+                                    />
                                   </div>
                                 </div>
                               </motion.div>
