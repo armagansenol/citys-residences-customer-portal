@@ -256,16 +256,6 @@ export function MasterplanModal() {
     }
   }, [isOpen, lenis])
 
-  useEffect(() => {
-    if (!isOpen) return
-
-    // Warm up hotspot card images so first reveal is instant.
-    hotspotImageSources.forEach((src) => {
-      const preloadImage = new window.Image()
-      preloadImage.src = src
-    })
-  }, [isOpen])
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -292,6 +282,20 @@ export function MasterplanModal() {
             data-lenis-prevent
           >
             <ModalHeader onClose={() => setIsOpen(false)} isVisible={showHeader} />
+            <div className='sr-only' aria-hidden>
+              {hotspotImageSources.map((src) => (
+                <Image
+                  key={src}
+                  src={src}
+                  alt=''
+                  width={1}
+                  height={1}
+                  priority
+                  loading='eager'
+                  fetchPriority='high'
+                />
+              ))}
+            </div>
 
             {/* Orientation Warning Overlay */}
             <AnimatePresence>
