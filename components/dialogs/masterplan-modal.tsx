@@ -75,8 +75,8 @@ const hotspots = [
   // x => horizontal position from left, y => vertical position from top.
   {
     id: "c1",
-    x: 18,
-    y: 58,
+    x: 19,
+    y: 55,
     label: "C1",
     title: "C1 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
@@ -85,7 +85,7 @@ const hotspots = [
   {
     id: "c2",
     x: 25,
-    y: 53,
+    y: 50,
     label: "C2",
     title: "C2 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
@@ -93,8 +93,8 @@ const hotspots = [
   },
   {
     id: "c3",
-    x: 31,
-    y: 48,
+    x: 30,
+    y: 45.5,
     label: "C3",
     title: "C3 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
@@ -102,7 +102,7 @@ const hotspots = [
   },
   {
     id: "b5",
-    x: 37,
+    x: 36,
     y: 44,
     label: "B5",
     title: "B5 BLOK",
@@ -111,7 +111,7 @@ const hotspots = [
   },
   {
     id: "b4",
-    x: 45,
+    x: 43,
     y: 49,
     label: "B4",
     title: "B4 BLOK",
@@ -120,7 +120,7 @@ const hotspots = [
   },
   {
     id: "b3",
-    x: 52,
+    x: 50.25,
     y: 44,
     label: "B3",
     title: "B3 BLOK",
@@ -129,7 +129,7 @@ const hotspots = [
   },
   {
     id: "b2",
-    x: 60,
+    x: 58,
     y: 49,
     label: "B2",
     title: "B2 BLOK",
@@ -147,8 +147,8 @@ const hotspots = [
   },
   {
     id: "a2",
-    x: 72,
-    y: 36.2,
+    x: 71,
+    y: 48,
     label: "A2",
     title: "A2 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
@@ -156,8 +156,8 @@ const hotspots = [
   },
   {
     id: "a1",
-    x: 80,
-    y: 50,
+    x: 78,
+    y: 46,
     label: "A1",
     title: "A1 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
@@ -284,16 +284,7 @@ export function MasterplanModal() {
             <ModalHeader onClose={() => setIsOpen(false)} isVisible={showHeader} />
             <div className='sr-only' aria-hidden>
               {hotspotImageSources.map((src) => (
-                <Image
-                  key={src}
-                  src={src}
-                  alt=''
-                  width={1}
-                  height={1}
-                  priority
-                  loading='eager'
-                  fetchPriority='high'
-                />
+                <Image key={src} src={src} alt='' width={1} height={1} priority loading='eager' fetchPriority='high' />
               ))}
             </div>
 
