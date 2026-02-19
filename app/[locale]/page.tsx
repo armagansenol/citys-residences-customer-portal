@@ -1,7 +1,5 @@
 "use client"
 
-import masterplan from "@/public/img/masterplan.jpg"
-
 import { AutoplayVideo } from "@/components/autoplay-video"
 import { IconCollab, IconScrollDown, Logo } from "@/components/icons"
 import { Image } from "@/components/image"
@@ -358,11 +356,11 @@ export default function Page() {
         </div>
         {/* PRELOAD MASTERPLAN IMAGE */}
         <Image
-          src={masterplan.src}
+          src={masterplanDrone.src}
           className='sr-only'
           alt='Preview masterplan'
-          width={masterplan.width}
-          height={masterplan.height}
+          width={masterplanDrone.width}
+          height={masterplanDrone.height}
         />
       </Wrapper>
     </>

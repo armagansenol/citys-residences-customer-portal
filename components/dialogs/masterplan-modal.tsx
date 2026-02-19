@@ -71,6 +71,8 @@ function ModalHeader({ onClose, isVisible }: { onClose: () => void; isVisible: b
 }
 
 const hotspots = [
+  // Hotspot coordinates are in percentage of the background image area.
+  // x => horizontal position from left, y => vertical position from top.
   {
     id: "c1",
     x: 18,
@@ -78,7 +80,7 @@ const hotspots = [
     label: "C1",
     title: "C1 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/citys-block.png",
+    image: "/img/c-blok.png",
   },
   {
     id: "c2",
@@ -87,7 +89,7 @@ const hotspots = [
     label: "C2",
     title: "C2 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/citys-block.png",
+    image: "/img/c-blok.png",
   },
   {
     id: "c3",
@@ -96,7 +98,7 @@ const hotspots = [
     label: "C3",
     title: "C3 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/citys-block.png",
+    image: "/img/c-blok.png",
   },
   {
     id: "b5",
@@ -105,7 +107,7 @@ const hotspots = [
     label: "B5",
     title: "B5 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/citys-block.png",
+    image: "/img/c-blok.png",
   },
   {
     id: "b4",
@@ -114,7 +116,7 @@ const hotspots = [
     label: "B4",
     title: "B4 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/citys-block.png",
+    image: "/img/c-blok.png",
   },
   {
     id: "b3",
@@ -123,7 +125,7 @@ const hotspots = [
     label: "B3",
     title: "B3 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/citys-block.png",
+    image: "/img/b-blok.png",
   },
   {
     id: "b2",
@@ -132,7 +134,7 @@ const hotspots = [
     label: "B2",
     title: "B2 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/citys-block.png",
+    image: "/img/b-blok.png",
   },
   {
     id: "b1",
@@ -141,7 +143,7 @@ const hotspots = [
     label: "B1",
     title: "B1 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/citys-block.png",
+    image: "/img/b-blok.png",
   },
   {
     id: "a2",
@@ -150,7 +152,7 @@ const hotspots = [
     label: "A2",
     title: "A2 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/citys-block.png",
+    image: "/img/a-blok.png",
   },
   {
     id: "a1",
@@ -159,22 +161,42 @@ const hotspots = [
     label: "A1",
     title: "A1 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/citys-block.png",
+    image: "/img/a-blok.png",
   },
 ]
 
 export function MasterplanModal() {
+  // Global modal visibility state from store.
   const isOpen = useStore((state) => state.isMasterplanModalOpen)
   const setIsOpen = useStore((state) => state.setIsMasterplanModalOpen)
   const lenis = useLenis()
+  // selectedHotspot controls which pin's detail card is open.
   const [selectedHotspot, setSelectedHotspot] = useState<(typeof hotspots)[0] | null>(null)
+  // Portrait mode on small screens shows a rotate-device overlay.
   const [isPortrait, setIsPortrait] = useState(false)
   const tCommon = useTranslations("common")
 
+  // Header auto-hides on downward scroll and reappears when scrolling up.
   const [showHeader, setShowHeader] = useState(true)
   const lastScrollY = useRef(0)
+  const hoverCloseTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const clearHoverCloseTimeout = () => {
+    if (hoverCloseTimeout.current) {
+      clearTimeout(hoverCloseTimeout.current)
+      hoverCloseTimeout.current = null
+    }
+  }
+
+  const scheduleHotspotClose = (hotspotId: string) => {
+    clearHoverCloseTimeout()
+    hoverCloseTimeout.current = setTimeout(() => {
+      setSelectedHotspot((current) => (current?.id === hotspotId ? null : current))
+    }, 80)
+  }
 
   useEffect(() => {
+    // Keep portrait detection in sync with resize/orientation changes.
     const checkOrientation = () => {
       const isMobile = window.innerWidth < 1024
       const isPortraitMode = window.innerHeight > window.innerWidth
@@ -192,6 +214,7 @@ export function MasterplanModal() {
   }, [])
 
   useEsc(() => {
+    // ESC closes active hotspot first; closes modal when no hotspot is selected.
     if (selectedHotspot) {
       setSelectedHotspot(null)
     } else {
@@ -210,6 +233,7 @@ export function MasterplanModal() {
   }
 
   useEffect(() => {
+    // While modal is open, lock page scroll and pause Lenis.
     if (isOpen) {
       setShowHeader(true)
       lastScrollY.current = 0
@@ -222,6 +246,10 @@ export function MasterplanModal() {
     }
 
     return () => {
+      if (hoverCloseTimeout.current) {
+        clearTimeout(hoverCloseTimeout.current)
+        hoverCloseTimeout.current = null
+      }
       document.body.style.overflow = ""
     }
   }, [isOpen, lenis])
@@ -295,6 +323,7 @@ export function MasterplanModal() {
                   isPortrait ? "h-screen" : "h-auto"
                 )}
               >
+                {/* Masterplan base image layer */}
                 <Image
                   src={masterplanDrone.src}
                   className='object-cover w-full h-full object-center'
@@ -308,6 +337,7 @@ export function MasterplanModal() {
                   ? null
                   : hotspots.map((hotspot) => {
                       const isActive = selectedHotspot?.id === hotspot.id
+                      // Show card to the opposite side of pin to avoid off-screen overflow.
                       const showOnRight = hotspot.x < 50
 
                       return (
@@ -320,14 +350,16 @@ export function MasterplanModal() {
                             transform: "translate(-50%, -50%)",
                           }}
                         >
+                          {/* Hotspot pin button */}
                           <motion.button
                             whileHover={{ scale: 1.15 }}
                             whileTap={{ scale: 0.9 }}
                             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              setSelectedHotspot(isActive ? null : hotspot)
+                            onMouseEnter={() => {
+                              clearHoverCloseTimeout()
+                              setSelectedHotspot(hotspot)
                             }}
+                            onMouseLeave={() => scheduleHotspotClose(hotspot.id)}
                             className={cn(
                               "cursor-pointer",
                               "size-6 md:size-8 lg:size-12 rounded-full",
@@ -340,6 +372,7 @@ export function MasterplanModal() {
                           </motion.button>
                           <AnimatePresence>
                             {isActive && (
+                              // Detail card for currently active hotspot.
                               <motion.div
                                 initial={{
                                   opacity: 0,
@@ -358,10 +391,12 @@ export function MasterplanModal() {
                                 }}
                                 className={cn(
                                   "absolute z-50 pointer-events-auto",
-                                  "w-[160px] md:w-[240px] aspect-12/16 bg-white/95 backdrop-blur-xl rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-4 md:p-6",
+                                  "w-header-height md:w-[240px] aspect-12/16 bg-white/95 backdrop-blur-xl rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-4 md:p-4",
                                   "top-1/2 -translate-y-[30%]",
                                   showOnRight ? "left-full ml-4" : "right-full mr-4"
                                 )}
+                                onMouseEnter={clearHoverCloseTimeout}
+                                onMouseLeave={() => scheduleHotspotClose(hotspot.id)}
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 <div className='flex flex-col h-full gap-3 md:gap-4'>
@@ -369,9 +404,6 @@ export function MasterplanModal() {
                                     <h3 className='text-base md:text-2xl font-medium text-gray-900 leading-tight tracking-tight'>
                                       {hotspot.title}
                                     </h3>
-                                    <p className='text-[10px] md:text-sm text-gray-800 mt-1 font-light'>
-                                      {hotspot.description}
-                                    </p>
                                   </div>
                                   <div className='relative flex-1 min-h-0 overflow-hidden'>
                                     <Image src={hotspot.image} fill className='object-contain' alt={hotspot.title} />

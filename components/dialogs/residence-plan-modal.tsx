@@ -75,7 +75,12 @@ export function ResidencePlanModal() {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["proposal", proposalId],
-    queryFn: () => fetchProposalById(proposalId!),
+    queryFn: () => {
+      if (!proposalId) {
+        throw new Error("Proposal ID is required")
+      }
+      return fetchProposalById(proposalId)
+    },
     enabled: Boolean(proposalId) && isOpen,
     staleTime: 1000 * 60 * 60, // Cache for 1 hour
   })
@@ -102,9 +107,14 @@ export function ResidencePlanModal() {
 
   // Scroll modal content to top when switching views (slug changes)
   useLayoutEffect(() => {
-    if (modalContentRef.current) {
+    if (!modalContentRef.current) return
+
+    if (slug) {
       modalContentRef.current.scrollTop = 0
+      return
     }
+
+    modalContentRef.current.scrollTop = 0
   }, [slug])
 
   useEsc(() => {
