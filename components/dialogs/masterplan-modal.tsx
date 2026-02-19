@@ -107,7 +107,7 @@ const hotspots = [
     label: "B5",
     title: "B5 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/c-blok.png",
+    image: "/img/b-blok.png",
   },
   {
     id: "b4",
@@ -116,7 +116,7 @@ const hotspots = [
     label: "B4",
     title: "B4 BLOK",
     description: "Yukarıdan bakan bir şehir deneyimi.",
-    image: "/img/c-blok.png",
+    image: "/img/b-blok.png",
   },
   {
     id: "b3",
