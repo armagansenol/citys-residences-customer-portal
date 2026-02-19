@@ -26,7 +26,7 @@ export default function Page() {
   const searchParams = useSearchParams()
   const proposalId = searchParams?.get("id") || null
 
-  // Prefetch proposal data in background - modal will use cached data
+  // Always fetch the latest proposal data when this page is active
   const { isLoading: isProposalLoading, isError: isProposalError } = useQuery({
     queryKey: ["proposal", proposalId],
     queryFn: () => {
@@ -36,7 +36,11 @@ export default function Page() {
       return fetchProposalById(proposalId)
     },
     enabled: Boolean(proposalId),
-    staleTime: 1000 * 60 * 60, // Cache for 1 hour
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   })
 
   const locale = useLocale()
