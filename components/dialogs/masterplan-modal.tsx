@@ -165,6 +165,8 @@ const hotspots = [
   },
 ]
 
+const visibleHotspotIds = new Set(["b2", "b3"])
+
 const hotspotImageSources = Array.from(new Set(hotspots.map((hotspot) => hotspot.image)))
 
 export function MasterplanModal() {
@@ -342,7 +344,7 @@ export function MasterplanModal() {
 
                 {isPortrait
                   ? null
-                  : hotspots.map((hotspot) => {
+                  : hotspots.filter((hotspot) => visibleHotspotIds.has(hotspot.id)).map((hotspot) => {
                       const isActive = selectedHotspot?.id === hotspot.id
                       // Show card to the opposite side of pin to avoid off-screen overflow.
                       const showOnRight = hotspot.x < 50
