@@ -452,7 +452,7 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
   const [isReady, setIsReady] = useState(false)
   const [pickerKey] = useState(() => Date.now())
   const containerRef = useRef<HTMLDivElement>(null)
-  const [emblaApi, setEmblaApi] = useState<EmblaCarouselType | undefined>(undefined)
+  const [, setEmblaApi] = useState<EmblaCarouselType | undefined>(undefined)
   const [wheelItemSize, setWheelItemSize] = useState(50)
 
   useEffect(() => {
@@ -472,6 +472,7 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
     setIsReady(true)
   }, [])
 
+  /*
   const scrollPrev = useCallback(() => {
     emblaApi?.scrollPrev()
   }, [emblaApi])
@@ -479,6 +480,7 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
   const scrollNext = useCallback(() => {
     emblaApi?.scrollNext()
   }, [emblaApi])
+  */
 
   return (
     <div
@@ -494,7 +496,7 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
         } as React.CSSProperties
       }
     >
-      <button type='button' className={styles.overlayTop} onClick={scrollPrev} aria-label='Scroll up' />
+      {/* <button type='button' className={styles.overlayTop} onClick={scrollPrev} aria-label='Scroll up' /> */}
       <IosPickerItem
         key={pickerKey}
         items={items}
@@ -505,7 +507,7 @@ export const IosPicker: React.FC<IosPickerProps> = ({ items, onSelect, initialIn
         onReady={handleReady}
         onEmblaApi={setEmblaApi}
       />
-      <button type='button' className={styles.overlayBottom} onClick={scrollNext} aria-label='Scroll down' />
+      {/* <button type='button' className={styles.overlayBottom} onClick={scrollNext} aria-label='Scroll down' /> */}
     </div>
   )
 }
