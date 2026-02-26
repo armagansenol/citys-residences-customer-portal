@@ -27,7 +27,7 @@
   z-index: 1;
   opacity: var(--pseudo-opacity, 0);
   transition: opacity 500ms ease-in-out;
-  pointer-events: auto;
+  pointer-events: none;
   cursor: pointer;
 }
 
