@@ -44,7 +44,11 @@ export async function fetchProposalById(proposalId: string): Promise<ProposalRes
     throw new Error(error.message || error.error || "Failed to fetch proposal")
   }
 
-  return (await response.json()) as ProposalResponse
+  const body = (await response.json()) as Partial<ProposalResponse>
+  if (!body?.data || !Array.isArray(body.data.active) || !Array.isArray(body.data.expired)) {
+    throw new Error("Proposal response is malformed")
+  }
+  return body as ProposalResponse
 }
 
 /**

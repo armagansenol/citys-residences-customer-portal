@@ -98,7 +98,7 @@ export function ResidencePlanModal() {
 
   // Trigger prefetch when modal opens and data is available
   useEffect(() => {
-    if (isOpen && data && !slug) {
+    if (isOpen && data?.data?.active && data?.data?.expired && !slug) {
       // Prefetch all PDFs from both active and expired lists
       const allProposals = [...data.data.active, ...data.data.expired]
       prefetchAllPDFs(allProposals)
@@ -142,7 +142,7 @@ export function ResidencePlanModal() {
 
   const handleCardClick = (selectedSlug: string) => {
     // Check if proposal is in the expired list
-    const expiredProposal = data?.data.expired.find((p) => generateProposalSlug(p) === selectedSlug)
+    const expiredProposal = data?.data?.expired?.find((p) => generateProposalSlug(p) === selectedSlug)
 
     if (expiredProposal) {
       setExpiredProposalUser({
@@ -160,7 +160,7 @@ export function ResidencePlanModal() {
   }
 
   // Find the proposal that matches the slug
-  const selectedProposal = slug && data?.data.active.find((p) => generateProposalSlug(p) === slug)
+  const selectedProposal = slug && data?.data?.active?.find((p) => generateProposalSlug(p) === slug)
 
   return (
     <AnimatePresence>
@@ -277,7 +277,7 @@ export function ResidencePlanModal() {
                     <LoadingSpinner />
                   </div>
                 </section>
-              ) : isError || !data ? (
+              ) : isError || !data?.data?.active || !data?.data?.expired ? (
                 <section className='w-full px-8 lg:px-16 xl:px-24 2xl:px-32'>
                   <div className='flex min-h-screen items-center justify-center'>
                     <p className='text-sm text-red-500'>
